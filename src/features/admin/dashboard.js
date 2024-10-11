@@ -7,16 +7,16 @@ export default function Dashboard() {
         <>
             <Navbar />
             <div className="flex flex-col items-center w-full min-h-screen py-10">
-                <p className="text-4xl font-saira tracking-wider">Welcome!</p>
-                <p className="text-lg text-center leading-tight tracking-wider font-light font-montserrat mt-2">Get Started Right Away</p>
-                <button className="button-style text-lg mt-6">
+                <p className="title_text">Welcome!</p>
+                <p className="subtitle_text mt-2">Get Started Right Away</p>
+                <button className="button_style mt-6">
                     Add New Product
                 </button>
                 <div className="flex w-full px-10 mt-10 gap-12">
                     <TotalProducts />
                     <div className="flex flex-col w-full gap-5">
                         <div className="flex flex-col gap-5">
-                            <p className="text-4xl font-saira tracking-wider">Recently Added Products</p>
+                            <p className="title_text">Recently Added Products</p>
 
                             {/* Recent Products */}
                             <table className="rounded-lg overflow-hidden border-b">
@@ -65,7 +65,7 @@ export default function Dashboard() {
 
                         {/* Recent Requests */}
                         <div className="flex flex-col gap-5">
-                            <p className="text-4xl font-saira tracking-wider">Recent Price Requests</p>
+                            <p className="title_text">Recent Price Requests</p>
                             <table className="rounded-lg overflow-hidden border-b">
                                 <thead className="text-left bg-gray-200 text-xl font-montserrat tracking-widest">
                                     <tr>
@@ -99,12 +99,12 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <p className="mt-10 font-saira text-3xl">Quick Links</p>
+                <p className="mt-10 title_text">Quick Links</p>
                 <div className="flex justify-center gap-10 w-full mt-5">
-                    <button className="button-style">
+                    <button className="button_style">
                         View All Products
                     </button>
-                    <button className="button-style">
+                    <button className="button_style">
                         View All Requests & Inquiries
                     </button>
                 </div>

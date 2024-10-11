@@ -53,77 +53,77 @@ export default function ProductList() {
                 <div className="flex justify-between px-10 w-full">
                     <div className="flex gap-5 items-center ">
                         <p className="font-montserrat ">Search By:</p> {/**Crimson Text */}
-                        <select onChange={handleKindChange} value={selectedKind} className="w-40 font-montserrat p-1 outline-none rounded drop-shadow-md border-b border-b-black hover:cursor-pointer"> {/**Crimson Text */}
-                            <option value='all' className="text-sm">
+                        <select onChange={handleKindChange} value={selectedKind} className="w-40 dropdown_style"> {/**Crimson Text */}
+                            <option value='all' className="">
                                 All kinds
                             </option>
-                            <option value='sapphire' className="text-sm">
+                            <option value='sapphire'>
                                 Sapphire
                             </option>
-                            <option value='spinel' className="text-sm">
+                            <option value='spinel'>
                                 Spinel
                             </option>
-                            <option value='padparadscha' className="text-sm">
+                            <option value='padparadscha'>
                                 Padparadscha
                             </option>
-                            <option value='ruby' className="text-sm">
+                            <option value='ruby'>
                                 Ruby
                             </option>
-                            <option value='Alexandrite' className="text-sm">
+                            <option value='Alexandrite'>
                                 Alexandrite
                             </option>
-                            <option value='Garnet' className="text-sm">
+                            <option value='Garnet'>
                                 Garnet
                             </option>
-                            <option value='Aquamarine' className="text-sm">
+                            <option value='Aquamarine'>
                                 Aquamarine
                             </option>
-                            <option value='Chrysoberyl' className="text-sm">
+                            <option value='Chrysoberyl'>
                                 Chrysoberyl
                             </option>
-                            <option value='Emerald' className="text-sm">
+                            <option value='Emerald'>
                                 Emerald
                             </option>
-                            <option value='Other' className="text-sm">
+                            <option value='Other'>
                                 Others
                             </option>
                         </select>
-                        <select onChange={handleWeightChange} value={selectedWeight} className="w-40 font-montserrat p-1 rounded outline-none drop-shadow-md border-b border-b-black hover:cursor-pointer">
-                            <option value='all' className="text-sm">
+                        <select onChange={handleWeightChange} value={selectedWeight} className="w-40 dropdown_style">
+                            <option value='all'>
                                 All Weights(cts)
                             </option>
-                            <option value='less-than-1' className="text-sm">
+                            <option value='less-than-1'>
                                 Less Than 1
                             </option>
-                            <option value='1-2' className="text-sm">
+                            <option value='1-2'>
                                 1 - 2
                             </option>
-                            <option value='2-4' className="text-sm">
+                            <option value='2-4'>
                                 2 - 4
                             </option>
-                            <option value='4-8' className="text-sm">
+                            <option value='4-8'>
                                 4 - 8
                             </option>
-                            <option value='greater-than-8' className="text-sm">
+                            <option value='greater-than-8'>
                                 Greater Than 8
                             </option>
                         </select>
                         {selectedKind === 'sapphire' || selectedKind === 'spinel' ?
-                            <select onChange={handleColourChange} value={selectedColour} className="w-40 font-montserrat rounded p-1 outline-none drop-shadow-md border-b border-b-black hover:cursor-pointer ">
-                                <option value='all' className="text-sm">
+                            <select onChange={handleColourChange} value={selectedColour} className="w-40 dropdown_style">
+                                <option value='all'>
                                     All colours
                                 </option>
-                                <option value='blue' className="text-sm">
+                                <option value='blue'>
                                     Blue
                                 </option>
-                                <option value='pink' className="text-sm">
+                                <option value='pink'>
                                     Pink
                                 </option>
                             </select>
                             : ''
                         }
                         <label className="flex gap-2 items-center font-montserrat text-lg hover:cursor-pointer">
-                            <input type="checkbox" id="sold" value='sold' checked={checkedSold} onChange={() => setCheckedSold(!checkedSold)} className="font-montserrat text-lg" />  {/**Crimson Text */}
+                            <input type="checkbox" id="sold" value='sold' checked={checkedSold} onChange={() => setCheckedSold(!checkedSold)} />  {/**Crimson Text */}
                             Only Sold
                         </label>
 
@@ -136,9 +136,9 @@ export default function ProductList() {
                         />
                     </div>
                     <div className="flex gap-5 items-center">
-                        <input type="text" value={gemstoneId} onChange={(e) => setGemstoneId(e.target.value)} placeholder="Search By ID" className="font-montserrat p-1 w-36 rounded outline-none border-b border-b-black drop-shadow-md" />
+                        <input type="text" value={gemstoneId} onChange={(e) => setGemstoneId(e.target.value)} placeholder="Search By ID" className="w-36 input_style border-b border-b-black" />
 
-                        <button className="button-style">
+                        <button className="button_style">
                             Add New product
                         </button>
                     </div>
@@ -155,12 +155,12 @@ export default function ProductList() {
                     {/* <TotalProducts /> */}
                     <p className="text-4xl font-saira tracking-wider">Featured Products</p>
                     <p className="text-xl font-montserrat ">Add Four Gemstone ID's To Be Featured</p>
-                    <form onSubmit={handleFeaturedSubmit} className="flex gap-5 font-montserrat">
-                        <input type="text" placeholder="ID One" className=" p-1 w-36 rounded outline-none border-b border-b-black drop-shadow-md" />
-                        <input type="text" placeholder="ID Two" className=" p-1 w-36 rounded outline-none border-b border-b-black drop-shadow-md" />
-                        <input type="text" placeholder="ID Three" className=" p-1 w-36 rounded outline-none border-b border-b-black drop-shadow-md" />
-                        <input type="text" placeholder="ID Four" className=" p-1 w-36 rounded outline-none border-b border-b-black drop-shadow-md" />
-                        <button type="submit" className="button-style">
+                    <form onSubmit={handleFeaturedSubmit} className="flex gap-5">
+                        <input type="text" placeholder="ID One" className="input_style w-36  border-b border-b-black" />
+                        <input type="text" placeholder="ID Two" className="input_style w-36  border-b border-b-black" />
+                        <input type="text" placeholder="ID Three" className="input_style w-36  border-b border-b-black" />
+                        <input type="text" placeholder="ID Four" className="input_style w-36  border-b border-b-black" />
+                        <button type="submit" className="button_style">
                             Save
                         </button>
                     </form>

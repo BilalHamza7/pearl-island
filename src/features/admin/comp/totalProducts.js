@@ -1,7 +1,7 @@
 export default function TotalProducts() {
     return (
         <div className="flex flex-col gap-5">
-            <p className="text-4xl font-saira tracking-wider">Products In Stock</p>
+            <p className="title_text">Products In Stock</p>
             <table className="w-96 rounded-lg overflow-hidden border-b">
                 <thead className="text-left bg-gray-200 text-2xl font-montserrat tracking-widest">
                     <tr>

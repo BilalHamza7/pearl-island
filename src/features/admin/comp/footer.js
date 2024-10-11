@@ -5,39 +5,39 @@ export default function Footer() {
         <div className="flex justify-start items-center gap-28 p-10 bg-black w-full h-96">
             <div className="flex flex-col gap-5 text-white ">
                 <p className="text-3xl tracking-wide underline font-saira text-gray-400">Quick Links</p>
-                <Link className="text-2xl font-montserrat font-light hover:text-gray-500 transition duration-300 "> {/**IBM Plex Serif Font */}
+                <Link className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 "> {/**IBM Plex Serif Font */}
                     Home
                 </Link>
-                <Link className="text-2xl font-montserrat font-light hover:text-gray-500 transition duration-300 ">
+                <Link className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
                     Our Products
                 </Link>
-                <Link className="text-2xl font-montserrat font-light hover:text-gray-500 transition duration-300 ">
+                <Link className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
                     About Us
                 </Link>
-                <Link className="text-2xl font-montserrat font-light hover:text-gray-500 transition duration-300 ">
+                <Link className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
                     Contact Us
                 </Link>
             </div>
             <div className="flex flex-col gap-5 text-white ">
                 <p className="text-3xl tracking-wide underline font-saira text-gray-400">Connect With Us On</p>
-                <a href="" className="text-2xl font-montserrat font-light hover:text-gray-500 transition duration-300 ">
+                <a href="" className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
                     <img />
                     Instagram
                 </a>
-                <a href="" className="text-2xl font-montserrat font-light hover:text-gray-500 transition duration-300 ">
+                <a href="" className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
                     <img />
                     WhatsApp
                 </a>
-                <a href="" className="text-2xl font-montserrat font-light hover:text-gray-500 transition duration-300 ">
+                <a href="" className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
                     <img />
                     Facebook
                 </a>
-                <a href="" className="text-2xl font-montserrat font-light hover:text-gray-500 transition duration-300 ">
+                <a href="" className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
                     <img />
                     Etsy
                 </a>
             </div>
-            <div className="text-8xl text-white font-saira font-extralight tracking-widest leading-snug "> {/**Cormorant Font */}
+            <div className="text-8xl text-white font-cormorant font-extralight tracking-widest leading-snug "> {/**Cormorant Font */}
                 <div className="flex gap-10">
                     <p>P</p>
                     <p>E</p>

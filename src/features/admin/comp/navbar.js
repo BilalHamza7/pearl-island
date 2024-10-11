@@ -26,7 +26,7 @@ export default function Navbar() {
                         className="w-7 transition duration-500"
                     />
                 </NavLink>
-                <NavLink to='/adminLogin' onMouseEnter={() => setIsLogoutHovered(true)} onMouseLeave={() => setIsLogoutHovered(false)}>
+                <NavLink to='/' onMouseEnter={() => setIsLogoutHovered(true)} onMouseLeave={() => setIsLogoutHovered(false)}>
                     <img
                         src={isLogoutHovered ? "/logoutOutlined.png" : "/logoutFilled.png"}
                         alt="Icon"
