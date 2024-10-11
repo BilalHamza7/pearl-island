@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.button-style {
+    @apply bg-black text-white font-saira uppercase border border-transparent px-12 py-1 hover:bg-transparent hover:text-black hover:border-black transition duration-500
+}
