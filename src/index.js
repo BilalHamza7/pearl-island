@@ -8,6 +8,8 @@ import ProductList from './features/admin/manageProducts/productsList';
 import ResetPassword from './features/admin/forgotPassword/resetPassword';
 import VerifyEmail from './features/admin/forgotPassword/verifyEmail';
 import NewPassword from './features/admin/forgotPassword/newPassword';
+import Manage from './features/admin/manageInq&Req/manage';
+import AdminProfile from './features/admin/adminProfile';
 
 function App() {
   return (
@@ -15,10 +17,12 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/resetPassword' element={<ResetPassword />} />
-        <Route path='/productsList' element={<ProductList />} />
+        <Route path='/manageProduct' element={<ProductList />} />
         <Route path='/adminDashboard' element={<Dashboard />} />
         <Route path='/verifyEmail' element={<VerifyEmail />} />
         <Route path='/newPassword' element={<NewPassword />} />
+        <Route path='/manageCustomer' element={<Manage />} />
+        <Route path='/adminProfile' element={<AdminProfile />} />
       </Routes>
     </BrowserRouter >
   );

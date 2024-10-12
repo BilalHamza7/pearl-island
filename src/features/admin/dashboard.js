@@ -1,8 +1,18 @@
-import Footer from "./comp/footer";
-import Navbar from "./comp/navbar";
-import TotalProducts from "./comp/totalProducts";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Footer from "./components/footer";
+import Navbar from "./components/navbar";
+import TotalProducts from "./components/totalProducts";
 
 export default function Dashboard() {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+    
+
     return (
         <>
             <Navbar />
@@ -28,36 +38,36 @@ export default function Dashboard() {
                                         <th className="p-3 text-left">Date</th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-gray-100 text-lg font-montserrat tracking-widest">
+                                <tbody className="text-left bg-gray-100 text-lg font-montserrat tracking-widest">
                                     <tr className="font-light p-3 border-b border-gray-300">
-                                        <td className="p-3 text-left">Natural Blue Sapphire</td>
-                                        <td className="p-3 text-left">3.05</td>
-                                        <td className="p-3 text-left">Rectangle</td>
-                                        <td className="p-3 text-left">01/10/2024</td>
+                                        <td className="p-3 ">Natural Blue Sapphire</td>
+                                        <td className="p-3 ">3.05</td>
+                                        <td className="p-3 ">Rectangle</td>
+                                        <td className="p-3 ">01/10/2024</td>
                                     </tr>
                                     <tr className="font-light p-3 border-b border-gray-300">
-                                        <td className="p-3 text-left">Natural Blue Sapphire</td>
-                                        <td className="p-3 text-left">3.05</td>
-                                        <td className="p-3 text-left">Square</td>
-                                        <td className="p-3 text-left">01/10/2024</td>
+                                        <td className="p-3 ">Natural Blue Sapphire</td>
+                                        <td className="p-3 ">3.05</td>
+                                        <td className="p-3 ">Square</td>
+                                        <td className="p-3 ">01/10/2024</td>
                                     </tr>
                                     <tr className="font-light p-3 border-b border-gray-300">
-                                        <td className="p-3 text-left">Natural Blue Sapphire</td>
-                                        <td className="p-3 text-left">3.05</td>
-                                        <td className="p-3 text-left">Round</td>
-                                        <td className="p-3 text-left">01/10/2024</td>
+                                        <td className="p-3 ">Natural Blue Sapphire</td>
+                                        <td className="p-3 ">3.05</td>
+                                        <td className="p-3 ">Round</td>
+                                        <td className="p-3 ">01/10/2024</td>
                                     </tr>
                                     <tr className="font-light p-3 border-b border-gray-300">
-                                        <td className="p-3 text-left">Natural Blue Sapphire</td>
-                                        <td className="p-3 text-left">3.05</td>
-                                        <td className="p-3 text-left">Heart</td>
-                                        <td className="p-3 text-left">01/10/2024</td>
+                                        <td className="p-3 ">Natural Blue Sapphire</td>
+                                        <td className="p-3 ">3.05</td>
+                                        <td className="p-3 ">Heart</td>
+                                        <td className="p-3 ">01/10/2024</td>
                                     </tr>
                                     <tr className="font-light p-3 border-b border-gray-300">
-                                        <td className="p-3 text-left">Natural Blue Sapphire</td>
-                                        <td className="p-3 text-left">3.05</td>
-                                        <td className="p-3 text-left">Oval</td>
-                                        <td className="p-3 text-left">01/10/2024</td>
+                                        <td className="p-3 ">Natural Blue Sapphire</td>
+                                        <td className="p-3 ">3.05</td>
+                                        <td className="p-3 ">Oval</td>
+                                        <td className="p-3 ">01/10/2024</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -69,30 +79,30 @@ export default function Dashboard() {
                             <table className="rounded-lg overflow-hidden border-b">
                                 <thead className="text-left bg-gray-200 text-xl font-montserrat tracking-widest">
                                     <tr>
-                                        <th className="p-3 text-left">Name</th>
-                                        <th className="p-3 text-left">Gemstone ID</th>
-                                        <th className="p-3 text-left">Email</th>
-                                        <th className="p-3 text-left">Date</th>
+                                        <th className="p-3">Name</th>
+                                        <th className="p-3">Gemstone ID</th>
+                                        <th className="p-3">Email</th>
+                                        <th className="p-3">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-gray-100 text-lg font-montserrat tracking-widest">
-                                    <tr className="font-light p-3 border-b border-gray-300">
-                                        <td className="p-3 text-left">John Wick</td>
-                                        <td className="p-3 text-left">PI-0001</td>
-                                        <td className="p-3 text-left">johnwick@gmail.com</td>
-                                        <td className="p-3 text-left">01/10/2024</td>
+                                    <tr className="text-left font-light p-3 border-b border-gray-300">
+                                        <td className="p-3 ">John Wick</td>
+                                        <td className="p-3 ">PI-0001</td>
+                                        <td className="p-3 ">johnwick@gmail.com</td>
+                                        <td className="p-3 ">01/10/2024</td>
                                     </tr>
                                     <tr className="font-light p-3 border-b border-gray-300">
-                                        <td className="p-3 text-left">Batista taker</td>
-                                        <td className="p-3 text-left">PI-0002</td>
-                                        <td className="p-3 text-left">batista@gmail.com</td>
-                                        <td className="p-3 text-left">01/10/2024</td>
+                                        <td className="p-3 ">Batista taker</td>
+                                        <td className="p-3 ">PI-0002</td>
+                                        <td className="p-3 ">batista@gmail.com</td>
+                                        <td className="p-3 ">01/10/2024</td>
                                     </tr>
                                     <tr className="font-light p-3 border-b border-gray-300">
-                                        <td className="p-3 text-left">Sachin Tendulkar</td>
-                                        <td className="p-3 text-left">PI-0003</td>
-                                        <td className="p-3 text-left">sachin@gmail.com</td>
-                                        <td className="p-3 text-left">01/10/2024</td>
+                                        <td className="p-3 ">Sachin Tendulkar</td>
+                                        <td className="p-3 ">PI-0003</td>
+                                        <td className="p-3 ">sachin@gmail.com</td>
+                                        <td className="p-3 ">01/10/2024</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -101,15 +111,14 @@ export default function Dashboard() {
                 </div>
                 <p className="mt-10 title_text">Quick Links</p>
                 <div className="flex justify-center gap-10 w-full mt-5">
-                    <button className="button_style">
+                    <button onClick={() => navigate('/manageProduct')} className="button_style">
                         View All Products
                     </button>
-                    <button className="button_style">
+                    <button onClick={() => navigate('/manageCustomer')} className="button_style">
                         View All Requests & Inquiries
                     </button>
                 </div>
             </div>
-            <Footer />
         </>
     )
 };

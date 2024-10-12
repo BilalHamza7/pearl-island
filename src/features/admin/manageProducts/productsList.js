@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import Navbar from "../comp/navbar";
-import TotalProducts from "../comp/totalProducts";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/navbar";
+import TotalProducts from "../components/totalProducts";
 
 export default function ProductList() {
+
+    const navigate = useNavigate();
 
     const [selectedKind, setSelectedKind] = useState('all');
     const [selectedWeight, setSelectedWeight] = useState('all');
@@ -37,6 +40,7 @@ export default function ProductList() {
     };
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         setTest('Kind: ' + selectedKind + '  Weight: ' + selectedWeight + '  Colour: ' + selectedColour + '  Sold? ' + checkedSold);
 
     }, [selectedKind, selectedWeight, selectedColour, checkedSold])
@@ -48,9 +52,12 @@ export default function ProductList() {
     return (
         <>
             <Navbar />
-            <div className=" flex flex-col items-center min-h-screen py-10 gap-7">
+            <div className="flex flex-col items-center min-h-screen p-10 gap-7">
+                
                 <p className="text-4xl font-saira tracking-wider">Manage Your Gemstone Inventory</p>
-                <div className="flex justify-between px-10 w-full">
+
+                {/* Search Filters */}
+                <div className="flex justify-between w-full">
                     <div className="flex gap-5 items-center ">
                         <p className="font-montserrat ">Search By:</p> {/**Crimson Text */}
                         <select onChange={handleKindChange} value={selectedKind} className="w-40 dropdown_style"> {/**Crimson Text */}
@@ -136,14 +143,23 @@ export default function ProductList() {
                         />
                     </div>
                     <div className="flex gap-5 items-center">
-                        <input type="text" value={gemstoneId} onChange={(e) => setGemstoneId(e.target.value)} placeholder="Search By ID" className="w-36 input_style border-b border-b-black" />
-
+                        <div className="flex gap-1 items-center bg-gray-100 rounded-lg">
+                            <input type="text" value={gemstoneId} onChange={(e) => setGemstoneId(e.target.value)} placeholder="Search By ID" className="w-36 input_style border-b border-b-black" />
+                            <img
+                                src="/searchOutlined.png"
+                                className="w-7 mx-1 cursor-pointer"
+                            />
+                        </div>
                         <button className="button_style">
                             Add New product
                         </button>
                     </div>
                 </div>
+
+
                 <p>{test}</p>
+
+
                 <table>
                     <tbody>
                         <tr>
@@ -151,8 +167,17 @@ export default function ProductList() {
                         </tr>
                     </tbody>
                 </table>
+
+
+                <div className="flex justify-between w-full items-center font-montserrat text-lg">
+                    <p>&larr; Previous Page</p>
+                    <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
+                    <p>Next Page &rarr;</p>
+                </div>
+
+
+                {/* <TotalProducts /> */}
                 <div className="flex flex-col items-center gap-5 w-full">
-                    {/* <TotalProducts /> */}
                     <p className="text-4xl font-saira tracking-wider">Featured Products</p>
                     <p className="text-xl font-montserrat ">Add Four Gemstone ID's To Be Featured</p>
                     <form onSubmit={handleFeaturedSubmit} className="flex gap-5">
@@ -164,6 +189,17 @@ export default function ProductList() {
                             Save
                         </button>
                     </form>
+                </div>
+
+
+                <p className="title_text">Quick Links</p>
+                <div className="flex justify-center gap-10 w-full">
+                    <button onClick={() => navigate('/adminDashboard')} className="button_style">
+                        Dashboard
+                    </button>
+                    <button onClick={() => navigate('/manageCustomer')} className="button_style">
+                        View All Requests & Inquiries
+                    </button>
                 </div>
             </div>
         </>

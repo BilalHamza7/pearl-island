@@ -10,21 +10,22 @@ export default function Navbar() {
         <div className="flex justify-between p-6">
             <img src="/bigLogo.png" className="w-80 h-6" />
             <div className="flex items-center gap-8 font-saira text-lg tracking-widest">
-                <NavLink to='/adminDashboard' className="hover:underline">
+                <NavLink to='/adminDashboard' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
                     Dashboard
                 </NavLink>
-                <NavLink to='/productsList' className="hover:underline">
+                <NavLink to='/manageProduct' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
                     Manage Products
                 </NavLink>
-                <NavLink className="hover:underline">
+                <NavLink to='/manageCustomer' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
                     Manage Inquiries & Requests
                 </NavLink>
-                <NavLink onMouseEnter={() => setIsProfileHovered(true)} onMouseLeave={() => setIsProfileHovered(false)}>
-                    <img
-                        src={isProfileHovered ? "/profileFilled.png" : "/profileOutlined.png"}
-                        alt="Icon"
-                        className="w-7 transition duration-500"
-                    />
+                <NavLink to='/adminProfile' className={({ isActive }) => isActive ? "w-7 active" : "w-7" } onMouseEnter={() => setIsProfileHovered(true)} onMouseLeave={() => setIsProfileHovered(false)}>
+                    {({ isActive }) => (
+                        <img
+                            src={isProfileHovered || isActive ? "/profileFilled.png" : "/profileOutlined.png"}
+                            alt="Icon"
+                        />
+                    )}
                 </NavLink>
                 <NavLink to='/' onMouseEnter={() => setIsLogoutHovered(true)} onMouseLeave={() => setIsLogoutHovered(false)}>
                     <img

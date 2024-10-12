@@ -8,12 +8,17 @@
 @tailwind components;
 @tailwind utilities;
 
+
+html {
+    scroll-behavior: smooth;
+}
+
 .button_style {
     @apply bg-black text-lg text-white font-saira uppercase border border-transparent px-12 py-1 hover:bg-transparent hover:text-black hover:border-black transition duration-500
 }
 
 .input_style {
-    @apply text-xl font-crimson p-2 rounded-lg outline-none border border-gray-400  drop-shadow-lg
+    @apply text-lg font-crimson px-2 py-1 rounded-lg outline-none border border-gray-400 drop-shadow-lg
 }
 
 .input_label {
@@ -25,7 +30,7 @@
 }
 
 .dropdown_style {
-    @apply font-crimson rounded p-1 outline-none drop-shadow-md border-b border-b-black hover:cursor-pointer 
+    @apply font-crimson rounded-lg text-lg px-2 py-1 outline-none drop-shadow-md border border-gray-400 hover:cursor-pointer 
 }
 
 .subtitle_text {

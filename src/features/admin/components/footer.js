@@ -20,20 +20,20 @@ export default function Footer() {
             </div>
             <div className="flex flex-col gap-5 text-white ">
                 <p className="text-3xl tracking-wide underline font-saira text-gray-400">Connect With Us On</p>
-                <a href="" className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
-                    <img />
+                <a href="" className="flex gap-2 items-center text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
+                    <img src="/instaWhiteOutlined.png" className="w-7" />
                     Instagram
                 </a>
-                <a href="" className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
-                    <img />
+                <a href="" className="flex gap-2 items-center text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
+                    <img src="/whatsAppWhiteOutlined.png" className="w-7" />
                     WhatsApp
                 </a>
-                <a href="" className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
-                    <img />
+                <a href="" className="flex gap-2 items-center text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
+                    <img src="/facebookWhiteOulined.png" className="w-7" />
                     Facebook
                 </a>
-                <a href="" className="text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
-                    <img />
+                <a href="" className="flex gap-2 items-center text-2xl font-ibmplexserif tracking-wide hover:text-gray-500 transition duration-300 ">
+                    <img src="/etsyWhiteOutlined.png" className="w-7" />
                     Etsy
                 </a>
             </div>
