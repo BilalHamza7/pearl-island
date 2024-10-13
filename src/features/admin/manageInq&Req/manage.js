@@ -22,7 +22,6 @@ export default function Manage() {
     return (
         <div>
             <Navbar />
-
             <div className="flex flex-col w-full p-10">
                 <div className="flex">
                     <NavLink className={activePage === 'requests' ? "title_text bg-gray-300 py-2 px-4 rounded-t-lg" : "title_text py-2 px-4 hover:bg-gray-200 rounded-t-lg"} onClick={() => handlePageChange({ value: 'requests' })}>

@@ -11,7 +11,7 @@ export default function Dashboard() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [])
-    
+
 
     return (
         <>
@@ -19,7 +19,7 @@ export default function Dashboard() {
             <div className="flex flex-col items-center w-full min-h-screen py-10">
                 <p className="title_text">Welcome!</p>
                 <p className="subtitle_text mt-2">Get Started Right Away</p>
-                <button className="button_style mt-6">
+                <button onClick={() => navigate('/addNewProduct')} className="button_style mt-6">
                     Add New Product
                 </button>
                 <div className="flex w-full px-10 mt-10 gap-12">

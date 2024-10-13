@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
 import TotalProducts from "../components/totalProducts";
+import NewProduct from "./newProducts";
 
 export default function ProductList() {
 
@@ -12,7 +13,6 @@ export default function ProductList() {
     const [selectedColour, setselectedColour] = useState('all');
     const [checkedSold, setCheckedSold] = useState(false);
     const [gemstoneId, setGemstoneId] = useState('');
-
 
     const [test, setTest] = useState('');
 
@@ -53,7 +53,6 @@ export default function ProductList() {
         <>
             <Navbar />
             <div className="flex flex-col items-center min-h-screen p-10 gap-7">
-                
                 <p className="text-4xl font-saira tracking-wider">Manage Your Gemstone Inventory</p>
 
                 {/* Search Filters */}
@@ -150,7 +149,7 @@ export default function ProductList() {
                                 className="w-7 mx-1 cursor-pointer"
                             />
                         </div>
-                        <button className="button_style">
+                        <button onClick={() => navigate('/addNewProduct')} className="button_style">
                             Add New product
                         </button>
                     </div>
