@@ -12,6 +12,7 @@ import Manage from './features/admin/manageInq&Req/manage';
 import AdminProfile from './features/admin/adminProfile';
 import Navbar from './features/admin/components/navbar';
 import NewProduct from './features/admin/manageProducts/newProducts';
+import ProductImages from './features/admin/manageProducts/productImage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/manageCustomer' element={<Manage />} />
         <Route path='/adminProfile' element={<AdminProfile />} />
         <Route path='/addNewProduct' element={<NewProduct />} />
+        <Route path='/productImages' element={<ProductImages />} />
       </Routes>
     </BrowserRouter >
   );
