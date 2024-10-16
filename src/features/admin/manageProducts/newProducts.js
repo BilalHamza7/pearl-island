@@ -67,7 +67,7 @@ export default function NewProduct() {
                                     style={{ backgroundImage: `url(${selectedFiles[4] ? selectedFiles[4] : '/gemcopy.jpg'})` }}
                                 >
                                     <img
-                                        src={isSeemoreHovered ? "/seemoreFilled.png" : "/seemoreOutlined.png"}
+                                        src={isSeemoreHovered ? "/seemoreWhiteFilled.png" : "/seemoreWhiteOutlined.png"}
                                         alt="Icon"
                                         className="w-12"
                                     />
