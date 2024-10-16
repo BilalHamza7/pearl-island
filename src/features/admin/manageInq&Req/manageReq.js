@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
+import ReqRespond from "./reqRespond";
 
 function checkRespond(props) {
 
     if (props.value === true) { //true respond
         return (
-            <div className="text-center bg-green-200 rounded-lg font-medium">
-                <p>Responded</p>
-            </div>
+            <>
+                <div className="text-center bg-green-200 rounded-lg font-medium cursor-pointer hover:bg-green-300 transition duration-300" onClick={props.onOpen}>
+                    <p>Responded</p>
+                </div>
+                <ReqRespond isOpen={props.isOpen} onClose={props.onClose} />
+            </>
         )
     } else {  //false respond
         return (
-            <div className="text-center bg-red-200 rounded-lg font-medium">
-                <p>Respond</p>
-            </div>
+            <>
+                <div className="text-center bg-red-200 rounded-lg font-medium cursor-pointer hover:bg-red-300 transition duration-300" onClick={props.onOpen}>
+                    <p>Respond</p>
+                </div>
+                <ReqRespond isOpen={props.isOpen} onClose={props.onClose} />
+            </>
         )
     }
 }
@@ -23,6 +30,10 @@ export default function ManageReq() {
     const [requestId, setRequestId] = useState('');
     const [checkedRespond, setCheckedRespond] = useState('all');
     const [selectedDate, setSelectedDate] = useState('all');
+
+    const [isReqModalOpen, setIsReqModalOpen] = useState(false);
+    const openModal = () => setIsReqModalOpen(true);
+    const closeModal = () => setIsReqModalOpen(false);
 
     const [test, setTest] = useState('');
 
@@ -116,7 +127,7 @@ export default function ManageReq() {
                         <td className="p-3 ">GEM-0001</td>
                         <td className="p-3 ">01/10/2024</td>
                         <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">{checkRespond({ value: true })}</td>
+                        <td className="p-3 ">{checkRespond({ value: false, onOpen: openModal, onClose: closeModal, isOpen: isReqModalOpen })}</td>
                     </tr>
                     <tr className="font-light p-3 border-b border-gray-300">
                         <td className="p-3 ">REQ-0001</td>
@@ -124,31 +135,7 @@ export default function ManageReq() {
                         <td className="p-3 ">GEM-0001</td>
                         <td className="p-3 ">01/10/2024</td>
                         <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">{checkRespond({ value: false })}</td>
-                    </tr>
-                    <tr className="font-light p-3 border-b border-gray-300">
-                        <td className="p-3 ">REQ-0001</td>
-                        <td className="p-3 ">Bilal Hamza</td>
-                        <td className="p-3 ">GEM-0001</td>
-                        <td className="p-3 ">01/10/2024</td>
-                        <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">{checkRespond({ value: true })}</td>
-                    </tr>
-                    <tr className="font-light p-3 border-b border-gray-300">
-                        <td className="p-3 ">REQ-0001</td>
-                        <td className="p-3 ">Bilal Hamza</td>
-                        <td className="p-3 ">GEM-0001</td>
-                        <td className="p-3 ">01/10/2024</td>
-                        <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">{checkRespond({ value: false })}</td>
-                    </tr>
-                    <tr className="font-light p-3 border-b border-gray-300">
-                        <td className="p-3 ">REQ-0001</td>
-                        <td className="p-3 ">Bilal Hamza</td>
-                        <td className="p-3 ">GEM-0001</td>
-                        <td className="p-3 ">01/10/2024</td>
-                        <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">{checkRespond({ value: false })}</td>
+                        <td className="p-3 ">{checkRespond({ value: true, onOpen: openModal, onClose: closeModal, isOpen: isReqModalOpen })}</td>
                     </tr>
                 </tbody>
             </table>

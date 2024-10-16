@@ -21,6 +21,8 @@ export default function NewProduct() {
     const [certificate, setCertificate] = useState(false);
     const [description, setDescription] = useState('');
 
+    const [isSeemoreHovered, setIsSeemoreHovered] = useState(false);
+
     const [isModalOpen, setModalOpen] = useState(false);
 
     const openModal = () => setModalOpen(true);
@@ -58,16 +60,23 @@ export default function NewProduct() {
                                 <img src={selectedFiles[2] ? selectedFiles[2] : '/gem1.jpg'} className="w-full h-full " />
                                 <img src={selectedFiles[3] ? selectedFiles[3] : '/gem3.jpg'} className="w-full h-full " />
                                 <button
-                                    className="text-xs font-saira text-center h-full w-full relative bg-cover bg-center hover:font-bold overflow-hidden"
+                                    className="flex items-center justify-center text-xs font-saira text-center h-full w-full relative bg-cover bg-center overflow-hidden"
+                                    onMouseEnter={() => setIsSeemoreHovered(!isSeemoreHovered)}
+                                    onMouseLeave={() => setIsSeemoreHovered(!isSeemoreHovered)}
+                                    onClick={openModal}
                                     style={{ backgroundImage: `url(${selectedFiles[4] ? selectedFiles[4] : '/gemcopy.jpg'})` }}
                                 >
-                                    <span className="relative z-10">See More {">"}{">"}</span>
+                                    <img
+                                        src={isSeemoreHovered ? "/seemoreFilled.png" : "/seemoreOutlined.png"}
+                                        alt="Icon"
+                                        className="w-12"
+                                    />
                                 </button>
                             </div>
                         </div>
                         <div>
                             <input type="file" accept="image/*" multiple onChange={handleFileChange} />
-                            <button className="button_style" onClick={openModal}>See All</button>
+                            {/* <button className="button_style" onClick={openModal}>See All</button> */}
                             <ProductImages isOpen={isModalOpen} onClose={closeModal} images={selectedFiles} />
                         </div>
                     </div>
@@ -329,7 +338,7 @@ export default function NewProduct() {
                             </div>
                         </div>
                         <div className="flex w-full gap-10 mt-5">
-                            <button className="button_style w-full">Cancel</button>
+                            <button className="button_style w-full" onClick={() => navigate('/manageProduct')}>Cancel</button>
                             <button className="button_style w-full">Save</button>
                         </div>
                     </div>

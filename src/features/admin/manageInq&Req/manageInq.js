@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
+import InqRespond from "./inqRespond";
 
 function checkRespond(props) {
 
     if (props.value === true) { //true respond
         return (
-            <div className="text-center bg-green-200 rounded-lg font-medium">
-                <p>Responded</p>
-            </div>
+            <>
+                <div className="text-center bg-green-200 rounded-lg font-medium cursor-pointer hover:bg-green-300 transition duration-300" onClick={props.onOpen}>
+                    <p>Responded</p>
+                </div>
+                <InqRespond isOpen={props.isOpen} onClose={props.onClose} />
+            </>
         )
     } else {  //false respond
         return (
-            <div className="text-center bg-red-200 rounded-lg font-medium">
-                <p>Respond</p>
-            </div>
+            <>
+                <div className="text-center bg-red-200 rounded-lg font-medium cursor-pointer hover:bg-red-300 transition duration-300" onClick={props.onOpen}>
+                    <p>Respond</p>
+                </div>
+                <InqRespond isOpen={props.isOpen} onClose={props.onClose} />
+            </>
+
         )
     }
 }
@@ -24,6 +32,10 @@ export default function ManageInq() {
     const [selectedRespond, setSelectedRespond] = useState('all');
     const [selectedSubject, setSelectedSubject] = useState('all');
     const [selectedDate, setSelectedDate] = useState('all');
+
+    const [isInqModalOpen, setIsInqModalOpen] = useState(false);
+    const openModal = () => setIsInqModalOpen(true);
+    const closeModal = () => setIsInqModalOpen(false);
 
     const [test, setTest] = useState('');
 
@@ -132,46 +144,14 @@ export default function ManageInq() {
                         <td className="p-3 ">Custom Order</td>
                         <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
                         <td className="p-3 ">01/10/2024</td>
-                        <td className="p-3 ">{checkRespond({ value: true })}</td>
+                        <td className="p-3 ">{checkRespond({ value: false, onOpen: openModal, onClose: closeModal, isOpen: isInqModalOpen })}</td>
                     </tr>
-                    <tr className="font-light p-3 border-b border-gray-300">
-                        <td className="p-3 ">INQ-0001</td>
-                        <td className="p-3 ">Bilal Hamza</td>
-                        <td className="p-3 ">Custom Order</td>
-                        <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">01/10/2024</td>
-                        <td className="p-3 ">{checkRespond({ value: true })}</td>
-                    </tr>
-                    <tr className="font-light p-3 border-b border-gray-300">
-                        <td className="p-3 ">INQ-0001</td>
-                        <td className="p-3 ">Bilal Hamza</td>
-                        <td className="p-3 ">Custom Order</td>
-                        <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">01/10/2024</td>
-                        <td className="p-3 ">{checkRespond({ value: false })}</td>
-                    </tr>
-                    <tr className="font-light p-3 border-b border-gray-300">
-                        <td className="p-3 ">INQ-0001</td>
-                        <td className="p-3 ">Bilal Hamza</td>
-                        <td className="p-3 ">Custom Order</td>
-                        <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">01/10/2024</td>
-                        <td className="p-3 ">{checkRespond({ value: false })}</td>
-                    </tr>
-                    <tr className="font-light p-3 border-b border-gray-300">
-                        <td className="p-3 ">INQ-0001</td>
-                        <td className="p-3 ">Bilal Hamza</td>
-                        <td className="p-3 ">Custom Order</td>
-                        <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">01/10/2024</td>
-                        <td className="p-3 ">{checkRespond({ value: true })}</td>
-                    </tr>
-                    
+
                 </tbody>
             </table>
             <div className="flex justify-between items-center font-montserrat text-lg">
                 <p>&larr; Previous Page</p>
-                <p onClick={() => window.scrollTo(0,0)} className="cursor-pointer">&uarr; To Top</p>
+                <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
                 <p>Next Page &rarr;</p>
             </div>
         </div>
