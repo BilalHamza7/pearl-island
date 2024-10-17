@@ -23,7 +23,7 @@ export default function ProductImages({ isOpen, onClose, images }) {
                 </button>
 
                 <div className="flex flex-col h-full w-5/6 items-center">
-                    <div className="w-3/6 h-4/6 flex justify-center gap-5 items-center z-10">
+                    <div className="w-3/6 h-4/6 flex justify-center items-center z-10">
                         <ReactImageMagnify
                             {...{
                                 smallImage: {
@@ -33,20 +33,13 @@ export default function ProductImages({ isOpen, onClose, images }) {
                                 },
                                 largeImage: {
                                     src: source,
-                                    width: 700, // Width of the zoomed image
-                                    height: 700, // Height of the zoomed image
+                                    width: 1200, // Width of the zoomed image
+                                    height: 1000, // Height of the zoomed image
                                 },
                                 enlargedImagePosition: 'over',
-                                enlargedImageContainerDimensions: {
-                                    width: '150%', // Adjust if necessary
-                                    height: '150%', // Adjust if necessary
-                                },
-                                enlargedImageContainerOffset: {
-                                    x: 50, // Increase this value to move zoomed image to the right
-                                    y: 0,   // Keep this as is or adjust if needed
-                                },
+                                isHintEnabled: true,
                             }}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-fill"
                         />
                     </div>
 
