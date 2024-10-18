@@ -36,3 +36,7 @@ html {
 .subtitle_text {
     @apply text-lg text-center leading-tight tracking-wider font-light font-montserrat
 }
+
+.image_hover_magnify {
+    @apply absolute border-4 border-black rounded-full cursor-none w-[100px] h-[100px] block
+}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductImages from "./productImage";
 
@@ -20,6 +20,8 @@ export default function NewProduct() {
     const [clarity, setClarity] = useState('');
     const [certificate, setCertificate] = useState(false);
     const [description, setDescription] = useState('');
+
+    const [activeImage, setActiveImage] = useState();
 
     const [isSeemoreHovered, setIsSeemoreHovered] = useState(false);
 
@@ -46,6 +48,16 @@ export default function NewProduct() {
         }
     };
 
+    useEffect(() => {
+        if (selectedFiles.length > 0) {
+            setActiveImage(selectedFiles[0]);
+        }
+        else {
+            setActiveImage("select images.");
+        }
+    }, [selectedFiles])
+
+
     return (
         <>
             <div className="flex flex-col gap-10 p-10 min-h-screen z-50 ">
@@ -54,20 +66,21 @@ export default function NewProduct() {
                 <div className="flex justify-between gap-10 w-full h-fit">
                     <div className="flex flex-col gap-5 items-center w-full "> {/*Remove div when using for customer display */}
                         <div className="flex gap-10 w-full h-full ">
-                            <img src={selectedFiles[0] ? selectedFiles[0] : '/gemcopy.jpg'} className="w-3/4 h-full " />
+                            <img src={activeImage ? activeImage : '/gemcopy.jpg'} className="w-3/4 h-full object-contain " />
                             <div className="flex flex-col gap-3 justify-between">
-                                <img src={selectedFiles[1] ? selectedFiles[1] : '/gem3.jpg'} className="w-full h-full " />
+                                <img src={selectedFiles[0] ? selectedFiles[0] : '/gem3.jpg'} className="w-full h-full" />
                                 <img src={selectedFiles[2] ? selectedFiles[2] : '/gem1.jpg'} className="w-full h-full " />
                                 <img src={selectedFiles[3] ? selectedFiles[3] : '/gem3.jpg'} className="w-full h-full " />
                                 <button
-                                    className="flex items-center justify-center text-xs font-saira text-center h-full w-full relative bg-cover bg-center overflow-hidden"
+                                    className="flex items-center justify-center text-xs font-saira text-center h-full w-full border hover:border-black border-transparent transition duration-500 relative bg-cover bg-center overflow-hidden"
                                     onMouseEnter={() => setIsSeemoreHovered(!isSeemoreHovered)}
                                     onMouseLeave={() => setIsSeemoreHovered(!isSeemoreHovered)}
                                     onClick={openModal}
+                                    title="See More Images"
                                     style={{ backgroundImage: `url(${selectedFiles[4] ? selectedFiles[4] : '/gemcopy.jpg'})` }}
                                 >
                                     <img
-                                        src={isSeemoreHovered ? "/seemoreWhiteFilled.png" : "/seemoreWhiteOutlined.png"}
+                                        src={isSeemoreHovered ? "/seemoreFilled.png" : "/seemoreOutlined.png"}
                                         alt="Icon"
                                         className="w-12"
                                     />
