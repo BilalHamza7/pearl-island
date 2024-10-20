@@ -30,7 +30,7 @@ export default function AdminProfile() {
                     </label>
                 </div>
                 <div className="flex gap-10 justify-center">
-                    <button className="button_style">
+                    <button className="button_style" onClick={() => navigate('/resetPassword')}>
                         Change Password
                     </button>
                     <button className="button_style">

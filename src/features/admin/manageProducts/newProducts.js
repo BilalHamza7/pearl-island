@@ -136,7 +136,6 @@ export default function NewProduct() {
                             </label>
                         </div>
 
-
                         <div className="flex gap-10">
                             <div className="flex flex-col gap-5 w-full">
                                 <label className="flex gap-3 items-center input_label">

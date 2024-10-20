@@ -13,6 +13,7 @@ export default function ProductList() {
     const [selectedColour, setselectedColour] = useState('all');
     const [checkedSold, setCheckedSold] = useState(false);
     const [gemstoneId, setGemstoneId] = useState('');
+    const [selectedDate, setSelectedDate] = useState('all')
 
     const [test, setTest] = useState('');
 
@@ -54,6 +55,10 @@ export default function ProductList() {
             <Navbar />
             <div className="flex flex-col items-center min-h-screen p-10 gap-7">
                 <p className="text-4xl font-saira tracking-wider">Manage Your Gemstone Inventory</p>
+
+                <button onClick={() => navigate('/addNewProduct')} className="button_style my-3">
+                    Add New product
+                </button>
 
                 {/* Search Filters */}
                 <div className="flex justify-between w-full">
@@ -114,20 +119,61 @@ export default function ProductList() {
                                 Greater Than 8
                             </option>
                         </select>
-                        {selectedKind === 'sapphire' || selectedKind === 'spinel' ?
-                            <select onChange={handleColourChange} value={selectedColour} className="w-40 dropdown_style">
-                                <option value='all'>
-                                    All colours
-                                </option>
-                                <option value='blue'>
-                                    Blue
-                                </option>
-                                <option value='pink'>
-                                    Pink
-                                </option>
-                            </select>
-                            : ''
-                        }
+                        <select onChange={handleColourChange} value={selectedColour} className="w-40 dropdown_style">
+                            <option value='all'>
+                                All colours
+                            </option>
+                            <option value='blue'>
+                                Blue
+                            </option>
+                            <option value='red'>
+                                Red
+                            </option>
+                            <option value='yellow'>
+                                Yellow
+                            </option>
+                            <option value='pink'>
+                                Pink
+                            </option>
+                            <option value='purple'>
+                                Purple
+                            </option>
+                            <option value='green'>
+                                Green
+                            </option>
+                            <option value='peach'>
+                                Peach
+                            </option>
+                            <option value='bi-colour'>
+                                Bi-Colour
+                            </option>
+                            <option value='greay'>
+                                Grey
+                            </option>
+                            <option value='white'>
+                                White (Colourless)
+                            </option>
+                        </select>
+                        <select onChange={(event) => setSelectedDate(event.target.value)} value={selectedDate} className="w-40 dropdown_style">
+                            <option value='all'>
+                                All Dates
+                            </option>
+                            <option value='new-to-old'>
+                                New to Old
+                            </option>
+                            <option value='old-to-new'>
+                                Old to New
+                            </option>
+                            <option value='this-week'>
+                                This Week
+                            </option>
+                            <option value='this-month'>
+                                This Month
+                            </option>
+                            <option value='this-year'>
+                                This Year
+                            </option>
+                        </select>
                         <label className="flex gap-2 items-center font-montserrat text-lg hover:cursor-pointer">
                             <input type="checkbox" id="sold" value='sold' checked={checkedSold} onChange={() => setCheckedSold(!checkedSold)} />  {/**Crimson Text */}
                             Only Sold
@@ -141,17 +187,12 @@ export default function ProductList() {
                             className="w-7 cursor-pointer"
                         />
                     </div>
-                    <div className="flex gap-5 items-center">
-                        <div className="flex gap-1 items-center bg-gray-100 rounded-lg">
-                            <input type="text" value={gemstoneId} onChange={(e) => setGemstoneId(e.target.value)} placeholder="Search By ID" className="w-36 input_style border-b border-b-black" />
-                            <img
-                                src="/searchOutlined.png"
-                                className="w-7 mx-1 cursor-pointer"
-                            />
-                        </div>
-                        <button onClick={() => navigate('/addNewProduct')} className="button_style">
-                            Add New product
-                        </button>
+                    <div className="flex gap-1 items-center bg-gray-100 rounded-lg">
+                        <input type="text" value={gemstoneId} onChange={(e) => setGemstoneId(e.target.value)} placeholder="Search By ID" className="w-36 input_style border-b border-b-black" />
+                        <img
+                            src="/searchOutlined.png"
+                            className="w-7 mx-1 cursor-pointer"
+                        />
                     </div>
                 </div>
 
@@ -168,10 +209,8 @@ export default function ProductList() {
                 </table>
 
 
-                <div className="flex justify-between w-full items-center font-montserrat text-lg">
-                    <p>&larr; Previous Page</p>
+                <div className="flex justify-center w-full items-center font-montserrat text-lg">
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
-                    <p>Next Page &rarr;</p>
                 </div>
 
 

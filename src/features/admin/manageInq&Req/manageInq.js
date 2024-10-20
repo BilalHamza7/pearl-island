@@ -149,10 +149,8 @@ export default function ManageInq() {
 
                 </tbody>
             </table>
-            <div className="flex justify-between items-center font-montserrat text-lg">
-                <p>&larr; Previous Page</p>
+            <div className="flex justify-center items-center font-montserrat text-lg">
                 <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
-                <p>Next Page &rarr;</p>
             </div>
         </div>
     )
