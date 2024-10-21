@@ -38,6 +38,7 @@ export default function ProductList() {
         setSelectedKind('all');
         setCheckedSold(false);
         setGemstoneId('');
+        setSelectedDate('all');
     };
 
     useEffect(() => {

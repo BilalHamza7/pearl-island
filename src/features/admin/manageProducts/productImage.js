@@ -32,10 +32,10 @@ export default function ProductImages({ isOpen, onClose, images }) {
                                 smallImage: {
                                     alt: 'Main Image',
                                     isFluidWidth: true,
-                                    src: source || 'gemcopy.jpg',
+                                    src: source ,
                                 },
                                 largeImage: {
-                                    src: source || 'gemcopy.jpg',
+                                    src: source,
                                     width: 440,
                                     height: 1520,
                                 },

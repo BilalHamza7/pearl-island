@@ -1,43 +1,40 @@
 import { useEffect, useState } from "react";
 import ReqRespond from "./reqRespond";
 
-function checkRespond(props) {
-
-    if (props.value === true) { //true respond
-        return (
-            <>
-                <div className="text-center bg-green-200 rounded-lg font-medium cursor-pointer hover:bg-green-300 transition duration-300" onClick={props.onOpen}>
-                    <p>Responded</p>
-                </div>
-                <ReqRespond isOpen={props.isOpen} onClose={props.onClose} />
-            </>
-        )
-    } else {  //false respond
-        return (
-            <>
-                <div className="text-center bg-red-200 rounded-lg font-medium cursor-pointer hover:bg-red-300 transition duration-300" onClick={props.onOpen}>
-                    <p>Respond</p>
-                </div>
-                <ReqRespond isOpen={props.isOpen} onClose={props.onClose} />
-            </>
-        )
-    }
-}
 
 export default function ManageReq() {
+
+    const CheckRespond = (props) => {
+        return (
+            <>
+                <div className={`text-center rounded-lg font-medium cursor-pointer transition duration-300 ${props.respond ? 'bg-green-200 hover:bg-green-300' : 'bg-red-200 hover:bg-red-300'}`} onClick={props.onOpen}>
+                    <p>{props.respond ? 'Responded' : 'Respond'}</p>
+                </div>
+            </>
+
+        )
+    }
+
+    {/**Filters */ }
     const [gemstoneId, setGemstoneId] = useState('');
     const [customerName, setCustomerName] = useState('');
     const [requestId, setRequestId] = useState('');
     const [checkedRespond, setCheckedRespond] = useState('all');
     const [selectedDate, setSelectedDate] = useState('all');
+    const [isClearHovered, setisClearHovered] = useState(false);
 
+    {/**Modal */ }
     const [isReqModalOpen, setIsReqModalOpen] = useState(false);
-    const openModal = () => setIsReqModalOpen(true);
+    const [isResponded, setIsResponded] = useState(false);
+    const [ids, setIds] = useState([])
     const closeModal = () => setIsReqModalOpen(false);
+    const openModal = ({ respond, ids }) => {
+        setIsResponded(respond);
+        setIsReqModalOpen(true);
+        setIds(ids);
+    };
 
     const [test, setTest] = useState('');
-
-    const [isClearHovered, setisClearHovered] = useState(false);
 
     const handleClearFilterClick = () => {
         setGemstoneId('');
@@ -115,8 +112,8 @@ export default function ManageReq() {
                         <th className="p-3">Request ID</th>
                         <th className="p-3">Full Name</th>
                         <th className="p-3">Gemstone ID</th>
-                        <th className="p-3">Email</th>
                         <th className="p-3">Date</th>
+                        <th className="p-3">Email</th>
                         <th className="p-3">Status</th>
                     </tr>
                 </thead>
@@ -124,21 +121,39 @@ export default function ManageReq() {
                     <tr className="font-light p-3 border-b border-gray-300">
                         <td className="p-3 ">REQ-0001</td>
                         <td className="p-3 ">Bilal Hamza</td>
-                        <td className="p-3 ">GEM-0001</td>
+                        <td className="p-3 max-w-56 whitespace-nowrap overflow-hidden text-ellipsis" title="value" >GEM-0001GEM-0001GEM-0001GEM-0001</td>
                         <td className="p-3 ">01/10/2024</td>
                         <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">{checkRespond({ value: false, onOpen: openModal, onClose: closeModal, isOpen: isReqModalOpen })}</td>
+                        <td className="p-3 ">
+                           {/**Pass the whole inquiry */}
+                           <CheckRespond
+                                respond={true}
+                                onOpen={() => openModal({ respond: true, ids: ['GEM-0005', 'GEM-0006', 'GEM-0007'] })}
+                                onClose={closeModal}
+                                isOpen={isReqModalOpen}
+                            />
+                        </td>
                     </tr>
                     <tr className="font-light p-3 border-b border-gray-300">
                         <td className="p-3 ">REQ-0001</td>
                         <td className="p-3 ">Bilal Hamza</td>
-                        <td className="p-3 ">GEM-0001</td>
+                        <td className="p-3 max-w-56 whitespace-nowrap overflow-hidden text-ellipsis" title="value" >GEM-0001</td>
                         <td className="p-3 ">01/10/2024</td>
                         <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
-                        <td className="p-3 ">{checkRespond({ value: true, onOpen: openModal, onClose: closeModal, isOpen: isReqModalOpen })}</td>
+                        <td className="p-3 ">
+                            {/**Pass the whole inquiry */}
+                            <CheckRespond
+                                respond={false}
+                                onOpen={() => openModal({ respond: false, ids: ['GEM-0001'] })}
+                                onClose={closeModal}
+                                isOpen={isReqModalOpen}
+                            />
+                        </td>
                     </tr>
                 </tbody>
             </table>
+
+            <ReqRespond isOpen={isReqModalOpen} onClose={closeModal} respond={isResponded} gemIds={ids} />
 
             <div className="flex justify-center items-center font-montserrat text-lg">
                 <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>

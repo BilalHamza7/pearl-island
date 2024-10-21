@@ -52,9 +52,6 @@ export default function NewProduct() {
         if (selectedFiles.length > 0) {
             setActiveImage(selectedFiles[0]);
         }
-        else {
-            setActiveImage("select images.");
-        }
     }, [selectedFiles])
 
 
@@ -66,18 +63,18 @@ export default function NewProduct() {
                 <div className="flex justify-between gap-10 w-full h-fit">
                     <div className="flex flex-col gap-5 items-center w-full "> {/*Remove div when using for customer display */}
                         <div className="flex gap-10 w-full h-full ">
-                            <img src={activeImage ? activeImage : '/gemcopy.jpg'} className="w-3/4 h-full object-contain " />
+                            <img src={activeImage ? activeImage : '/addImage.jpg'} className="w-3/4 h-full object-contain " />
                             <div className="flex flex-col gap-3 justify-between">
-                                <img src={selectedFiles[0] ? selectedFiles[0] : '/gem3.jpg'} className="w-full h-full" />
-                                <img src={selectedFiles[2] ? selectedFiles[2] : '/gem1.jpg'} className="w-full h-full " />
-                                <img src={selectedFiles[3] ? selectedFiles[3] : '/gem3.jpg'} className="w-full h-full " />
+                                <img src={selectedFiles[0] ? selectedFiles[0] : '/addImage.jpg'} className="w-full h-full" />
+                                <img src={selectedFiles[2] ? selectedFiles[2] : '/addImage.jpg'} className="w-full h-full " />
+                                <img src={selectedFiles[3] ? selectedFiles[3] : '/addImage.jpg'} className="w-full h-full " />
                                 <button
                                     className="flex items-center justify-center text-xs font-saira text-center h-full w-full border hover:border-black border-transparent transition duration-500 relative bg-cover bg-center overflow-hidden"
                                     onMouseEnter={() => setIsSeemoreHovered(!isSeemoreHovered)}
                                     onMouseLeave={() => setIsSeemoreHovered(!isSeemoreHovered)}
                                     onClick={openModal}
                                     title="See More Images"
-                                    style={{ backgroundImage: `url(${selectedFiles[4] ? selectedFiles[4] : '/gemcopy.jpg'})` }}
+                                    style={{ backgroundImage: `url(${selectedFiles[4] ? selectedFiles[4] : '/addImage.jpg'})` }}
                                 >
                                     <img
                                         src={isSeemoreHovered ? "/seemoreFilled.png" : "/seemoreOutlined.png"}

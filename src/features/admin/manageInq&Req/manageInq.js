@@ -1,31 +1,19 @@
 import { useEffect, useState } from "react";
 import InqRespond from "./inqRespond";
 
-function checkRespond(props) {
 
-    if (props.value === true) { //true respond
+export default function ManageInq() {
+
+    const CheckRespond = (props) => {
         return (
             <>
-                <div className="text-center bg-green-200 rounded-lg font-medium cursor-pointer hover:bg-green-300 transition duration-300" onClick={props.onOpen}>
-                    <p>Responded</p>
+                <div className={`text-center rounded-lg font-medium cursor-pointer transition duration-300 ${props.respond ? 'bg-green-200 hover:bg-green-300' : 'bg-red-200 hover:bg-red-300'}`} onClick={props.onOpen}>
+                    <p>{props.respond ? 'Responded' : 'Respond'}</p>
                 </div>
-                <InqRespond isOpen={props.isOpen} onClose={props.onClose} />
-            </>
-        )
-    } else {  //false respond
-        return (
-            <>
-                <div className="text-center bg-red-200 rounded-lg font-medium cursor-pointer hover:bg-red-300 transition duration-300" onClick={props.onOpen}>
-                    <p>Respond</p>
-                </div>
-                <InqRespond isOpen={props.isOpen} onClose={props.onClose} />
             </>
 
         )
     }
-}
-
-export default function ManageInq() {
 
     const [inquiryId, setInquiryId] = useState('');
     const [customerName, setCustomerName] = useState('');
@@ -34,7 +22,12 @@ export default function ManageInq() {
     const [selectedDate, setSelectedDate] = useState('all');
 
     const [isInqModalOpen, setIsInqModalOpen] = useState(false);
-    const openModal = () => setIsInqModalOpen(true);
+    const [isResponded, setIsResponded] = useState(false);
+    const openModal = ({ respond, ids }) => {
+        setIsResponded(respond);
+        setIsReqModalOpen(true);
+        setIds(ids);
+    };
     const closeModal = () => setIsInqModalOpen(false);
 
     const [test, setTest] = useState('');
@@ -144,11 +137,21 @@ export default function ManageInq() {
                         <td className="p-3 ">Custom Order</td>
                         <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
                         <td className="p-3 ">01/10/2024</td>
-                        <td className="p-3 ">{checkRespond({ value: false, onOpen: openModal, onClose: closeModal, isOpen: isInqModalOpen })}</td>
+                        <td className="p-3 ">
+                            {/**Pass the whole inquiry */}
+                            <CheckRespond
+                                respond={false}
+                                onOpen={() => openModal({ respond: false })}
+                                onClose={closeModal}
+                                isOpen={isInqModalOpen}
+                            />
+                        </td>
                     </tr>
-
                 </tbody>
             </table>
+
+            <InqRespond isOpen={isInqModalOpen} onClose={closeModal} respond={isResponded} />
+
             <div className="flex justify-center items-center font-montserrat text-lg">
                 <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
             </div>
