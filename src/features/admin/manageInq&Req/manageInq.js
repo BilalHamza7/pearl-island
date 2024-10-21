@@ -23,10 +23,9 @@ export default function ManageInq() {
 
     const [isInqModalOpen, setIsInqModalOpen] = useState(false);
     const [isResponded, setIsResponded] = useState(false);
-    const openModal = ({ respond, ids }) => {
+    const openModal = ({ respond }) => {
         setIsResponded(respond);
-        setIsReqModalOpen(true);
-        setIds(ids);
+        setIsInqModalOpen(true);
     };
     const closeModal = () => setIsInqModalOpen(false);
 
