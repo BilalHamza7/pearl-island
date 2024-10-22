@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import ReqRespond from "./reqRespond";
 
 
+//allow to change responded
+
 export default function ManageReq() {
 
     const CheckRespond = (props) => {
@@ -33,6 +35,9 @@ export default function ManageReq() {
         setIsReqModalOpen(true);
         setIds(ids);
     };
+    const setRespond = ({ val }) => {
+        setIsResponded(val);
+    }
 
     const [test, setTest] = useState('');
 
@@ -125,8 +130,8 @@ export default function ManageReq() {
                         <td className="p-3 ">01/10/2024</td>
                         <td className="p-3 ">bilalhamzazuhry@gmail.com</td>
                         <td className="p-3 ">
-                           {/**Pass the whole inquiry */}
-                           <CheckRespond
+                            {/**Pass the whole inquiry */}
+                            <CheckRespond
                                 respond={true}
                                 onOpen={() => openModal({ respond: true, ids: ['GEM-0005', 'GEM-0006', 'GEM-0007'] })}
                                 onClose={closeModal}
@@ -153,7 +158,7 @@ export default function ManageReq() {
                 </tbody>
             </table>
 
-            <ReqRespond isOpen={isReqModalOpen} onClose={closeModal} respond={isResponded} gemIds={ids} />
+            <ReqRespond isOpen={isReqModalOpen} onClose={closeModal} respond={isResponded} gemIds={ids} setRespond={setRespond} />
 
             <div className="flex justify-center items-center font-montserrat text-lg">
                 <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>

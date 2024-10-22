@@ -11,7 +11,7 @@ export default function NewProduct() {
     const [summary, setSummary] = useState('This elegant <weight>-carat <colour> <kind>, ethically sourced from <Origin>, is a rare find. Expertly cut to maximize brilliance.');
     const [selectedKind, setSelectedKind] = useState('sapphire');
     const [weight, setWeight] = useState('');
-    const [selectedColour, setselectedColour] = useState('blue');
+    const [colour, setColour] = useState('');
     const [size, setSize] = useState('');
     const [selectedCut, setSelectedCut] = useState('Round');
     const [origin, setOrigin] = useState('');
@@ -20,6 +20,50 @@ export default function NewProduct() {
     const [clarity, setClarity] = useState('');
     const [certificate, setCertificate] = useState(false);
     const [description, setDescription] = useState('');
+
+    const coloursList = [
+        'Blue',
+        'Royal Blue',
+        'Deep Royal Blue',
+        'Cornflower Blue',
+        'Vivid Blue',
+        'Light Blue',
+        'Greenish Blue',
+        'Yellow',
+        'Orange',
+        'Orangy Yellow',
+        'Yellowish Orange',
+        'Golden Yellow',
+        'Light Yellow',
+        'Pale Yellow',
+        'Pink',
+        'Reddish Pink',
+        'Vivid Pink',
+        'Purplish Pink',
+        'Red',
+        'Pigeon Blood',
+        'Vivid Red',
+        'Purple',
+        'Deep Purple',
+        'Violet',
+        'Violetish Purple',
+        'Purplish Violet',
+        'Light Purple',
+        'Green',
+        'Teal',
+        'Blueish Green',
+        'Yellowish Green',
+        'Yellow/Blue Green',
+        'Padparadscha',
+        'Peach',
+        'White',
+        'Brown',
+        'Light Brown',
+        'Yellow-Blue',
+        'Green-Yellow',
+        'Blue-Green',
+        'Grey',
+    ];
 
     const [activeImage, setActiveImage] = useState();
 
@@ -48,6 +92,15 @@ export default function NewProduct() {
         }
     };
 
+    const handleColourChange = async (event) => {
+        await setColour(event.target.value);
+
+        for(let i=0; i < coloursList.length; i++ ) {
+
+        }
+
+    };
+
     useEffect(() => {
         if (selectedFiles.length > 0) {
             setActiveImage(selectedFiles[0]);
@@ -65,16 +118,16 @@ export default function NewProduct() {
                         <div className="flex gap-10 w-full h-full ">
                             <img src={activeImage ? activeImage : '/addImage.jpg'} className="w-3/4 h-full object-contain " />
                             <div className="flex flex-col gap-3 justify-between">
-                                <img src={selectedFiles[0] ? selectedFiles[0] : '/addImage.jpg'} className="w-full h-full" />
-                                <img src={selectedFiles[2] ? selectedFiles[2] : '/addImage.jpg'} className="w-full h-full " />
-                                <img src={selectedFiles[3] ? selectedFiles[3] : '/addImage.jpg'} className="w-full h-full " />
+                                <img src={selectedFiles[0] ? selectedFiles[0] : '/addImage.jpg'} className="w-full h-full cursor-pointer border border-transparent hover:border-black transition duration-500" onClick={() => setActiveImage(selectedFiles[0])} />
+                                <img src={selectedFiles[1] ? selectedFiles[1] : '/addImage.jpg'} className="w-full h-full cursor-pointer border border-transparent hover:border-black transition duration-500" onClick={() => setActiveImage(selectedFiles[1])} />
+                                <img src={selectedFiles[2] ? selectedFiles[2] : '/addImage.jpg'} className="w-full h-full cursor-pointer border border-transparent hover:border-black transition duration-500" onClick={() => setActiveImage(selectedFiles[2])} />
                                 <button
                                     className="flex items-center justify-center text-xs font-saira text-center h-full w-full border hover:border-black border-transparent transition duration-500 relative bg-cover bg-center overflow-hidden"
                                     onMouseEnter={() => setIsSeemoreHovered(!isSeemoreHovered)}
                                     onMouseLeave={() => setIsSeemoreHovered(!isSeemoreHovered)}
                                     onClick={openModal}
                                     title="See More Images"
-                                    style={{ backgroundImage: `url(${selectedFiles[4] ? selectedFiles[4] : '/addImage.jpg'})` }}
+                                    style={{ backgroundImage: `url(${selectedFiles[3] ? selectedFiles[3] : '/addImage.jpg'})` }}
                                 >
                                     <img
                                         src={isSeemoreHovered ? "/seemoreFilled.png" : "/seemoreOutlined.png"}
@@ -176,31 +229,10 @@ export default function NewProduct() {
                                     <input type="text" value={weight} onChange={(event) => setWeight(event.target.value)} className="font-crimson w-full text-xl px-2 py-1 focus:outline-none border-b-2 border-black" />
                                 </label>
 
+                                {/* Add Colour Querying */}
                                 <label className="flex gap-3 items-center input_label">
                                     Colour:
-                                    <select onChange={(event) => setselectedColour(event.target.value)} value={selectedColour} className="w-full dropdown_style"> {/**Crimson Text */}
-                                        <option value='neutral'>
-                                            Neutral
-                                        </option>
-                                        <option value='blue'>
-                                            Blue
-                                        </option>
-                                        <option value='yellow'>
-                                            Yellow
-                                        </option>
-                                        <option value='pink'>
-                                            Pink
-                                        </option>
-                                        <option value='green'>
-                                            Green
-                                        </option>
-                                        <option value='Alexandrite'>
-                                            Alexandrite
-                                        </option>
-                                        <option value='Garnet'>
-                                            Garnet
-                                        </option>
-                                    </select>
+                                    <input type="text" value={colour} onChange={(event) => handleColourChange(event)} className="font-crimson w-full text-xl px-2 py-1 focus:outline-none border-b-2 border-black" />
                                 </label>
 
                                 <label className="flex gap-3 items-center input_label">

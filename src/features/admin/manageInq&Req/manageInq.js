@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import InqRespond from "./inqRespond";
 
 
+//allow to change responded
+
 export default function ManageInq() {
 
     const CheckRespond = (props) => {
@@ -23,11 +25,15 @@ export default function ManageInq() {
 
     const [isInqModalOpen, setIsInqModalOpen] = useState(false);
     const [isResponded, setIsResponded] = useState(false);
+    const closeModal = () => setIsInqModalOpen(false);
     const openModal = ({ respond }) => {
         setIsResponded(respond);
         setIsInqModalOpen(true);
     };
-    const closeModal = () => setIsInqModalOpen(false);
+    const setRespond = ({val}) => {
+        setIsResponded(val);
+    }
+
 
     const [test, setTest] = useState('');
 
@@ -149,7 +155,7 @@ export default function ManageInq() {
                 </tbody>
             </table>
 
-            <InqRespond isOpen={isInqModalOpen} onClose={closeModal} respond={isResponded} />
+            <InqRespond isOpen={isInqModalOpen} onClose={closeModal} respond={isResponded} setRespond={setRespond} />
 
             <div className="flex justify-center items-center font-montserrat text-lg">
                 <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>

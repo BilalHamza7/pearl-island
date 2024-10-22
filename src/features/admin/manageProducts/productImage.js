@@ -27,32 +27,34 @@ export default function ProductImages({ isOpen, onClose, images }) {
                 <div className="flex w-full justify-center">
                     <div className="w-2/6 object-contain">
                         {/* <img src={source} alt="source" className="relative cursor-none hover:image_hover_magnify" /> */}
-                        <ReactImageMagnify
-                            {...{
-                                smallImage: {
-                                    alt: 'Main Image',
-                                    isFluidWidth: true,
-                                    src: source ,
-                                },
-                                largeImage: {
-                                    src: source,
-                                    width: 440,
-                                    height: 1520,
-                                },
-                                enlargedImagePosition: 'over',
-                                enlargedImageContainerDimensions: {
-                                    width: 440,
-                                    height: 440
-                                } ,
-                                isHintEnabled: true,
-                            }}
-                        />
+                        {images.length > 0 &&
+                            <ReactImageMagnify
+                                {...{
+                                    smallImage: {
+                                        alt: 'Main Image',
+                                        isFluidWidth: true,
+                                        src: source,
+                                    },
+                                    largeImage: {
+                                        src: source,
+                                        width: 440,
+                                        height: 1520,
+                                    },
+                                    enlargedImagePosition: 'over',
+                                    enlargedImageContainerDimensions: {
+                                        width: 440,
+                                        height: 440
+                                    },
+                                    isHintEnabled: true,
+                                }}
+                            />
+                        }
                     </div>
                 </div>
-                <div className="flex items-center justify-center gap-3 h-fit w-full z-20 ">
+                <div className="flex items-center justify-center gap-3 h-fit w-full z-20  ">
                     {images.length > 0 ? (
                         images.map((image, index) => (
-                            <img key={index} src={image} alt={`Selected ${index}`} onClick={() => setSource(image)} className="w-36 h-36 object-cover cursor-pointer hover:opacity-75 transition duration-300" />
+                            <img key={index} src={image} alt={`Selected ${index}`} onClick={() => setSource(image)} className="w-36 h-36 object-cover cursor-pointer hover:opacity-75 border border-transparent hover:border-black transition duration-300" />
                         ))
                     ) : (
                         <p className="title_text ">No images selected</p>

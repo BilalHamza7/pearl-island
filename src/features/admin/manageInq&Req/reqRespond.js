@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function ReqRespond({ isOpen, onClose, respond, gemIds }) {
+export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespond }) {
 
     const gems = Array.isArray(gemIds) ? gemIds : [gemIds];
 
@@ -42,9 +42,6 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds }) {
                         <div className="flex flex-col items-start gap-5 w-full ">
                             <p className="input_label">Gemstone Details:</p>
 
-
-                            {/**Single Gem Request */}
-
                             <div className="flex w-full gap-16">
 
                                 <div className="flex flex-col gap-3">
@@ -61,6 +58,7 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds }) {
                                         ))
                                     ) : (
                                         <>
+                                            {/**Single Gem Request */}
                                             <p className="font-saira text-2xl">Natural Blue Sapphire {gems[0]}</p>
                                             <div className="flex gap-10">
                                                 <div className="flex flex-col gap-5 input_label">
@@ -127,7 +125,7 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds }) {
                         </div>
                     </div>
                     <label className="flex justify-center w-fit mt-12 gap-3 input_label z-10">
-                        <input type="checkbox" value="respond" className="w-4" checked={respond} />
+                        <input type="checkbox" value="respond" className="w-4" checked={respond} onChange={setRespond(!respond)} />
                         Mark As Responded
                     </label>
                     <button className="flex justify-center mt-4 button_style z-10">
@@ -135,7 +133,6 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds }) {
                     </button>
                 </div>
             </div>
-
         </>
     )
 }

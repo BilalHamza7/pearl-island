@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function InqRespond({ isOpen, onClose, respond }) {
+export default function InqRespond({ isOpen, onClose, respond, setRespond }) {
 
     if (!isOpen) return null;
 
@@ -34,7 +34,7 @@ export default function InqRespond({ isOpen, onClose, respond }) {
                         </div>
                     </div>
                     <label className="flex justify-center w-full mt-16 gap-3 input_label ">
-                        <input type="checkbox" value="responded" className="w-4" checked={respond} />
+                        <input type="checkbox" value="responded" className="w-4" checked={respond} onChange={setRespond(!respond)} />
                         Mark As Responded
                     </label>
                     <button className="flex justify-center mt-4 button_style ">

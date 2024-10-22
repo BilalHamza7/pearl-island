@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
 import TotalProducts from "../components/totalProducts";
 import NewProduct from "./newProducts";
+import ProductCard from "./productCard";
 
 export default function ProductList() {
 
@@ -24,13 +25,9 @@ export default function ProductList() {
         setselectedColour('all')
     };
 
-    const handleWeightChange = (event) => {
-        setSelectedWeight(event.target.value);
-    };
+    const handleWeightChange = (event) => {setSelectedWeight(event.target.value)};
 
-    const handleColourChange = (event) => {
-        setselectedColour(event.target.value);
-    };
+    const handleColourChange = (event) => {setselectedColour(event.target.value)};
 
     const handleClearFilterClick = () => {
         setselectedColour('all');
@@ -200,11 +197,23 @@ export default function ProductList() {
 
                 <p>{test}</p>
 
-
-                <table>
-                    <tbody>
+                {/* Design product card, pass parameters, onClick events */}
+                <table className="w-full">
+                    <tbody className="flex gap-7 justify-between">
                         <tr>
-                            {/**4 each row  */}
+                            <ProductCard source='/gemcopy.jpg'  />
+                        </tr>
+                        <tr>
+                            <ProductCard source='/gem1.jpg' />
+                        </tr>
+                        <tr>
+                            <ProductCard source='/gem2.jpg' />
+                        </tr>
+                        <tr>
+                            <ProductCard source='/gem3.jpg' />
+                        </tr>
+                        <tr>
+                            <ProductCard source='/gem1.jpg' />
                         </tr>
                     </tbody>
                 </table>
