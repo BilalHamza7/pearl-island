@@ -95,11 +95,15 @@ export default function NewProduct() {
     const handleColourChange = async (event) => {
         await setColour(event.target.value);
 
-        for(let i=0; i < coloursList.length; i++ ) {
+        for (let i = 0; i < coloursList.length; i++) {
 
         }
 
     };
+
+    function handleNewProduct() {
+        
+    }
 
     useEffect(() => {
         if (selectedFiles.length > 0) {
@@ -112,7 +116,6 @@ export default function NewProduct() {
         <>
             <div className="flex flex-col gap-10 p-10 min-h-screen z-50 ">
                 <p className="text-xl w-fit font-montserrat hover:text-gray-600 transition duration-300 cursor-pointer " onClick={() => navigate('/manageProduct')}>&larr; Product List</p>
-
                 <div className="flex justify-between gap-10 w-full h-fit">
                     <div className="flex flex-col gap-5 items-center w-full "> {/*Remove div when using for customer display */}
                         <div className="flex gap-10 w-full h-full ">
@@ -139,10 +142,54 @@ export default function NewProduct() {
                         </div>
                         <div>
                             <input type="file" accept="image/*" multiple onChange={handleFileChange} />
-                            {/* <button className="button_style" onClick={openModal}>See All</button> */}
                             <ProductImages isOpen={isModalOpen} onClose={closeModal} images={selectedFiles} />
                         </div>
                     </div>
+
+                    <datalist className=""  id="coloursList"> {/**Dropdown of Colour Search */}
+                        <option value="Blue" />
+                        <option value="Royal Blue" />
+                        <option value="Deep Royal Blue" />
+                        <option value="Cornflower Blue" />
+                        <option value="Vivid Blue" />
+                        <option value="Light Blue" />
+                        <option value="Greenish Blue" />
+                        <option value="Yellow" />
+                        <option value="Orange" />
+                        <option value="Orangy Yellow" />
+                        <option value="Yellowish Orange" />
+                        <option value="Golden Yellow" />
+                        <option value="Light Yellow" />
+                        <option value="Pale Yellow" />
+                        <option value="Pink" />
+                        <option value="Reddish Pink" />
+                        <option value="Vivid Pink" />
+                        <option value="Purplish Pink" />
+                        <option value="Red" />
+                        <option value="Pigeon Blood" />
+                        <option value="Vivid Red" />
+                        <option value="Purple" />
+                        <option value="Deep Purple" />
+                        <option value="Violet" />
+                        <option value="Violetish Purple" />
+                        <option value="Purplish Violet" />
+                        <option value="Light Purple" />
+                        <option value="Green" />
+                        <option value="Teal" />
+                        <option value="Blueish Green" />
+                        <option value="Yellowish Green" />
+                        <option value="Yellow/Blue Green" />
+                        <option value="Padparadscha" />
+                        <option value="Peach" />
+                        <option value="White" />
+                        <option value="Brown" />
+                        <option value="Light Brown" />
+                        <option value="Yellow-Blue" />
+                        <option value="Green-Yellow" />
+                        <option value="Blue-Green" />
+                        <option value="Grey" />
+                    </datalist>
+
                     <div className="flex flex-col gap-5 w-full">
                         <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter Name Here" className="font-saira w-96 text-3xl px-2 py-1 focus:outline-none border-b-2 border-black" />
                         <textarea rows={3} value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Enter Summary Here" className="px-2 py-1 font-montserrat text-lg resize-none focus:outline-none border-b-2 border-black" />
@@ -232,7 +279,7 @@ export default function NewProduct() {
                                 {/* Add Colour Querying */}
                                 <label className="flex gap-3 items-center input_label">
                                     Colour:
-                                    <input type="text" value={colour} onChange={(event) => handleColourChange(event)} className="font-crimson w-full text-xl px-2 py-1 focus:outline-none border-b-2 border-black" />
+                                    <input type="searcg" list='coloursList' value={colour} onChange={(event) => handleColourChange(event)} className="font-crimson w-full text-xl px-2 py-1 focus:outline-none border-b-2 border-black" />
                                 </label>
 
                                 <label className="flex gap-3 items-center input_label">
@@ -378,9 +425,10 @@ export default function NewProduct() {
                                 </div>
                             </div>
                         </div>
+
                         <div className="flex w-full gap-10 mt-5">
                             <button className="button_style w-full" onClick={() => navigate('/manageProduct')}>Cancel</button>
-                            <button className="button_style w-full">Save</button>
+                            <button onClick={handleNewProduct} className="button_style w-full">Save</button>
                         </div>
                     </div>
                 </div>

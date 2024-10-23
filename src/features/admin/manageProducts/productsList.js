@@ -25,9 +25,9 @@ export default function ProductList() {
         setselectedColour('all')
     };
 
-    const handleWeightChange = (event) => {setSelectedWeight(event.target.value)};
+    const handleWeightChange = (event) => { setSelectedWeight(event.target.value) };
 
-    const handleColourChange = (event) => {setselectedColour(event.target.value)};
+    const handleColourChange = (event) => { setselectedColour(event.target.value) };
 
     const handleClearFilterClick = () => {
         setselectedColour('all');
@@ -194,32 +194,20 @@ export default function ProductList() {
                     </div>
                 </div>
 
+                {/* set search by id to search through a <dataList> which fetches the Ids from DB in first render */}
 
                 <p>{test}</p>
 
                 {/* Design product card, pass parameters, onClick events */}
-                <table className="w-full">
-                    <tbody className="flex gap-7 justify-between">
-                        <tr>
-                            <ProductCard source='/gemcopy.jpg'  />
-                        </tr>
-                        <tr>
-                            <ProductCard source='/gem1.jpg' />
-                        </tr>
-                        <tr>
-                            <ProductCard source='/gem2.jpg' />
-                        </tr>
-                        <tr>
-                            <ProductCard source='/gem3.jpg' />
-                        </tr>
-                        <tr>
-                            <ProductCard source='/gem1.jpg' />
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="grid grid-cols-5 gap-7 w-full">
+                    <ProductCard source='/gemcopy.jpg' />
+                    <ProductCard source='/gem1.jpg' />
+                    <ProductCard source='/gem2.jpg' />
+                    <ProductCard source='/gem3.jpg' />
+                    <ProductCard source='/gem4.jpg' />
+                </div>
 
-
-                <div className="flex justify-center w-full items-center font-montserrat text-lg">
+                <div className="flex justify-center w-full input_label">
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
                 </div>
 

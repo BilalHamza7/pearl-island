@@ -160,7 +160,7 @@ export default function ManageReq() {
 
             <ReqRespond isOpen={isReqModalOpen} onClose={closeModal} respond={isResponded} gemIds={ids} setRespond={setRespond} />
 
-            <div className="flex justify-center items-center font-montserrat text-lg">
+            <div className="flex justify-center input_label">
                 <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
             </div>
         </div>
