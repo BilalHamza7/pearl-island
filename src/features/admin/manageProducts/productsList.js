@@ -40,9 +40,9 @@ export default function ProductList() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        setTest('Kind: ' + selectedKind + '  Weight: ' + selectedWeight + '  Colour: ' + selectedColour + '  Sold? ' + checkedSold);
+        setTest('Kind: ' + selectedKind + '  Weight: ' + selectedWeight + '  Date: ' + selectedDate + '  Colour: ' + selectedColour + '  Sold? ' + checkedSold);
 
-    }, [selectedKind, selectedWeight, selectedColour, checkedSold])
+    }, [selectedKind, selectedWeight, selectedColour, selectedDate, checkedSold])
 
     const handleFeaturedSubmit = (e) => {
         e.preventDefault();
@@ -54,15 +54,18 @@ export default function ProductList() {
             <div className="flex flex-col items-center min-h-screen p-10 gap-7">
                 <p className="text-4xl font-saira tracking-wider">Manage Your Gemstone Inventory</p>
 
-                <button onClick={() => navigate('/addNewProduct')} className="button_style my-3">
-                    Add New product
-                </button>
+                <div className="flex gap-10">
+                    <a href='#featured' className="button_style my-3">Featured Products</a>
+                    <button onClick={() => navigate('/addNewProduct')} className="button_style my-3">
+                        Add New product
+                    </button>
+                </div>
 
                 {/* Search Filters */}
                 <div className="flex justify-between w-full">
                     <div className="flex gap-5 items-center ">
-                        <p className="font-montserrat ">Search By:</p> {/**Crimson Text */}
-                        <select onChange={handleKindChange} value={selectedKind} className="w-40 dropdown_style"> {/**Crimson Text */}
+                        <p className="font-montserrat ">Search By:</p>
+                        <select onChange={handleKindChange} value={selectedKind} className="w-40 dropdown_style">
                             <option value='all' className="">
                                 All kinds
                             </option>
@@ -97,7 +100,7 @@ export default function ProductList() {
                                 Others
                             </option>
                         </select>
-                        <select onChange={handleWeightChange} value={selectedWeight} className="w-40 dropdown_style">
+                        <select onChange={(event) => setSelectedWeight(event.target.value)} value={selectedWeight} className="w-40 dropdown_style">
                             <option value='all'>
                                 All Weights(cts)
                             </option>
@@ -117,7 +120,7 @@ export default function ProductList() {
                                 Greater Than 8
                             </option>
                         </select>
-                        <select onChange={handleColourChange} value={selectedColour} className="w-40 dropdown_style">
+                        <select onChange={(event) => setselectedColour(event.target.value)} value={selectedColour} className="w-40 dropdown_style">
                             <option value='all'>
                                 All colours
                             </option>
@@ -214,7 +217,7 @@ export default function ProductList() {
 
                 {/* <TotalProducts /> */}
                 <div className="flex flex-col items-center gap-5 w-full">
-                    <p className="text-4xl font-saira tracking-wider">Featured Products</p>
+                    <p id="featured" className="text-4xl font-saira tracking-wider">Featured Products</p>
                     <p className="text-xl font-montserrat ">Add Four Gemstone ID's To Be Featured</p>
                     <form onSubmit={handleFeaturedSubmit} className="flex gap-5">
                         <input type="text" placeholder="ID One" className="input_style w-36  border-b border-b-black" />
