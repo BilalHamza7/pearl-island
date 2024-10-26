@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactImageMagnify from 'react-image-magnify';
 
-export default function ProductImages({ isOpen, onClose, images }) {
+export default function ProductImages({ isOpen, onClose, images, certificate }) {
 
     const [source, setSource] = useState();
 
@@ -9,7 +9,10 @@ export default function ProductImages({ isOpen, onClose, images }) {
         if (images.length > 0) {
             setSource(images[0]);
         }
-    }, [images]);
+        else if (certificate !== null) {
+            setSource(certificate);
+        }
+    }, [images, certificate]);
 
 
     if (!isOpen) return null;
@@ -26,8 +29,7 @@ export default function ProductImages({ isOpen, onClose, images }) {
 
                 <div className="flex w-full justify-center">
                     <div className="w-2/6 object-contain">
-                        {/* <img src={source} alt="source" className="relative cursor-none hover:image_hover_magnify" /> */}
-                        {images.length > 0 &&
+                        {(images.length > 0 || certificate !== null) && (
                             <ReactImageMagnify
                                 {...{
                                     smallImage: {
@@ -48,7 +50,7 @@ export default function ProductImages({ isOpen, onClose, images }) {
                                     isHintEnabled: true,
                                 }}
                             />
-                        }
+                        )}
                     </div>
                 </div>
                 <div className="flex items-center justify-center gap-3 h-fit w-full z-20  ">
@@ -59,17 +61,10 @@ export default function ProductImages({ isOpen, onClose, images }) {
                     ) : (
                         <p className="title_text ">No images selected</p>
                     )}
+                    {certificate &&
+                        <img src={certificate} alt={'certificate'} onClick={() => setSource(certificate)} className="w-36 h-36 object-cover cursor-pointer hover:opacity-75 border border-transparent hover:border-black transition duration-300" />
+                    }
                 </div>
-
-                {/* <div className="flex flex-col h-full w-3/6 gap-44 items-center border border-red-600">
-                    <div className="w-fit h-3/5 border border-green-500">
-                        <div className="w-3/5 h-full border border-black z-10">
-
-                        </div>
-                    </div>
-
-                    
-                </div> */}
             </div>
         </div>
     );

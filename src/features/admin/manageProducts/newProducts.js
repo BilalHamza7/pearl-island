@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductImages from "./productImage";
+import axios from 'axios';
 
 export default function NewProduct() {
 
@@ -11,7 +12,7 @@ export default function NewProduct() {
     const [summary, setSummary] = useState('This elegant <weight>-carat <colour> <kind>, ethically sourced from <Origin>, is a rare find. Expertly cut to maximize brilliance.');
     const [selectedKind, setSelectedKind] = useState('sapphire');
     const [weight, setWeight] = useState('');
-    const [colour, setColour] = useState('');
+    const [colour, setColour] = useState('Royal Blue');
     const [size, setSize] = useState('');
     const [selectedCut, setSelectedCut] = useState('Round');
     const [origin, setOrigin] = useState('');
@@ -20,6 +21,7 @@ export default function NewProduct() {
     const [clarity, setClarity] = useState('');
     const [certificate, setCertificate] = useState(false);
     const [description, setDescription] = useState('');
+    const [selectedCertificate, setSelectedCertificate] = useState(null);
 
     const coloursList = [
         'Blue',
@@ -77,14 +79,32 @@ export default function NewProduct() {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const maxFiles = 7;
 
+    const certificateInputRef = useRef(null); // to trigger click of hidden input for certificate
+
+    const handleAddCertificate = () => {
+        certificateInputRef.current.click();
+    }
+
+    const handleCertificateFileChange = (e) => {
+        if (e.target.files) {
+            const imageUrl = URL.createObjectURL(e.target.files[0]);
+            setSelectedCertificate(imageUrl);
+        }
+    };
+
+    const handleCertificate = (e) => {
+        setCertificate(!certificate);
+        if(certificate === false) setSelectedCertificate(null);
+    }
+
     const handleFileChange = (event) => {
 
         const files = event.target.files;
 
         if (files.length > maxFiles) {
             alert(`You can only select up to ${maxFiles} images.`);
-            setSelectedFiles([]); // Clear the state
-            event.target.value = ''; // Clear the input
+            setSelectedFiles([]);
+            event.target.value = '';
         } else {
             const fileArray = Array.from(files);
             const imageUrls = fileArray.map((file) => URL.createObjectURL(file));
@@ -92,17 +112,10 @@ export default function NewProduct() {
         }
     };
 
-    const handleColourChange = async (event) => {
-        await setColour(event.target.value);
-
-        for (let i = 0; i < coloursList.length; i++) {
-
-        }
-
-    };
-
-    function handleNewProduct() {
-        
+    const handleNewProduct = async () => {
+        const response = await axios.post('', {
+            
+        })
     }
 
     useEffect(() => {
@@ -142,11 +155,11 @@ export default function NewProduct() {
                         </div>
                         <div>
                             <input type="file" accept="image/*" multiple onChange={handleFileChange} />
-                            <ProductImages isOpen={isModalOpen} onClose={closeModal} images={selectedFiles} />
+                            <ProductImages isOpen={isModalOpen} onClose={closeModal} images={selectedFiles} certificate={certificate ? selectedCertificate : null} />
                         </div>
                     </div>
 
-                    <datalist className=""  id="coloursList"> {/**Dropdown of Colour Search */}
+                    <datalist className="" id="coloursList"> {/**Dropdown of Colour Search */}
                         <option value="Blue" />
                         <option value="Royal Blue" />
                         <option value="Deep Royal Blue" />
@@ -279,7 +292,7 @@ export default function NewProduct() {
                                 {/* Add Colour Querying */}
                                 <label className="flex gap-3 items-center input_label">
                                     Colour:
-                                    <input type="searcg" list='coloursList' value={colour} onChange={(event) => handleColourChange(event)} className="font-crimson w-full text-xl px-2 py-1 focus:outline-none border-b-2 border-black" />
+                                    <input type="text" list='coloursList' value={colour} onChange={(event) => setColour(event.target.value)} className="font-crimson w-full text-xl px-2 py-1 focus:outline-none border-b-2 border-black" />
                                 </label>
 
                                 <label className="flex gap-3 items-center input_label">
@@ -417,11 +430,18 @@ export default function NewProduct() {
                                     <label className="flex gap-3 w-fit items-center input_label">
                                         Certificate:
                                         <label className="flex gap-2 w-fit items-center font-montserrat text-base hover:cursor-pointer">
-                                            <input type="checkbox" value="available" checked={certificate} onChange={() => setCertificate(!certificate)} />
+                                            <input type="checkbox" value="available" checked={certificate} onChange={(e) => handleCertificate(e)} />
                                             Available
                                         </label>
                                     </label>
-                                    {certificate && <p className="font-saira text-sm underline hover:text-blue-500 cursor-pointer" onClick={() => alert('Attached')}>Attach</p>}
+                                    {certificate && <p className="font-saira text-sm underline hover:text-blue-500 cursor-pointer" onClick={handleAddCertificate}>Attach</p>}
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        ref={certificateInputRef}
+                                        className='hidden'
+                                        onChange={(e) => handleCertificateFileChange(e)}
+                                    />
                                 </div>
                             </div>
                         </div>

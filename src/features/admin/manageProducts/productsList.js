@@ -39,6 +39,8 @@ export default function ProductList() {
     };
 
     useEffect(() => {
+        //fetch all available ids
+
         window.scrollTo(0, 0);
         setTest('Kind: ' + selectedKind + '  Weight: ' + selectedWeight + '  Date: ' + selectedDate + '  Colour: ' + selectedColour + '  Sold? ' + checkedSold);
 
@@ -214,7 +216,6 @@ export default function ProductList() {
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
                 </div>
 
-
                 {/* <TotalProducts /> */}
                 <div className="flex flex-col items-center gap-5 w-full">
                     <p id="featured" className="text-4xl font-saira tracking-wider">Featured Products</p>
@@ -229,7 +230,6 @@ export default function ProductList() {
                         </button>
                     </form>
                 </div>
-
 
                 <p className="title_text">Quick Links</p>
                 <div className="flex justify-center gap-10 w-full">
