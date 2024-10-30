@@ -217,6 +217,13 @@ export default function ProductList() {
                 </div>
 
                 {/* <TotalProducts /> */}
+
+                {/* Featured Products
+
+                    - maintain an array state to store the featured ids entered in the fields
+                    - have a datalist of ids available and dropdown when entering featured id
+                */}
+
                 <div className="flex flex-col items-center gap-5 w-full">
                     <p id="featured" className="text-4xl font-saira tracking-wider">Featured Products</p>
                     <p className="text-xl font-montserrat ">Add Four Gemstone ID's To Be Featured</p>
