@@ -13,6 +13,7 @@ import AdminProfile from './features/admin/adminProfile';
 import Navbar from './features/admin/components/navbar';
 import NewProduct from './features/admin/manageProducts/newProducts';
 import ProductImages from './features/admin/manageProducts/productImage';
+import CreateAdmin from './features/admin/createAdmin';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path='/adminProfile' element={<AdminProfile />} />
         <Route path='/addNewProduct' element={<NewProduct />} />
         <Route path='/productImages' element={<ProductImages />} />
+        <Route path='/createAdmin' element={<CreateAdmin />} />
       </Routes>
     </BrowserRouter >
   );

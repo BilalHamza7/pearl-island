@@ -27,9 +27,12 @@ export default function Login() {
                             <input type="type" className="input_style" />
                             <p className="text-xs underline text-end text-gray-600 cursor-pointer hover:text-blue-500" onClick={() => navigate('/resetPassword')}>Forgot your password?</p>
                         </label>
-                        <div className="flex justify-center ">
+                        <div className="flex w-full gap-5 justify-center ">
                             <button type="submit" className="button_style text-lg flex justify-center">
                                 Submit
+                            </button>
+                            <button className="hover:bg-gray-300 p-2" onClick={() => navigate('/createAdmin')}>
+                                Create Admin
                             </button>
                         </div>
                     </form>
