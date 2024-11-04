@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import Navbar from "../components/navbar";
-import TotalProducts from "../components/totalProducts";
-import NewProduct from "./newProducts";
 import ProductCard from "./productCard";
 
 export default function ProductList() {
@@ -14,7 +13,9 @@ export default function ProductList() {
     const [selectedColour, setselectedColour] = useState('all');
     const [checkedSold, setCheckedSold] = useState(false);
     const [gemstoneId, setGemstoneId] = useState('');
-    const [selectedDate, setSelectedDate] = useState('all')
+    const [selectedDate, setSelectedDate] = useState('all');
+
+    const [products, setProducts] = useState([]);
 
     const [test, setTest] = useState('');
 
@@ -25,10 +26,6 @@ export default function ProductList() {
         setselectedColour('all')
     };
 
-    const handleWeightChange = (event) => { setSelectedWeight(event.target.value) };
-
-    const handleColourChange = (event) => { setselectedColour(event.target.value) };
-
     const handleClearFilterClick = () => {
         setselectedColour('all');
         setSelectedWeight('all');
@@ -38,8 +35,32 @@ export default function ProductList() {
         setSelectedDate('all');
     };
 
+    const fetchProducts = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/product/getProducts');
+            setProducts(response.data.products);
+            console.log('getProducts Successful');
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 404) { // response status 404
+                    console.error(error.response.data.message || 'No products available.');
+                    setProducts([]);
+                } else if (error.response.status === 500) { // response status 500
+                    console.error('Server error. Please try again later.');
+                    setProducts([]);
+                } else { // other response status
+                    console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
+                    setProducts([]);
+                }
+            } else { // Network Errors
+                console.error('Network error. Please check your connection.');
+                setProducts([]);
+            }
+        }
+    }
+
     useEffect(() => {
-        //fetch all available ids
+        fetchProducts();
 
         window.scrollTo(0, 0);
         setTest('Kind: ' + selectedKind + '  Weight: ' + selectedWeight + '  Date: ' + selectedDate + '  Colour: ' + selectedColour + '  Sold? ' + checkedSold);
@@ -195,6 +216,7 @@ export default function ProductList() {
                         <img
                             src="/searchOutlined.png"
                             className="w-7 mx-1 cursor-pointer"
+                            onClick={null}
                         />
                     </div>
                 </div>
@@ -203,20 +225,32 @@ export default function ProductList() {
 
                 <p>{test}</p>
 
+
+                {products.length > 0 ?
+                    products.map((product) => (
+                        <div className="grid grid-cols-5 gap-7 w-full">
+                            <ProductCard prod={product} />
+                        </div>
+                    ))
+                    : (
+                        <p className="title_text">No Products To Show At The Moment</p>
+                    )
+                }
+
                 {/* Design product card, pass parameters, onClick events */}
-                <div className="grid grid-cols-5 gap-7 w-full">
-                    <ProductCard source='/gemcopy.jpg' />
+                {/* <div className="grid grid-cols-5 gap-7 w-full">
+
                     <ProductCard source='/gem1.jpg' />
                     <ProductCard source='/gem2.jpg' />
                     <ProductCard source='/gem3.jpg' />
                     <ProductCard source='/gem4.jpg' />
-                </div>
+                </div> */}
 
                 <div className="flex justify-center w-full input_label">
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
                 </div>
 
-                {/* <TotalProducts /> */}
+                {/* <ProductsCount /> */}
 
                 {/* Featured Products
 

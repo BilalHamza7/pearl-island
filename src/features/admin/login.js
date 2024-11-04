@@ -26,6 +26,7 @@ export default function Login() {
         e.preventDefault();
         const validation = validateForm();
         if (validation === true) {
+            setError({});
             try {
                 const response = await axios.post('http://localhost:5000/admin/verifyAdmin',
                     {

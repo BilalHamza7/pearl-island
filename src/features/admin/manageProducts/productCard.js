@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ReactImageMagnify from "react-image-magnify";
 
-export default function ProductCard({ source }) {
+export default function ProductCard({ prod }) {
 
     const [isHovered, setIsHovered] = useState(false);
 
