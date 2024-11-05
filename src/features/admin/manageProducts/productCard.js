@@ -7,7 +7,6 @@ export default function ProductCard({ prod }) {
     const navigate = useNavigate();
 
     const [isHovered, setIsHovered] = useState(false);
-
     return (
         <div className="w-full bg-white transition duration-300 hover:drop-shadow-xl" onMouseOver={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
             <ReactImageMagnify
@@ -28,11 +27,11 @@ export default function ProductCard({ prod }) {
             />
 
             <div className="p-2 input_label flex flex-col items-center gap-3">
-                <p className="input_label">
+                <p className="input_label text-center">
                     {prod.name}
                 </p>
                 <p className="font-montserrat font-light text-lg">
-                    {prod.weight}
+                    {prod.weight} Cts
                 </p>
 
                 {/* navigate to editProduct page with the prod object */}

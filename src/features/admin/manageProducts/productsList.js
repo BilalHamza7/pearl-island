@@ -73,7 +73,7 @@ export default function ProductList() {
         if (gemstoneId !== '') {
             try {
                 const response = await axios.get(`http://localhost:5000/product/getProductById?gemstoneId=${gemstoneId}`);
-                setProducts(response.data.products);
+                setProducts(response.data.product);
                 console.log('getProductById Successful');
             } catch (error) {
                 if (error.response) {
@@ -327,28 +327,20 @@ export default function ProductList() {
                     </div>
                 </div>
 
-                <div className="min-h-96 w-full text-center">
-                    {products.length > 0 ?
-                        products.map((product) => (
-                            <div className="grid grid-cols-5 gap-7 w-full">
-                                <ProductCard prod={product} />
-                            </div>
-                        ))
-                        : (
-                            <p className="title_text mt-10 text-red-500">No Products To Show :(</p>
-                        )
-                    }
-                </div>
+                {products.length > 0 ?
+                    <div className="grid grid-cols-5 gap-7 w-full">
+                        {products.map((product) => (
+                            <ProductCard key={product.productId} prod={product} />
+                        ))}
+                    </div>
+                    : (
+                        <p className="title_text mt-10 text-red-500">No Products To Show :(</p>
+                    )
+                }
 
                 <div className="flex justify-center w-full input_label">
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
                 </div>
-
-                {/* Featured Products
-
-                    - maintain an array state to store the featured ids entered in the fields
-                    - have a datalist of ids available and dropdown when entering featured id
-                */}
 
                 <div className="flex flex-col items-center gap-5 w-full">
                     <p id="featured" className="text-4xl font-saira tracking-wider">Featured Products</p>

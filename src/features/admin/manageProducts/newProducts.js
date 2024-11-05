@@ -15,10 +15,10 @@ export default function NewProduct() {
     const [colour, setColour] = useState('Royal Blue');
     const [size, setSize] = useState('');
     const [selectedCut, setSelectedCut] = useState('Round');
-    const [origin, setOrigin] = useState('');
-    const [shape, setShape] = useState('');
-    const [treatment, setTreatment] = useState('');
-    const [clarity, setClarity] = useState('');
+    const [origin, setOrigin] = useState('Ceylon');
+    const [shape, setShape] = useState('round');
+    const [treatment, setTreatment] = useState('un-heat');
+    const [clarity, setClarity] = useState('slightly-included');
     const [certificate, setCertificate] = useState(false);
     const [description, setDescription] = useState('');
     const [selectedCertificate, setSelectedCertificate] = useState(null);
@@ -68,9 +68,7 @@ export default function NewProduct() {
     ];
 
     const [activeImage, setActiveImage] = useState();
-
     const [isSeemoreHovered, setIsSeemoreHovered] = useState(false);
-
     const [isModalOpen, setModalOpen] = useState(false);
 
     const openModal = () => setModalOpen(true);
@@ -86,36 +84,114 @@ export default function NewProduct() {
     }
 
     const handleCertificateFileChange = (e) => {
-        if (e.target.files) {
-            const imageUrl = URL.createObjectURL(e.target.files[0]);
-            setSelectedCertificate(imageUrl);
+        if (e.target.files && e.target.files.length > 0) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setSelectedCertificate(reader.result);
+            };
+
+            reader.readAsDataURL(e.target.files[0]);
         }
     };
 
     const handleCertificate = (e) => {
         setCertificate(!certificate);
-        if(certificate === false) setSelectedCertificate(null);
+        if (certificate === false) setSelectedCertificate(null);
     }
 
-    const handleFileChange = (event) => {
-
+    const handleFileChange = async (event) => {
         const files = event.target.files;
+        const fileArray = Array.from(files);
 
         if (files.length > maxFiles) {
             alert(`You can only select up to ${maxFiles} images.`);
             setSelectedFiles([]);
             event.target.value = '';
         } else {
-            const fileArray = Array.from(files);
-            const imageUrls = fileArray.map((file) => URL.createObjectURL(file));
-            setSelectedFiles(imageUrls);
+            const promises = fileArray.map((file) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result); // Resolve with Base64 string
+                    reader.onerror = reject; // Handle errors
+                    reader.readAsDataURL(file); // Convert image to Base64
+                });
+            });
+            try {
+                const base64Images = await Promise.all(promises); // Wait for all images to be read
+                setSelectedFiles(base64Images); // Set state with all Base64 images
+            } catch (error) {
+                console.error('Error reading files:', error);
+            }
         }
     };
 
     const handleNewProduct = async () => {
-        const response = await axios.post('', {
-            
-        })
+
+        if (name === '') {
+            alert('Please enter a valid name');
+            return;
+        }
+        else if (summary === '') {
+            alert('Please enter a brief summary');
+            return;
+        }
+        else if (weight === '') {
+            alert('Please enter the weight');
+            return;
+        }
+        else if (colour === '') {
+            alert('Please enter the colour');
+            return;
+        }
+        else if (size === '') {
+            alert('Please enter the size');
+            return;
+        }
+        else if (description === '') {
+            alert('Please enter a description');
+            return;
+        }
+        else if (certificate === true && selectedCertificate === null) {
+            alert('Please attach an image of the certificate');
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://localhost:5000/product/saveProduct', {
+                name: name,
+                kind: selectedKind,
+                weight: weight,
+                colour: colour,
+                section: section,
+                size: size,
+                cut: selectedCut,
+                origin: origin,
+                shape: shape,
+                treatment: treatment,
+                clarity: clarity,
+                certificate: selectedCertificate,
+                summary: summary,
+                description: description,
+                images: selectedFiles,
+                soldStatus: false,
+            });
+            console.log(response.data);
+            alert('Product Saved Successfully : ' + response.data.product.productId);
+            navigate('/manageProduct');
+        } catch (error) {
+            alert('An Error Occured, Please Try Again!');
+            if (error.response) {
+                if (error.response.status === 404) { // response status 404
+                    console.error(error.response.data.message || 'Could Not Save Product.');
+                } else if (error.response.status === 500) { // response status 500
+                    console.error('Server error. Please try again later.');
+                } else { // other response status
+                    console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
+                }
+            } else { // Network Errors
+                console.error('Network error. Please check your connection.');
+            }
+        }
     }
 
     useEffect(() => {
@@ -306,14 +382,14 @@ export default function NewProduct() {
                                         <option value='step-cut'>
                                             Step Cut
                                         </option>
+                                        <option value='modified-step-cut'>
+                                            Modified Step Cut
+                                        </option>
                                         <option value='step-cut'>
                                             Emerald Cut
                                         </option>
                                         <option value='radiant-cut'>
                                             Radiant Cut
-                                        </option>
-                                        <option value='ya-cut'>
-                                            Ya
                                         </option>
                                         <option value='asscher-cut'>
                                             Asscher Cut
@@ -334,35 +410,47 @@ export default function NewProduct() {
                                 <label className="flex gap-3 items-center input_label">
                                     Origin:
                                     <select onChange={(event) => setOrigin(event.target.value)} value={origin} className="w-full dropdown_style"> {/**Crimson Text */}
-                                        <option value='sapphire'>
-                                            Sapphire
+                                        <option value='n/a'>
+                                            N/A
                                         </option>
-                                        <option value='spinel'>
-                                            Spinel
+                                        <option value='ceylon'>
+                                            Ceylon
                                         </option>
-                                        <option value='padparadscha'>
-                                            Padparadscha
+                                        <option value='mozambique'>
+                                            Mozambique
                                         </option>
-                                        <option value='ruby'>
-                                            Ruby
+                                        <option value='madagascar'>
+                                            Madagascar
                                         </option>
-                                        <option value='Alexandrite'>
-                                            Alexandrite
+                                        <option value='tanzania'>
+                                            Tanzania
                                         </option>
-                                        <option value='Garnet'>
-                                            Garnet
+                                        <option value='kenya'>
+                                            Kenya
                                         </option>
-                                        <option value='Aquamarine'>
-                                            Aquamarine
+                                        <option value='kashmir'>
+                                            Kashmir (India)
                                         </option>
-                                        <option value='Chrysoberyl'>
-                                            Chrysoberyl
+                                        <option value='burma'>
+                                            Burma
                                         </option>
-                                        <option value='Emerald'>
-                                            Emerald
+                                        <option value='australia'>
+                                            Australia
                                         </option>
-                                        <option value='Other'>
-                                            Others
+                                        <option value='nigeria'>
+                                            Nigeria
+                                        </option>
+                                        <option value='thailand'>
+                                            Thailand
+                                        </option>
+                                        <option value='afghanistan'>
+                                            Afghanistan
+                                        </option>
+                                        <option value='brazil'>
+                                            Brazil
+                                        </option>
+                                        <option value='ethiopia'>
+                                            Ethiopia
                                         </option>
                                     </select>
                                 </label>
@@ -375,17 +463,35 @@ export default function NewProduct() {
                                         <option value='oval'>
                                             Oval
                                         </option>
-                                        <option value='cushion'>
-                                            Cushion
+                                        <option value='antique-cushion'>
+                                            Antique Cushion
                                         </option>
-                                        <option value='pear'>
-                                            Pear
-                                        </option>
-                                        <option value='emerald'>
-                                            Emerald
+                                        <option value='square-antique-cushion'>
+                                            Square Antique Cushion
                                         </option>
                                         <option value='heart'>
                                             Heart
+                                        </option>
+                                        <option value='drop-pear'>
+                                            Drop/Pear
+                                        </option>
+                                        <option value='reactangle'>
+                                            Rectangle
+                                        </option>
+                                        <option value='square'>
+                                            Square
+                                        </option>
+                                        <option value='triangle'>
+                                            Triangle
+                                        </option>
+                                        <option value='marquise'>
+                                            Marquise
+                                        </option>
+                                        <option value='kite'>
+                                            Kite
+                                        </option>
+                                        <option value='freeform'>
+                                            freeform
                                         </option>
                                     </select>
                                 </label>
@@ -412,16 +518,16 @@ export default function NewProduct() {
                                             Internally Flawless (IF)
                                         </option>
                                         <option value='very-very-slightly-included'>
-                                            Very, Very Slightly Included (VVS1 and VVS2)
+                                            Very, Very Slightly Included (VVS)
                                         </option>
                                         <option value='very-slightly-included'>
-                                            Very Slightly Included (VS1 and VS2)
+                                            Very Slightly Included (VS)
                                         </option>
                                         <option value='slightly-included'>
-                                            Slightly Included (SI1 and SI2)
+                                            Slightly Included (SI)
                                         </option>
                                         <option value='included'>
-                                            Included (I1, I2, and I3)
+                                            Included
                                         </option>
                                     </select>
                                 </label>
