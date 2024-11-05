@@ -17,12 +17,10 @@ export default function ProductList() {
     const [selectedDate, setSelectedDate] = useState('all');
     const [isClearHovered, setisClearHovered] = useState(false);
 
-    // products list
     const [products, setProducts] = useState([]);
-
     const [featuredProducts, setFeaturedProducts] = useState([]);
+    const [featuredProdError, setFeaturedProdError] = useState('');
 
-    const [test, setTest] = useState('');
 
     const handleKindChange = (event) => {
         setSelectedKind(event.target.value);
@@ -36,11 +34,20 @@ export default function ProductList() {
         setCheckedSold(false);
         setGemstoneId('');
         setSelectedDate('all');
+        fetchProducts();
     };
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/product/getProducts');
+            const response = await axios.post('http://localhost:5000/product/getProducts',
+                {
+                    kind: selectedKind,
+                    weight: selectedWeight,
+                    colour: selectedColour,
+                    date: selectedDate,
+                    soldStatus: checkedSold
+                }
+            );
             setProducts(response.data.products);
             console.log('getProducts Successful');
         } catch (error) {
@@ -62,26 +69,59 @@ export default function ProductList() {
         }
     }
 
-    const handleFeaturedSubmit = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/featuredProd/saveFeaturedProds');
-            setProducts(response.data.products);
-            console.log('getProducts Successful');
-        } catch (error) {
-            if (error.response) {
-                if (error.response.status === 404) { // response status 404
-                    console.error(error.response.data.message || 'No products available.');
-                    setProducts([]);
-                } else if (error.response.status === 500) { // response status 500
-                    console.error('Server error. Please try again later.');
-                    setProducts([]);
-                } else { // other response status
-                    console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
+    const fetchProductById = async () => {
+        if (gemstoneId !== '') {
+            try {
+                const response = await axios.get(`http://localhost:5000/product/getProductById?gemstoneId=${gemstoneId}`);
+                setProducts(response.data.products);
+                console.log('getProductById Successful');
+            } catch (error) {
+                if (error.response) {
+                    if (error.response.status === 404) { // response status 404
+                        console.error(error.response.data.message || 'Could Not Find A Product.');
+                        setProducts([]);
+                    } else if (error.response.status === 500) { // response status 500
+                        console.error('Server error. Please try again later.');
+                        setProducts([]);
+                    } else { // other response status
+                        console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
+                        setProducts([]);
+                    }
+                } else { // Network Errors
+                    console.error('Network error. Please check your connection.');
                     setProducts([]);
                 }
-            } else { // Network Errors
-                console.error('Network error. Please check your connection.');
-                setProducts([]);
+            }
+        } else {
+            alert('Enter a Product ID to search by!');
+        }
+    }
+
+    const handleFeaturedSubmit = async (e) => {
+        e.preventDefault();
+
+        if (featuredProducts.length === 0) {
+            setFeaturedProdError('Please Enter 1-4 Product IDs To Save');
+        } else {
+            setFeaturedProdError('');
+            try {
+                const response = await axios.post('http://localhost:5000/featuredProd/saveFeaturedProds',
+                    featuredProducts
+                );
+                setFeaturedProducts(response.data.products.productId);
+                console.log('saveFeaturedProds Successful');
+            } catch (error) {
+                if (error.response) {
+                    if (error.response.status === 404) { // response status 404
+                        console.error(error.response.data.message || 'Could Not Save Featured Products.');
+                    } else if (error.response.status === 500) { // response status 500
+                        console.error('Server error. Please try again later.');
+                    } else { // other response status
+                        console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
+                    }
+                } else { // Network Errors
+                    console.error('Network error. Please check your connection.');
+                }
             }
         }
     }
@@ -111,12 +151,17 @@ export default function ProductList() {
         }
     }
 
+    const handleFeaturedInputChange = (index, value) => {
+        setFeaturedProducts((prevProducts) => {
+            const updatedProducts = [...prevProducts];
+            updatedProducts[index] = value; // Store product ID directly as a string
+            return updatedProducts;
+        });
+    };
+
     useEffect(() => {
         fetchProducts();
         fetchFeaturedProducts();
-
-        window.scrollTo(0, 0);
-        setTest('Kind: ' + selectedKind + '  Weight: ' + selectedWeight + '  Date: ' + selectedDate + '  Colour: ' + selectedColour + '  Sold? ' + checkedSold);
 
     }, [selectedKind, selectedWeight, selectedColour, selectedDate, checkedSold])
 
@@ -132,6 +177,18 @@ export default function ProductList() {
                         Add New product
                     </button>
                 </div>
+
+                <datalist id="productIdList">
+                    {products.length > 0 ?
+                        (
+                            products.map((product) =>
+                                <option key={product.productId} value={product.productId} />
+                            )
+                        ) : (
+                            <option value="none" />
+                        )
+                    }
+                </datalist>
 
                 {/* Search Filters */}
                 <div className="flex justify-between w-full">
@@ -261,29 +318,27 @@ export default function ProductList() {
                         />
                     </div>
                     <div className="flex gap-1 items-center bg-gray-100 rounded-lg">
-                        <input type="text" value={gemstoneId} onChange={(e) => setGemstoneId(e.target.value)} placeholder="Search By ID" className="w-36 input_style border-b border-b-black" />
+                        <input type="text" list="productIdList" value={gemstoneId} onChange={(e) => setGemstoneId(e.target.value)} placeholder="Search By ID" className="w-36 input_style" />
                         <img
                             src="/searchOutlined.png"
                             className="w-7 mx-1 cursor-pointer"
-                            onClick={null}
+                            onClick={fetchProductById}
                         />
                     </div>
                 </div>
 
-                {/* set search by id to search through a <dataList> which fetches the Ids from DB in first render */}
-
-                <p>{test}</p>
-
-                {products.length > 0 ?
-                    products.map((product) => (
-                        <div className="grid grid-cols-5 gap-7 w-full">
-                            <ProductCard prod={product} />
-                        </div>
-                    ))
-                    : (
-                        <p className="title_text text-red-500">No Products To Show :(</p>
-                    )
-                }
+                <div className="min-h-96 w-full text-center">
+                    {products.length > 0 ?
+                        products.map((product) => (
+                            <div className="grid grid-cols-5 gap-7 w-full">
+                                <ProductCard prod={product} />
+                            </div>
+                        ))
+                        : (
+                            <p className="title_text mt-10 text-red-500">No Products To Show :(</p>
+                        )
+                    }
+                </div>
 
                 <div className="flex justify-center w-full input_label">
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
@@ -298,15 +353,23 @@ export default function ProductList() {
                 <div className="flex flex-col items-center gap-5 w-full">
                     <p id="featured" className="text-4xl font-saira tracking-wider">Featured Products</p>
                     <p className="text-xl font-montserrat ">Add Four Gemstone ID's To Be Featured</p>
-                    <form onSubmit={handleFeaturedSubmit} className="flex gap-5">
-                        <input type="text" placeholder="ID One" value={featuredProducts[0]} onChange={(e) => setFeaturedProducts[0](e.target.value)} className="input_style w-36  border-b border-b-black" />
-                        <input type="text" placeholder="ID Two" value={featuredProducts[1]} className="input_style w-36  border-b border-b-black" />
-                        <input type="text" placeholder="ID Three" value={featuredProducts[2]} className="input_style w-36  border-b border-b-black" />
-                        <input type="text" placeholder="ID Four" value={featuredProducts[3]} className="input_style w-36  border-b border-b-black" />
+                    <form onSubmit={(e) => handleFeaturedSubmit(e)} className="flex gap-5">
+                        {[0, 1, 2, 3].map((index) => (
+                            <input
+                                key={index}
+                                type="text"
+                                placeholder={`ID ${index + 1}`}
+                                list="productIdList"
+                                value={featuredProducts[index] || ""}
+                                onChange={(e) => handleFeaturedInputChange(index, e.target.value)}
+                                className="input_style w-36"
+                            />
+                        ))}
                         <button type="submit" className="button_style">
                             Save
                         </button>
                     </form>
+                    <p className="subtitle_text text-red-600">{featuredProdError}</p>
                 </div>
 
                 <p className="title_text">Quick Links</p>
