@@ -8,18 +8,21 @@ export default function ProductList() {
 
     const navigate = useNavigate();
 
+    // filters
     const [selectedKind, setSelectedKind] = useState('all');
     const [selectedWeight, setSelectedWeight] = useState('all');
     const [selectedColour, setselectedColour] = useState('all');
     const [checkedSold, setCheckedSold] = useState(false);
     const [gemstoneId, setGemstoneId] = useState('');
     const [selectedDate, setSelectedDate] = useState('all');
+    const [isClearHovered, setisClearHovered] = useState(false);
 
+    // products list
     const [products, setProducts] = useState([]);
 
-    const [test, setTest] = useState('');
+    const [featuredProducts, setFeaturedProducts] = useState([]);
 
-    const [isClearHovered, setisClearHovered] = useState(false);
+    const [test, setTest] = useState('');
 
     const handleKindChange = (event) => {
         setSelectedKind(event.target.value);
@@ -59,17 +62,63 @@ export default function ProductList() {
         }
     }
 
+    const handleFeaturedSubmit = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/featuredProd/saveFeaturedProds');
+            setProducts(response.data.products);
+            console.log('getProducts Successful');
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 404) { // response status 404
+                    console.error(error.response.data.message || 'No products available.');
+                    setProducts([]);
+                } else if (error.response.status === 500) { // response status 500
+                    console.error('Server error. Please try again later.');
+                    setProducts([]);
+                } else { // other response status
+                    console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
+                    setProducts([]);
+                }
+            } else { // Network Errors
+                console.error('Network error. Please check your connection.');
+                setProducts([]);
+            }
+        }
+    }
+
+    const fetchFeaturedProducts = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/featuredProd/getFeaturedProds');
+
+            setFeaturedProducts(response.data.products);
+            console.log('getFeaturedProds Successful');
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 404) { // response status 404
+                    console.error(error.response.data.message || 'No Featured products Are available.');
+                    setFeaturedProducts([]);
+                } else if (error.response.status === 500) { // response status 500
+                    console.error('Server error. Please try again later.');
+                    setFeaturedProducts([]);
+                } else { // other response status
+                    console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
+                    setFeaturedProducts([]);
+                }
+            } else { // Network Errors
+                console.error('Network error. Please check your connection.');
+                setFeaturedProducts([]);
+            }
+        }
+    }
+
     useEffect(() => {
         fetchProducts();
+        fetchFeaturedProducts();
 
         window.scrollTo(0, 0);
         setTest('Kind: ' + selectedKind + '  Weight: ' + selectedWeight + '  Date: ' + selectedDate + '  Colour: ' + selectedColour + '  Sold? ' + checkedSold);
 
     }, [selectedKind, selectedWeight, selectedColour, selectedDate, checkedSold])
-
-    const handleFeaturedSubmit = (e) => {
-        e.preventDefault();
-    }
 
     return (
         <>
@@ -225,7 +274,6 @@ export default function ProductList() {
 
                 <p>{test}</p>
 
-
                 {products.length > 0 ?
                     products.map((product) => (
                         <div className="grid grid-cols-5 gap-7 w-full">
@@ -233,24 +281,13 @@ export default function ProductList() {
                         </div>
                     ))
                     : (
-                        <p className="title_text">No Products To Show At The Moment</p>
+                        <p className="title_text text-red-500">No Products To Show :(</p>
                     )
                 }
-
-                {/* Design product card, pass parameters, onClick events */}
-                {/* <div className="grid grid-cols-5 gap-7 w-full">
-
-                    <ProductCard source='/gem1.jpg' />
-                    <ProductCard source='/gem2.jpg' />
-                    <ProductCard source='/gem3.jpg' />
-                    <ProductCard source='/gem4.jpg' />
-                </div> */}
 
                 <div className="flex justify-center w-full input_label">
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
                 </div>
-
-                {/* <ProductsCount /> */}
 
                 {/* Featured Products
 
@@ -262,10 +299,10 @@ export default function ProductList() {
                     <p id="featured" className="text-4xl font-saira tracking-wider">Featured Products</p>
                     <p className="text-xl font-montserrat ">Add Four Gemstone ID's To Be Featured</p>
                     <form onSubmit={handleFeaturedSubmit} className="flex gap-5">
-                        <input type="text" placeholder="ID One" className="input_style w-36  border-b border-b-black" />
-                        <input type="text" placeholder="ID Two" className="input_style w-36  border-b border-b-black" />
-                        <input type="text" placeholder="ID Three" className="input_style w-36  border-b border-b-black" />
-                        <input type="text" placeholder="ID Four" className="input_style w-36  border-b border-b-black" />
+                        <input type="text" placeholder="ID One" value={featuredProducts[0]} onChange={(e) => setFeaturedProducts[0](e.target.value)} className="input_style w-36  border-b border-b-black" />
+                        <input type="text" placeholder="ID Two" value={featuredProducts[1]} className="input_style w-36  border-b border-b-black" />
+                        <input type="text" placeholder="ID Three" value={featuredProducts[2]} className="input_style w-36  border-b border-b-black" />
+                        <input type="text" placeholder="ID Four" value={featuredProducts[3]} className="input_style w-36  border-b border-b-black" />
                         <button type="submit" className="button_style">
                             Save
                         </button>

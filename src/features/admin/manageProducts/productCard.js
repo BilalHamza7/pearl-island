@@ -1,7 +1,10 @@
 import { useState } from "react";
 import ReactImageMagnify from "react-image-magnify";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({ prod }) {
+
+    const navigate = useNavigate();
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -12,10 +15,10 @@ export default function ProductCard({ prod }) {
                     smallImage: {
                         alt: 'Main Image',
                         isFluidWidth: true,
-                        src: source,
+                        src: prod.images[0],
                     },
                     largeImage: {
-                        src: source,
+                        src: prod.images[0],
                         width: 236,
                         height: 570,
                     },
@@ -26,13 +29,14 @@ export default function ProductCard({ prod }) {
 
             <div className="p-2 input_label flex flex-col items-center gap-3">
                 <p className="input_label">
-                    Natural Blue Sapphire
+                    {prod.name}
                 </p>
                 <p className="font-montserrat font-light text-lg">
-                    2.75 cts
+                    {prod.weight}
                 </p>
 
-                <button className={`button_style ${!isHovered ? 'opacity-0' : 'opacity-100'}`}>
+                {/* navigate to editProduct page with the prod object */}
+                <button onClick={() => navigate('/addNewProduct')} className={`button_style ${!isHovered ? 'opacity-0' : 'opacity-100'}`}>
                     VIEW MORE
                 </button>
             </div>
