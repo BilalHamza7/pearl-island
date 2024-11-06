@@ -4,15 +4,17 @@ import axios from 'axios';
 export default function RecentProduct() {
 
     const [product, setProduct] = useState([]);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setMessage('Loading...');
                 const response = await axios.get('http://localhost:5000/product/getLatestProducts');
                 setProduct(response.data.products);
-                console.log('getLatestProduct Successful');
             } catch (error) {
                 if (error.response) {
+                    setMessage('No Products Are Available');
                     if (error.response.status === 404) { // response status 404
                         console.error(error.response.data.message || 'No products available yet.');
                         setProduct([]);
@@ -47,16 +49,17 @@ export default function RecentProduct() {
 
                 {product.length > 0 ?
                     product.map((product) => (
-                        <tr key={product.productId} className="font-light p-3 border-b border-gray-300">
+                        <tr key={product.productId} className="capitalize font-light p-3 border-b border-gray-300">
                             <td className="p-3 ">{product.name}</td>
                             <td className="p-3 ">{product.weight}</td>
                             <td className="p-3 ">{product.shape}</td>
-                            <td className="p-3 ">{product.dateListed}</td>
+                            {/* creating a date object to use convertion methods */}
+                            <td className="p-3 ">{new Date(product.dateListed).toLocaleDateString('en-GB')}</td>
                         </tr>
                     ))
                     : (
                         <tr>
-                            <th colSpan='4' className="p-3 text-left text-base font-medium">No Products Are Available</th>
+                            <th colSpan='4' className="p-3 text-left text-base font-medium">{message}</th>
                         </tr>
                     )
                 }

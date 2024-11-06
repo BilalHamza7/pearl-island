@@ -4,15 +4,17 @@ import axios from 'axios';
 export default function RecentRequest() {
 
     const [request, setRequest] = useState([]);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setMessage('Loading...');
                 const response = await axios.get('http://localhost:5000/request/getLatestRequests');
                 setRequest(response.data.products);
-                console.log('getLatestRequest Successful');
             } catch (error) {
                 if (error.response) {
+                    setMessage('No Requests Are Available');
                     if (error.response.status === 404) { // response status 404
                         console.error(error.response.data.message || 'No requests received yet.');
                         setRequest([]);
@@ -54,13 +56,13 @@ export default function RecentRequest() {
                                     { prodId }
                                 ))}
                             </td>
-                            <td className="p-3 ">johnwick@gmail.com</td>
-                            <td className="p-3 ">01/10/2024</td>
+                            <td className="p-3 ">{request.email}</td>
+                            <td className="p-3 ">{new Date(request.date).toLocaleDateString('en-GB')}</td>
                         </tr>
                     ))
                     : (
                         <tr>
-                            <th colSpan='4' className="p-3 text-left text-base font-medium">No Requests Are Available</th>
+                            <th colSpan='4' className="p-3 text-left text-base font-medium">{message}</th>
                         </tr>
                     )
                 }

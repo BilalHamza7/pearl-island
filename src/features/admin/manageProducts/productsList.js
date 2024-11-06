@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Navbar from "../components/navbar";
 import ProductCard from "./productCard";
+import { dateFilter } from "../components/dateFilter";
 
 export default function ProductList() {
 
@@ -18,9 +19,10 @@ export default function ProductList() {
     const [isClearHovered, setisClearHovered] = useState(false);
 
     const [products, setProducts] = useState([]);
+    const [productList, setProductList] = useState([]);
     const [featuredProducts, setFeaturedProducts] = useState([]);
     const [featuredProdError, setFeaturedProdError] = useState('');
-
+    const [message, setMessage] = useState('');
 
     const handleKindChange = (event) => {
         setSelectedKind(event.target.value);
@@ -39,6 +41,7 @@ export default function ProductList() {
 
     const fetchProducts = async () => {
         try {
+            setMessage('Loading...');
             const response = await axios.post('http://localhost:5000/product/getProducts',
                 {
                     kind: selectedKind,
@@ -52,6 +55,7 @@ export default function ProductList() {
             console.log('getProducts Successful');
         } catch (error) {
             if (error.response) {
+                setMessage('No Products To Show :(');
                 if (error.response.status === 404) { // response status 404
                     console.error(error.response.data.message || 'No products available.');
                     setProducts([]);
@@ -72,11 +76,13 @@ export default function ProductList() {
     const fetchProductById = async () => {
         if (gemstoneId !== '') {
             try {
+                setMessage('Loading...');
                 const response = await axios.get(`http://localhost:5000/product/getProductById?gemstoneId=${gemstoneId}`);
                 setProducts(response.data.product);
                 console.log('getProductById Successful');
             } catch (error) {
                 if (error.response) {
+                    setMessage('No Products To Show :(');
                     if (error.response.status === 404) { // response status 404
                         console.error(error.response.data.message || 'Could Not Find A Product.');
                         setProducts([]);
@@ -159,11 +165,94 @@ export default function ProductList() {
         });
     };
 
+    const weightFilter = async (weight) => {
+        const filteredWeight = {};
+
+        try {
+            switch (weight) {
+                case 'less-than-1':
+                    filteredWeight.weight = { $lt: 1 };
+                    break;
+                case '1-2':
+                    filteredWeight.weight = { $gte: 1, $lt: 2 };
+                    break;
+                case '2-4':
+                    filteredWeight.weight = { $gte: 2, $lt: 4 };
+                    break;
+                case '4-8':
+                    filteredWeight.weight = { $gte: 4, $lt: 8 };
+                    break;
+                case 'greater-than-8':
+                    filteredWeight.weight = { $gte: 8 };
+                    break;
+                default:
+                    break;
+            }
+            return filteredWeight;
+        } catch (error) {
+            console.error(error);
+            return 'Could Not Filter Weight';
+        }
+    }
+
+    const handleProductList = async () => {
+        let filtered = [...products];
+
+        // Filter by kind
+        if (selectedKind !== 'all') {
+            filtered = filtered.filter(product => product.kind === selectedKind);
+        }
+
+        // Apply weight filter
+        if (selectedWeight !== 'all') {
+            const weightConditions = await weightFilter(selectedWeight);
+            if (weightConditions.weight) {
+                const { $lt, $gte } = weightConditions.weight;
+                filtered = filtered.filter(product => {
+                    const productWeight = product.weight;
+                    return ($lt ? productWeight < $lt : true) && ($gte ? productWeight >= $gte : true);
+                });
+            }
+        }
+
+        // Filter by colour
+        if (selectedColour !== 'all') {
+            filtered = filtered.filter(product => product.colour === selectedColour);
+        }
+
+        // Filter by soldStatus
+        if (checkedSold !== null) {
+            filtered = filtered.filter(product => product.soldStatus === checkedSold);
+        }
+
+        // Date filtering
+        // Sorting by date
+        if (selectedDate === 'new-to-old') {
+            filtered.sort((a, b) => new Date(b.dateListed) - new Date(a.dateListed));
+        } else if (selectedDate === 'old-to-new') {
+            filtered.sort((a, b) => new Date(a.dateListed) - new Date(b.dateListed));
+        } else if (selectedDate !== 'all') {
+            const dateConditions = await dateFilter(selectedDate);
+            if (dateConditions.date) {
+                const { $gte, $lt } = dateConditions.date;
+                filtered = filtered.filter(product => {
+                    const dateListed = new Date(product.dateListed);
+                    return dateListed >= $gte && dateListed < $lt;
+                });
+            }
+        }
+
+        setProductList(filtered)
+    }
+
     useEffect(() => {
         fetchProducts();
         fetchFeaturedProducts();
+    }, [])
 
-    }, [selectedKind, selectedWeight, selectedColour, selectedDate, checkedSold])
+    useEffect(() => {
+        handleProductList();
+    }, [products, selectedKind, selectedWeight, selectedColour, selectedDate, checkedSold])
 
     return (
         <>
@@ -327,14 +416,14 @@ export default function ProductList() {
                     </div>
                 </div>
 
-                {products.length > 0 ?
+                {productList.length > 0 ?
                     <div className="grid grid-cols-5 gap-7 w-full">
-                        {products.map((product) => (
+                        {productList.map((product) => (
                             <ProductCard key={product.productId} prod={product} />
                         ))}
                     </div>
                     : (
-                        <p className="title_text mt-10 text-red-500">No Products To Show :(</p>
+                        <p className="title_text mt-10 text-red-500">{message}</p>
                     )
                 }
 
