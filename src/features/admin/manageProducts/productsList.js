@@ -174,38 +174,11 @@ export default function ProductList() {
         }
 
         setProductList(filtered);
-
-        // if (gemstoneId !== '') {
-        //     try {
-        //         const response = await axios.get(`http://localhost:5000/product/getProductById?gemstoneId=${gemstoneId}`);
-        //         setProducts(response.data.product);
-        //         console.log('getProductById Successful');
-        //     } catch (error) {
-        //         if (error.response) {
-        //             setMessage('No Products To Show :(');
-        //             if (error.response.status === 404) { // response status 404
-        //                 console.error(error.response.data.message || 'Could Not Find A Product.');
-        //                 setProducts([]);
-        //             } else if (error.response.status === 500) { // response status 500
-        //                 console.error('Server error. Please try again later.');
-        //                 setProducts([]);
-        //             } else { // other response status
-        //                 console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
-        //                 setProducts([]);
-        //             }
-        //         } else { // Network Errors
-        //             console.error('Network error. Please check your connection.');
-        //             setProducts([]);
-        //         }
-        //     }
-        // } else {
-        //     alert('Enter a Product ID to search by!');
-        // }
+        if (filtered.length === 0) setMessage('No Products Are Available!');
     }
 
 
     const handleProductList = async () => {
-        setMessage('Loading...');
         let filtered = [...products];
 
         // Filter by kind
@@ -253,7 +226,7 @@ export default function ProductList() {
         }
 
         setProductList(filtered);
-        if (filtered.length === null) setMessage('No Products Are Available!');
+        if (filtered.length === 0 && products.length !== 0) setMessage('No Products Are Available!');
     }
 
     useEffect(() => {
@@ -445,7 +418,7 @@ export default function ProductList() {
                 <div className="flex flex-col items-center gap-5 w-full">
                     <p id="featured" className="text-4xl font-saira tracking-wider">Featured Products</p>
                     <p className="text-xl font-montserrat ">Add Four Gemstone ID's To Be Featured</p>
-                    <form onSubmit={(e) => handleFeaturedSubmit(e)} className="flex gap-5">
+                    <form onSubmit={(e) => handleFeaturedSubmit(e)} className="flex gap-5 items-center">
                         {[0, 1, 2, 3].map((index) => (
                             <input
                                 key={index}
@@ -457,7 +430,7 @@ export default function ProductList() {
                                 className="input_style w-36"
                             />
                         ))}
-                        <button type="submit" className="button_style">
+                        <button type="submit" className="button_style h-fit">
                             Save
                         </button>
                     </form>
