@@ -1,14 +1,13 @@
 import { useState } from "react";
 import ReactImageMagnify from "react-image-magnify";
-import { useNavigate } from "react-router-dom";
 
-export default function ProductCard({ prod }) {
-
-    const navigate = useNavigate();
+export default function ProductCard({ prod, openModal }) {
 
     const [isHovered, setIsHovered] = useState(false);
+
     return (
         <div className="w-full bg-white transition duration-300 hover:drop-shadow-xl" onMouseOver={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+
             <ReactImageMagnify
                 {...{
                     smallImage: {
@@ -35,7 +34,7 @@ export default function ProductCard({ prod }) {
                 </p>
 
                 {/* navigate to editProduct page with the prod object */}
-                <button onClick={() => navigate('/addNewProduct')} className={`button_style ${!isHovered ? 'opacity-0' : 'opacity-100'}`}>
+                <button onClick={() => openModal(prod)} className={`button_style ${!isHovered ? 'opacity-0' : 'opacity-100'}`}>
                     VIEW MORE
                 </button>
             </div>

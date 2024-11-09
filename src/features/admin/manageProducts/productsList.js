@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from "../components/navbar";
 import ProductCard from "./productCard";
 import { dateFilter } from "../components/dateFilter";
+import { EditProduct } from "./editProduct";
 
 export default function ProductList() {
 
@@ -72,7 +73,6 @@ export default function ProductList() {
             }
         }
     }
-
 
     const handleFeaturedSubmit = async (e) => {
         e.preventDefault();
@@ -165,6 +165,7 @@ export default function ProductList() {
             return 'Could Not Filter Weight';
         }
     }
+
     const fetchProductById = async () => {
         let filtered = [...products];
 
@@ -176,7 +177,6 @@ export default function ProductList() {
         setProductList(filtered);
         if (filtered.length === 0) setMessage('No Products Are Available!');
     }
-
 
     const handleProductList = async () => {
         let filtered = [...products];
@@ -229,9 +229,18 @@ export default function ProductList() {
         if (filtered.length === 0 && products.length !== 0) setMessage('No Products Are Available!');
     }
 
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState({});
+    const closeModal = () => setIsEditModalOpen(false);
+    const openModal = (product) => {
+        setSelectedProduct(product);
+        setIsEditModalOpen(true);
+    };
+
     useEffect(() => {
         fetchProducts();
         fetchFeaturedProducts();
+        window.scroll(0, 0);
     }, [])
 
     useEffect(() => {
@@ -403,13 +412,16 @@ export default function ProductList() {
                 {productList.length > 0 ?
                     <div className="grid grid-cols-5 gap-7 w-full">
                         {productList.map((product) => (
-                            <ProductCard key={product.productId} prod={product} />
+                            <>
+                                <ProductCard key={product.productId} prod={product} openModal={() => openModal(product)} />
+                            </>
                         ))}
                     </div>
                     : (
                         <p className="title_text mt-10 text-red-500">{message}</p>
                     )
                 }
+                {/* <EditProduct isOpen={isEditModalOpen} onClose={closeModal} product={selectedProduct} /> */}
 
                 <div className="flex justify-center w-full input_label">
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
