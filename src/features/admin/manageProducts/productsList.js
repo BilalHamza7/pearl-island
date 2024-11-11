@@ -43,15 +43,7 @@ export default function ProductList() {
     const fetchProducts = async () => {
         try {
             setMessage('Loading...');
-            const response = await axios.post('http://localhost:5000/product/getProducts',
-                {
-                    kind: selectedKind,
-                    weight: selectedWeight,
-                    colour: selectedColour,
-                    date: selectedDate,
-                    soldStatus: checkedSold
-                }
-            );
+            const response = await axios.get('http://localhost:5000/product/getProducts');
             setProducts(response.data.products);
             console.log('getProducts Successful');
         } catch (error) {
@@ -82,10 +74,12 @@ export default function ProductList() {
         } else {
             setFeaturedProdError('');
             try {
+                setFeaturedProdError('Please Wait!')
                 const response = await axios.post('http://localhost:5000/featuredProd/saveFeaturedProds',
                     featuredProducts
                 );
                 setFeaturedProducts(response.data.products.productId);
+                setFeaturedProdError('Saved!');
                 console.log('saveFeaturedProds Successful');
             } catch (error) {
                 if (error.response) {
@@ -411,11 +405,9 @@ export default function ProductList() {
 
                 {productList.length > 0 ?
                     <div className="grid grid-cols-5 gap-7 w-full">
-                        {productList.map((product) => (
-                            <>
-                                <ProductCard key={product.productId} prod={product} openModal={() => openModal(product)} />
-                            </>
-                        ))}
+                        {productList.map((product) =>
+                            <ProductCard key={product.productId} prod={product} openModal={() => openModal(product)} />
+                        )}
                     </div>
                     : (
                         <p className="title_text mt-10 text-red-500">{message}</p>
