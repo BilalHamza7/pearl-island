@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductImages from "./productImage";
 import axios from 'axios';
+import FileBase from 'react-file-base64';
 
 export default function NewProduct() {
 
@@ -99,29 +100,18 @@ export default function NewProduct() {
         if (certificate === false) setSelectedCertificate(null);
     }
 
-    const handleFileChange = async (event) => {
-        const files = event.target.files;
-        const fileArray = Array.from(files);
+    const handleFileChange = (base64) => {
 
-        if (files.length > maxFiles) {
-            alert(`You can only select up to ${maxFiles} images.`);
+        if (base64.length > maxFiles) {
             setSelectedFiles([]);
-            event.target.value = '';
-        } else {
-            const promises = fileArray.map((file) => {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result); // Resolve with Base64 string
-                    reader.onerror = reject; // Handle errors
-                    reader.readAsDataURL(file); // Convert image to Base64
-                });
-            });
-            try {
-                const base64Images = await Promise.all(promises); // Wait for all images to be read
-                setSelectedFiles(base64Images); // Set state with all Base64 images
-            } catch (error) {
-                console.error('Error reading files:', error);
-            }
+            return alert(`You can only select up to ${maxFiles} images.`);
+        }
+        else {
+            let images = [];
+            base64.map((file, index) => {
+                images[index] = file.base64;
+            })
+            setSelectedFiles(images);
         }
     };
 
@@ -230,7 +220,11 @@ export default function NewProduct() {
                             </div>
                         </div>
                         <div>
-                            <input type="file" accept="image/*" multiple onChange={handleFileChange} />
+                            <FileBase
+                                type='file'
+                                multiple={true}
+                                onDone={(base64) => handleFileChange(base64)}
+                            />
                             <ProductImages isOpen={isModalOpen} onClose={closeModal} images={selectedFiles} certificate={certificate ? selectedCertificate : null} />
                         </div>
                     </div>
