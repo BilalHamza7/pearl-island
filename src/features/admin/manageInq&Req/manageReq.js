@@ -30,6 +30,7 @@ export default function ManageReq() {
     {/**Modal */ }
     const [isReqModalOpen, setIsReqModalOpen] = useState(false);
     const [isResponded, setIsResponded] = useState(false);
+
     const [ids, setIds] = useState([]);
     const closeModal = () => setIsReqModalOpen(false);
     const openModal = ({ respond, ids }) => {
@@ -46,6 +47,7 @@ export default function ManageReq() {
     const [message, setMessage] = useState('');
     const [gemstoneIdList, setGemstoneIdList] = useState([]);
     const [test, setTest] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const fetchPriceRequests = async () => {
         try {
@@ -53,6 +55,11 @@ export default function ManageReq() {
             const response = await axios.get('http://localhost:5000/request/getRequests');
             if (response.status === 200) {
                 setRequests(response.data.requests);
+                let ids = [];
+                requests.map((request, index) => {
+                    ids[index] = request.gemstoneId;
+                });
+                setGemstoneIdList(ids);
                 console.log('getRequests Successful');
             }
         } catch (error) {
@@ -99,7 +106,8 @@ export default function ManageReq() {
 
         // Filter by responded
         if (checkedRespond !== 'all') {
-            filtered = filtered.filter(request => request.responded === checkedRespond ? true : false);
+            const res = checkedRespond === 'true';
+            filtered = filtered.filter(request => request.responded === res);
         }
 
         // Date filtering
@@ -120,17 +128,36 @@ export default function ManageReq() {
         }
 
         setRequestList(filtered);
-        console.log(requestList);
         if (filtered.length === 0 && requests.length !== 0) setMessage('No Requests Found!');
     }
 
-    const handleClearFilterClick = () => {
+    const handleClearFilterClick = async () => {
         setGemstoneId('');
         setCustomerName('');
         setRequestId('');
         setCheckedRespond('all');
         setSelectedDate('all');
+        handleRequestList();
     };
+
+    const handleRespondedChange = async (id, value) => {
+        try {
+            setLoading(true);
+            const response = await axios.put('http://localhost:5000/request/updateRequest', {
+                id: id,
+                responded: !value,
+            });
+            if (response.status === 200) {
+                fetchPriceRequests();
+                setLoading(false);
+                console.log('updateRespond Successful');
+            }
+        } catch (error) {
+            if(error) {
+                console.error('error occured: ', error.message);
+            }
+        }
+    }
 
     useEffect(() => {
         fetchPriceRequests();
@@ -166,17 +193,24 @@ export default function ManageReq() {
                     )
                 }
             </datalist>
-            {/* <datalist id="gemstoneIdList"> CHECK
+            <datalist id="gemstoneIdList">
                 {gemstoneIdList.length > 0 ?
                     (
-                        gemstoneIdList.map((gemstone) =>
-                            <option key={gemstone.requestId} value={gemstone.gemstoneId} />
+                        gemstoneIdList.map((id, index) => {
+                            if (id.length > 1) {
+                                id.map((spread, index) => {
+                                    <option key={spread[index]} value={spread[index]} />
+                                })
+                            } else {
+                                <option key={id[index]} value={id[index]} />
+                            }
+                        }
                         )
                     ) : (
                         <option value="none" />
                     )
                 }
-            </datalist> */}
+            </datalist>
             <div className="flex gap-5 items-center ">
                 <p className="font-montserrat ">Search By:</p> {/**Crimson Text */}
                 <input type="text" list="customerNameList" placeholder="Customer Name" value={customerName} onChange={(event) => setCustomerName(event.target.value)} className="input_style w-40" />
@@ -215,10 +249,10 @@ export default function ManageReq() {
                     <option value='all'>
                         All
                     </option>
-                    <option value='responded'>
+                    <option value='true'>
                         Responded
                     </option>
-                    <option value='to-respond'>
+                    <option value='false'>
                         To Respond
                     </option>
                 </select>
@@ -243,6 +277,7 @@ export default function ManageReq() {
                         <th className="p-3">Date</th>
                         <th className="p-3">Email</th>
                         <th className="p-3">Status</th>
+                        <th className="p-3">Flag</th>
                     </tr>
                 </thead>
                 <tbody className="text-left bg-gray-100 text-lg font-montserrat tracking-widest">
@@ -251,7 +286,7 @@ export default function ManageReq() {
                             <tr key={request.requestId} className="font-light p-3 border-b border-gray-300">
                                 <td className="p-3 ">{request.requestId}</td>
                                 <td className="p-3 ">{request.fullName}</td>
-                                <td className="p-3 max-w-56 whitespace-nowrap overflow-hidden text-ellipsis" title="value" >{request.gemstoneId}</td>
+                                <td className="p-3 max-w-56 whitespace-nowrap overflow-hidden text-ellipsis" title={request.gemstoneId} >{request.gemstoneId}</td>
                                 <td className="p-3 ">{new Date(request.date).toLocaleDateString('en-GB')}</td>
                                 <td className="p-3 ">{request.email}</td>
                                 <td className="p-3 ">
@@ -261,16 +296,19 @@ export default function ManageReq() {
                                         onOpen={() => openModal({ responded: request.responded, ids: [...request.gemstoneId] })}
                                     />
                                 </td>
+                                <td className="p-3 my-auto flex gap-4 items-center">
+                                    <input type='checkbox' checked={request.responded} onChange={() => handleRespondedChange(request.requestId, request.responded)} />
+                                    <p className={loading ? 'text-black' : 'text-transparent' }>...</p>
+                                </td>
                             </tr>
                         ))
                         : (
                             <tr>
-                                <th colSpan='6' className="p-3 text-left text-base font-medium">{message}</th>
+                                <th colSpan='7' className="p-3 text-left text-base font-medium">{message}</th>
                             </tr>)
                     }
                 </tbody>
             </table>
-
             <ReqRespond isOpen={isReqModalOpen} onClose={closeModal} respond={isResponded} gemIds={ids} setRespond={setRespond} />
 
             <div className="flex justify-center input_label">

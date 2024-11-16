@@ -1,22 +1,42 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespond }) {
-
-    const gems = Array.isArray(gemIds) ? gemIds : [gemIds];
-
+    
     const [hoveredGem, setHoveredGem] = useState(null);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+    const [product, setProduct] = useState(null);
+    const [message, setMessage] = useState('');
+
+    const getProductById = async (gem) => {
+        try {
+            setMessage('Loading...')
+            const response = await axios.get('http://localhost:5000/product/getProducts', {
+                gemstoneId: gem,
+            });
+            setProduct(response.data.product);
+        } catch (error) {
+            setMessage(error.message);
+            console.error("Error Fetching Product Details: ", error.message);
+        }
+    }
 
     const showDetails = (gem, event) => {
         // Get the mouse position to position the popup
         const { clientX, clientY } = event;
         setPopupPosition({ top: clientY - 20, left: clientX });
         setHoveredGem(gem); // Set the gem details
+        getProductById(gem);
     };
 
     const hideDetails = () => {
         setHoveredGem(null); // Hide the popup when not hovering
     };
+
+    useEffect(() => {
+        getProductById(gemIds[0]);
+    }, [])
+
 
     if (!isOpen) return null;
 
@@ -24,11 +44,6 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
         <>
             <div className="fixed top-0 bottom-0 left-0 right-0">
                 <div className="flex flex-col items-center p-10 w-full h-full bg-white">
-
-                    {gems.length === 0 && (
-                        <img src="/gem1.jpg" className="w-5/12 absolute opacity-55 z-0 " />
-                    )
-                    } {/**Single Gem Request */}
 
 
                     <div className="flex w-full z-10">
@@ -40,26 +55,28 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
 
                     <div className="flex w-full h-fit mt-20 justify-center  z-10">
                         <div className="flex flex-col items-start gap-5 w-full ">
-                            <p className="input_label">Gemstone Details:</p>
+                            <p className="input_label">gemstone Details:</p>
 
                             <div className="flex w-full gap-16">
 
                                 <div className="flex flex-col gap-3">
                                     {/** Multiple Gem Request */}
-                                    {gems.length > 1 ? (
-                                        gems.map((gem) => (
+                                    {gemIds.length > 1 ? (
+                                        gemIds.map((gem) => (
                                             <p
-                                                key={gem}
-                                                onMouseOver={(e) => showDetails(gem, e)}
+                                            key={gem}
+                                            onMouseOver={(e) => showDetails(gem, e)}
                                                 onMouseLeave={hideDetails}
-                                                className="font-saira text-2xl my-2 underline">
-                                                Natural Blue Sapphire {gem}
+                                                className="font-saira text-2xl my-2 underline"
+                                                >
+                                                name {gem}
                                             </p>
                                         ))
-                                    ) : (
-                                        <>
-                                            {/**Single Gem Request */}
-                                            <p className="font-saira text-2xl">Natural Blue Sapphire {gems[0]}</p>
+                                        ) : (
+                                            product ? (
+                                            <>
+                                            <img src="/gem1.jpg" className="w-5/12 absolute opacity-55 z-0 " />
+                                            <p className="font-saira text-2xl">{product} {gemIds[0]}</p>
                                             <div className="flex gap-10">
                                                 <div className="flex flex-col gap-5 input_label">
                                                     <p>Kind: <span className="font-montserrat font-light text-lg">Sapphire</span></p>
@@ -76,7 +93,9 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
                                                     <p>Certificate: <span className="font-montserrat font-light text-lg">View / N/A</span></p>
                                                 </div>
                                             </div>
-                                        </>
+                                        </>) : (
+                                            <p className="subtitle_text">{message}</p>
+                                        )
                                     )}
 
                                     {hoveredGem && (
@@ -86,7 +105,7 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
                                         >
                                             <img src="/gemcopy.jpg" className="w-48 absolute left-20 opacity-55 z-0 " />
                                             <div className="relative z-50">
-                                                <p className="font-saira text-lg">Natural Blue Sapphire {hoveredGem}</p>
+                                                <p className="font-saira text-lg">name {hoveredGem}</p>
                                                 <div className="flex gap-5 z-50">
                                                     <div className="flex flex-col gap-2">
                                                         <p>Kind: <span className="font-montserrat font-light text-sm">Sapphire</span></p>
