@@ -7,17 +7,16 @@ import ReqRespond from "./reqRespond";
 
 export default function ManageReq() {
 
-    const CheckRespond = ({ responded, onOpen }) => {
+    const CheckRespond = ({ request, onOpen }) => {
         return (
             <>
-                <div className={`text-center rounded-lg font-medium cursor-pointer transition duration-300 ${responded ? 'bg-green-200 hover:bg-green-300' : 'bg-red-200 hover:bg-red-300'}`} onClick={onOpen}>
-                    <p>{responded ? 'Responded' : 'Respond'}</p>
+                <div className={`text-center rounded-lg font-medium cursor-pointer transition duration-300 ${request.responded ? 'bg-green-200 hover:bg-green-300' : 'bg-red-200 hover:bg-red-300'}`} onClick={onOpen}>
+                    <p>{request.responded ? 'Responded' : 'Respond'}</p>
                 </div>
             </>
 
         )
     };
-
 
     {/**Filters */ }
     const [gemstoneId, setGemstoneId] = useState('');
@@ -33,8 +32,8 @@ export default function ManageReq() {
 
     const [ids, setIds] = useState([]);
     const closeModal = () => setIsReqModalOpen(false);
-    const openModal = ({ respond, ids }) => {
-        setIsResponded(respond);
+    const openModal = ({ responded, ids }) => {
+        setIsResponded(responded);
         setIsReqModalOpen(true);
         setIds(ids);
     };
@@ -55,11 +54,6 @@ export default function ManageReq() {
             const response = await axios.get('http://localhost:5000/request/getRequests');
             if (response.status === 200) {
                 setRequests(response.data.requests);
-                let ids = [];
-                requests.map((request, index) => {
-                    ids[index] = request.gemstoneId;
-                });
-                setGemstoneIdList(ids);
                 console.log('getRequests Successful');
             }
         } catch (error) {
@@ -99,10 +93,10 @@ export default function ManageReq() {
             filtered = filtered.filter(request => request.requestId === requestId);
         }
 
-        // Filter by gemstoneID
-        if (gemstoneId !== '') {
-            filtered = filtered.filter(request => request.gemstoneId === gemstoneId);
-        }
+        // // Filter by gemstoneID
+        // if (gemstoneId !== '') {
+        //     filtered = filtered.filter(request => request.gemstoneId === gemstoneId);
+        // }
 
         // Filter by responded
         if (checkedRespond !== 'all') {
@@ -153,11 +147,38 @@ export default function ManageReq() {
                 console.log('updateRespond Successful');
             }
         } catch (error) {
-            if(error) {
+            if (error) {
                 console.error('error occured: ', error.message);
             }
         }
     }
+
+    const [product, setProduct] = useState(null);
+    
+    const getProductById = async (gem) => {
+        try {
+            setMessage('Loading...');
+            const response = await axios.get('http://localhost:5000/product/getProductById', {
+                gemstoneId: gem,
+            });
+            setProduct(response.data.product);
+        } catch (error) {
+            setMessage(error.message);
+            console.error("Error Fetching Product Details: ", error.message);
+        }
+    }
+
+    // const getGemstoneIdList = () => {
+    //     let ids = [];
+    //     requests.map((request, index) => {
+    //         ids[index] = request.gemstoneId;
+    //     });
+    //     setGemstoneIdList(ids);
+    // };
+
+    // useEffect(() => {
+    //     getGemstoneIdList();
+    // }, [requests]);
 
     useEffect(() => {
         fetchPriceRequests();
@@ -193,16 +214,16 @@ export default function ManageReq() {
                     )
                 }
             </datalist>
-            <datalist id="gemstoneIdList">
+            {/* <datalist id="gemstoneIdList">
                 {gemstoneIdList.length > 0 ?
                     (
-                        gemstoneIdList.map((id, index) => {
-                            if (id.length > 1) {
-                                id.map((spread, index) => {
-                                    <option key={spread[index]} value={spread[index]} />
-                                })
+                        gemstoneIdList.map((id, outIndex) => {
+                            if (gemstoneIdList[outIndex].length > 1) {
+                                return gemstoneIdList[outIndex].map((spread, InIndex) => (
+                                    <option key={`${outIndex}-${InIndex}`} value={spread} />
+                                ))
                             } else {
-                                <option key={id[index]} value={id[index]} />
+                                return <option key={outIndex} value={id} />
                             }
                         }
                         )
@@ -210,12 +231,13 @@ export default function ManageReq() {
                         <option value="none" />
                     )
                 }
-            </datalist>
+            </datalist> */}
+
             <div className="flex gap-5 items-center ">
                 <p className="font-montserrat ">Search By:</p> {/**Crimson Text */}
                 <input type="text" list="customerNameList" placeholder="Customer Name" value={customerName} onChange={(event) => setCustomerName(event.target.value)} className="input_style w-40" />
                 <input type="text" list="requestIdList" placeholder="Request ID" value={requestId} onChange={(event) => setRequestId(event.target.value)} className="input_style w-40" />
-                <input type="text" list="gemstoneIdList" placeholder="Gemstone ID" value={gemstoneId} onChange={(event) => setGemstoneId(event.target.value)} className="input_style w-40" />
+                {/* <input type="text" list="gemstoneIdList" placeholder="Gemstone ID" value={gemstoneId} onChange={(event) => setGemstoneId(event.target.value)} className="input_style w-40" /> */}
 
                 <img
                     src="/searchOutlined.png"
@@ -294,11 +316,12 @@ export default function ManageReq() {
                                     <CheckRespond
                                         request={request}
                                         onOpen={() => openModal({ responded: request.responded, ids: [...request.gemstoneId] })}
+                                        
                                     />
                                 </td>
                                 <td className="p-3 my-auto flex gap-4 items-center">
-                                    <input type='checkbox' checked={request.responded} onChange={() => handleRespondedChange(request.requestId, request.responded)} />
-                                    <p className={loading ? 'text-black' : 'text-transparent' }>...</p>
+                                    <input type='checkbox' defaultChecked={request.responded} onChange={() => handleRespondedChange(request.requestId, request.responded)} />
+                                    <p className={loading ? 'text-black' : 'text-transparent'}>...</p>
                                 </td>
                             </tr>
                         ))

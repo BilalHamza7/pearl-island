@@ -2,24 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespond }) {
-    
+
     const [hoveredGem, setHoveredGem] = useState(null);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
-    const [product, setProduct] = useState(null);
-    const [message, setMessage] = useState('');
-
-    const getProductById = async (gem) => {
-        try {
-            setMessage('Loading...')
-            const response = await axios.get('http://localhost:5000/product/getProducts', {
-                gemstoneId: gem,
-            });
-            setProduct(response.data.product);
-        } catch (error) {
-            setMessage(error.message);
-            console.error("Error Fetching Product Details: ", error.message);
-        }
-    }
 
     const showDetails = (gem, event) => {
         // Get the mouse position to position the popup
@@ -32,11 +17,6 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
     const hideDetails = () => {
         setHoveredGem(null); // Hide the popup when not hovering
     };
-
-    useEffect(() => {
-        getProductById(gemIds[0]);
-    }, [])
-
 
     if (!isOpen) return null;
 
@@ -64,36 +44,36 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
                                     {gemIds.length > 1 ? (
                                         gemIds.map((gem) => (
                                             <p
-                                            key={gem}
-                                            onMouseOver={(e) => showDetails(gem, e)}
+                                                key={gem}
+                                                onMouseOver={(e) => showDetails(gem, e)}
                                                 onMouseLeave={hideDetails}
                                                 className="font-saira text-2xl my-2 underline"
-                                                >
+                                            >
                                                 name {gem}
                                             </p>
                                         ))
-                                        ) : (
-                                            product ? (
+                                    ) : (
+                                        product ? (
                                             <>
-                                            <img src="/gem1.jpg" className="w-5/12 absolute opacity-55 z-0 " />
-                                            <p className="font-saira text-2xl">{product} {gemIds[0]}</p>
-                                            <div className="flex gap-10">
-                                                <div className="flex flex-col gap-5 input_label">
-                                                    <p>Kind: <span className="font-montserrat font-light text-lg">Sapphire</span></p>
-                                                    <p>Weight: <span className="font-montserrat font-light text-lg">2.75 Carat</span></p>
-                                                    <p>Colour: <span className="font-montserrat font-light text-lg">Royal Blue</span></p>
-                                                    <p>Size (mm): <span className="font-montserrat font-light text-lg">3.10 x 2.31 x 2.14</span></p>
-                                                    <p>Cut: <span className="font-montserrat font-light text-lg">Princess Cut</span></p>
+                                                <img src="/gem1.jpg" className="w-5/12 absolute opacity-55 z-0 " />
+                                                <p className="font-saira text-2xl">{product} {gemIds[0]}</p>
+                                                <div className="flex gap-10">
+                                                    <div className="flex flex-col gap-5 input_label">
+                                                        <p>Kind: <span className="font-montserrat font-light text-lg">Sapphire</span></p>
+                                                        <p>Weight: <span className="font-montserrat font-light text-lg">2.75 Carat</span></p>
+                                                        <p>Colour: <span className="font-montserrat font-light text-lg">Royal Blue</span></p>
+                                                        <p>Size (mm): <span className="font-montserrat font-light text-lg">3.10 x 2.31 x 2.14</span></p>
+                                                        <p>Cut: <span className="font-montserrat font-light text-lg">Princess Cut</span></p>
+                                                    </div>
+                                                    <div className="flex flex-col gap-5 input_label">
+                                                        <p>Origin: <span className="font-montserrat font-light text-lg">Mozambique</span></p>
+                                                        <p>Shape: <span className="font-montserrat font-light text-lg">Square</span></p>
+                                                        <p>Treatment: <span className="font-montserrat font-light text-lg">Un-Heat</span></p>
+                                                        <p>Clarity: <span className="font-montserrat font-light text-lg">Flawless</span></p>
+                                                        <p>Certificate: <span className="font-montserrat font-light text-lg">View / N/A</span></p>
+                                                    </div>
                                                 </div>
-                                                <div className="flex flex-col gap-5 input_label">
-                                                    <p>Origin: <span className="font-montserrat font-light text-lg">Mozambique</span></p>
-                                                    <p>Shape: <span className="font-montserrat font-light text-lg">Square</span></p>
-                                                    <p>Treatment: <span className="font-montserrat font-light text-lg">Un-Heat</span></p>
-                                                    <p>Clarity: <span className="font-montserrat font-light text-lg">Flawless</span></p>
-                                                    <p>Certificate: <span className="font-montserrat font-light text-lg">View / N/A</span></p>
-                                                </div>
-                                            </div>
-                                        </>) : (
+                                            </>) : (
                                             <p className="subtitle_text">{message}</p>
                                         )
                                     )}
@@ -143,10 +123,9 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
                             </div>
                         </div>
                     </div>
-                    <label className="flex justify-center w-fit mt-12 gap-3 input_label z-10">
-                        <input type="checkbox" value="respond" className="w-4" checked={respond} onChange={setRespond(!respond)} />
-                        Mark As Responded
-                    </label>
+                    <div className={`text-center text-lg font-montserrat tracking-widest mt-12 p-3 rounded-lg font-medium cursor-pointer transition duration-300 ${respond ? 'bg-green-300' : 'bg-red-300'}`}>
+                        <p>{respond ? 'Responded' : 'Not Responded'}</p>
+                    </div>
                     <button className="flex justify-center mt-4 button_style z-10">
                         Respond
                     </button>

@@ -13,39 +13,43 @@ export default function ProductsCount() {
         for(let i = 0; i < productCount.length; i++) {
             total += productCount[i].count;
         }
-        setTotalcount(total)
+        setTotalcount(total);
     }
+    
+    const fetchData = async () => {
+        try {
+            setMessage('Loading...');
+            const response = await axios.get('http://localhost:5000/product/getKindCount');
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setMessage('Loading...');
-                const response = await axios.get('http://localhost:5000/product/getKindCount');
-
-                // will only execute if a response with status 200 is received
-                setProductCount(response.data.products);
-                calculateTotalCount();
-                console.log('getKindCount Successful');
-            } catch (error) {
-                if (error.response) {
-                    if (error.response.status === 404) { // response status 404
-                        setMessage('No Products Are Available Yet');
-                        console.error(error.response.data.message || 'No products available yet.');
-                        setProductCount([]);
-                    } else if (error.response.status === 500) { // response status 500
-                        console.error('Server error. Please try again later.');
-                        setProductCount([]);
-                    } else { // other response status
-                        console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
-                        setProductCount([]);
-                    }
-                } else { // Network Errors
-                    console.error('Network error. Please check your connection.');
+            // will only execute if a response with status 200 is received
+            setProductCount(response.data.products);
+            calculateTotalCount();
+            console.log('getKindCount Successful');
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 404) { // response status 404
+                    setMessage('No Products Are Available Yet');
+                    console.error(error.response.data.message || 'No products available yet.');
+                    setProductCount([]);
+                } else if (error.response.status === 500) { // response status 500
+                    console.error('Server error. Please try again later.');
+                    setProductCount([]);
+                } else { // other response status
+                    console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
                     setProductCount([]);
                 }
+            } else { // Network Errors
+                console.error('Network error. Please check your connection.');
+                setProductCount([]);
             }
-        };
+        }
+    };
 
+    useEffect(() => {
+        calculateTotalCount();
+    }, [productCount]);
+
+    useEffect(() => {
         fetchData();
     }, []);
 
