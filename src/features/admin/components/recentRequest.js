@@ -11,7 +11,7 @@ export default function RecentRequest() {
             try {
                 setMessage('Loading...');
                 const response = await axios.get('http://localhost:5000/request/getLatestRequests');
-                setRequest(response.data.products);
+                setRequest(response.data.requests);
             } catch (error) {
                 if (error.response) {
                     setMessage('No Requests Are Available');
@@ -51,11 +51,7 @@ export default function RecentRequest() {
                     request.map((request) => (
                         <tr key={request.requestId} className="text-left font-light p-3 border-b border-gray-300">
                             <td className="p-3 ">{request.fullName}</td>
-                            <td className="p-3 max-w-24 overflow-hidden text-ellipsis whitespace-nowrap">
-                                {request.gemstoneId.map((prodId, index) => (
-                                    { prodId }
-                                ))}
-                            </td>
+                            <td className="p-3 max-w-56 whitespace-nowrap overflow-hidden text-ellipsis" title={request.gemstoneId} >{request.gemstoneId}</td>
                             <td className="p-3 ">{request.email}</td>
                             <td className="p-3 ">{new Date(request.date).toLocaleDateString('en-GB')}</td>
                         </tr>

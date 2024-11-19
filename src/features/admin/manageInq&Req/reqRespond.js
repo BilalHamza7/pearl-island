@@ -1,17 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespond }) {
+export default function ReqRespond({ isOpen, onClose, products, request }) {
 
     const [hoveredGem, setHoveredGem] = useState(null);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+    const singleProd = products[0];
 
     const showDetails = (gem, event) => {
         // Get the mouse position to position the popup
         const { clientX, clientY } = event;
         setPopupPosition({ top: clientY - 20, left: clientX });
         setHoveredGem(gem); // Set the gem details
-        getProductById(gem);
     };
 
     const hideDetails = () => {
@@ -25,7 +24,6 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
             <div className="fixed top-0 bottom-0 left-0 right-0">
                 <div className="flex flex-col items-center p-10 w-full h-full bg-white">
 
-
                     <div className="flex w-full z-10">
                         <p className="text-center w-full title_text">CUSTOMER PRICE REQUEST</p>
                         <button className="w-fit flex justify-end" onClick={onClose}>
@@ -33,73 +31,69 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
                         </button>
                     </div>
 
-                    <div className="flex w-full h-fit mt-20 justify-center  z-10">
-                        <div className="flex flex-col items-start gap-5 w-full ">
-                            <p className="input_label">gemstone Details:</p>
+                    <div className="flex w-full h-fit mt-20 justify-center  ">
+                        <div className="flex flex-col items-start gap-5 w-full">
+                            <p className="input_label z-10">Gemstone Details:</p>
 
                             <div className="flex w-full gap-16">
-
                                 <div className="flex flex-col gap-3">
                                     {/** Multiple Gem Request */}
-                                    {gemIds.length > 1 ? (
-                                        gemIds.map((gem) => (
+                                    {request.gemstoneId.length > 1 ? (
+                                        request.gemstoneId.map((ids, index) => (
                                             <p
-                                                key={gem}
-                                                onMouseOver={(e) => showDetails(gem, e)}
+                                                key={ids}
+                                                onMouseOver={(e) => showDetails(products[index], e)}
                                                 onMouseLeave={hideDetails}
-                                                className="font-saira text-2xl my-2 underline"
+                                                className="font-saira w-fit text-2xl my-2 underline z-10"
                                             >
-                                                name {gem}
+                                                {products[index].name} {ids}
                                             </p>
                                         ))
                                     ) : (
-                                        product ? (
-                                            <>
-                                                <img src="/gem1.jpg" className="w-5/12 absolute opacity-55 z-0 " />
-                                                <p className="font-saira text-2xl">{product} {gemIds[0]}</p>
-                                                <div className="flex gap-10">
-                                                    <div className="flex flex-col gap-5 input_label">
-                                                        <p>Kind: <span className="font-montserrat font-light text-lg">Sapphire</span></p>
-                                                        <p>Weight: <span className="font-montserrat font-light text-lg">2.75 Carat</span></p>
-                                                        <p>Colour: <span className="font-montserrat font-light text-lg">Royal Blue</span></p>
-                                                        <p>Size (mm): <span className="font-montserrat font-light text-lg">3.10 x 2.31 x 2.14</span></p>
-                                                        <p>Cut: <span className="font-montserrat font-light text-lg">Princess Cut</span></p>
-                                                    </div>
-                                                    <div className="flex flex-col gap-5 input_label">
-                                                        <p>Origin: <span className="font-montserrat font-light text-lg">Mozambique</span></p>
-                                                        <p>Shape: <span className="font-montserrat font-light text-lg">Square</span></p>
-                                                        <p>Treatment: <span className="font-montserrat font-light text-lg">Un-Heat</span></p>
-                                                        <p>Clarity: <span className="font-montserrat font-light text-lg">Flawless</span></p>
-                                                        <p>Certificate: <span className="font-montserrat font-light text-lg">View / N/A</span></p>
-                                                    </div>
+                                        <>
+                                            <img src={singleProd.images[0]} className="w-5/12 absolute top-14 left-96 opacity-55 z-0" />
+                                            <p className="font-saira text-2xl ">{singleProd.name} {singleProd.productId}</p>
+                                            <div className="flex gap-10 z-10">
+                                                <div className="flex flex-col gap-5 input_label">
+                                                    <p>Kind: <span className="font-montserrat font-light text-xl">{singleProd.kind}</span></p>
+                                                    <p>Weight: <span className="font-montserrat font-light text-xl">{singleProd.weight} Carat</span></p>
+                                                    <p>Colour: <span className="font-montserrat font-light text-xl">{singleProd.colour}</span></p>
+                                                    <p>Size (mm): <span className="font-montserrat font-light text-xl">{singleProd.size} mm</span></p>
+                                                    <p>Cut: <span className="font-montserrat font-light text-xl">{singleProd.cut}</span></p>
                                                 </div>
-                                            </>) : (
-                                            <p className="subtitle_text">{message}</p>
-                                        )
+                                                <div className="flex flex-col gap-5 input_label">
+                                                    <p>Origin: <span className="font-montserrat font-light text-xl">{singleProd.origin}</span></p>
+                                                    <p>Shape: <span className="font-montserrat font-light text-xl">{singleProd.shape}</span></p>
+                                                    <p>Treatment: <span className="font-montserrat font-light text-xl">{singleProd.treatment}</span></p>
+                                                    <p>Clarity: <span className="font-montserrat font-light text-xl">{singleProd.clarity}</span></p>
+                                                    <p>Certificate: <span className="font-montserrat font-light text-xl">{singleProd.certificate ? 'Available' : 'N/A'}</span></p>
+                                                </div>
+                                            </div>
+                                        </>
                                     )}
 
                                     {hoveredGem && (
                                         <div
-                                            className="absolute bg-white shadow-md border p-4 rounded"
+                                            className="absolute bg-white shadow-md border p-4 rounded z-20"
                                             style={{ top: popupPosition.top, left: popupPosition.left, transform: 'translate(-50%, -100%)' }}
                                         >
-                                            <img src="/gemcopy.jpg" className="w-48 absolute left-20 opacity-55 z-0 " />
+                                            <img src={hoveredGem.images[0]} className="w-48 absolute left-20 opacity-55  " />
                                             <div className="relative z-50">
-                                                <p className="font-saira text-lg">name {hoveredGem}</p>
+                                                <p className="font-saira text-xl">{hoveredGem.name} {hoveredGem.productId}</p>
                                                 <div className="flex gap-5 z-50">
                                                     <div className="flex flex-col gap-2">
-                                                        <p>Kind: <span className="font-montserrat font-light text-sm">Sapphire</span></p>
-                                                        <p>Weight: <span className="font-montserrat font-light text-sm">2.75 Carat</span></p>
-                                                        <p>Colour: <span className="font-montserrat font-light text-sm">Royal Blue</span></p>
-                                                        <p>Size (mm): <span className="font-montserrat font-light text-sm">3.10 x 2.31 x 2.14</span></p>
-                                                        <p>Cut: <span className="font-montserrat font-light text-sm">Princess Cut</span></p>
+                                                        <p>Kind: <span className="font-montserrat font-light text-sm">{hoveredGem.kind}</span></p>
+                                                        <p>Weight: <span className="font-montserrat font-light text-sm">{hoveredGem.weight} Carat</span></p>
+                                                        <p>Colour: <span className="font-montserrat font-light text-sm">{hoveredGem.colour}</span></p>
+                                                        <p>Size (mm): <span className="font-montserrat font-light text-sm">{hoveredGem.size} mm</span></p>
+                                                        <p>Cut: <span className="font-montserrat font-light text-sm">{hoveredGem.cut}</span></p>
                                                     </div>
                                                     <div className="flex flex-col gap-2 ">
-                                                        <p>Origin: <span className="font-montserrat font-light text-sm">Mozambique</span></p>
-                                                        <p>Shape: <span className="font-montserrat font-light text-sm">Square</span></p>
-                                                        <p>Treatment: <span className="font-montserrat font-light text-sm">Un-Heat</span></p>
-                                                        <p>Clarity: <span className="font-montserrat font-light text-sm">Flawless</span></p>
-                                                        <p>Certificate: <span className="font-montserrat font-light text-sm">View / N/A</span></p>
+                                                        <p>Origin: <span className="font-montserrat font-light text-sm">{hoveredGem.origin}</span></p>
+                                                        <p>Shape: <span className="font-montserrat font-light text-sm">{hoveredGem.shape}</span></p>
+                                                        <p>Treatment: <span className="font-montserrat font-light text-sm">{hoveredGem.treatment}</span></p>
+                                                        <p>Clarity: <span className="font-montserrat font-light text-sm">{hoveredGem.clarity}</span></p>
+                                                        <p>Certificate: <span className="font-montserrat font-light text-sm">{hoveredGem.certificate ? 'Available' : 'N/A'}</span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,25 +102,25 @@ export default function ReqRespond({ isOpen, onClose, respond, gemIds, setRespon
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-5 w-full">
+                        <div className="flex flex-col gap-5 w-full z-10">
                             <p className="input_label">Request Details:</p>
                             <div className="flex w-full gap-16">
                                 <div className="flex flex-col gap-5 input_label">
-                                    <p className="flex flex-col gap-3">Full Name: <span className="font-montserrat font-light text-lg">John Smith</span></p>
-                                    <p className="flex flex-col gap-3">Email: <span className="font-montserrat font-light text-lg">johnsmith@gmail.com</span></p>
-                                    <p className="flex flex-col gap-3">Mobile Number: <span className="font-montserrat font-light text-lg">0773888721</span></p>
+                                    <p className="flex flex-col gap-3">Full Name: <span className="font-montserrat font-light text-xl">{request.fullName}</span></p>
+                                    <p className="flex flex-col gap-3">Email: <span className="font-montserrat font-light text-xl">{request.email}</span></p>
+                                    <p className="flex flex-col gap-3">Mobile Number: <span className="font-montserrat font-light text-xl">{request.mobileNumber}</span></p>
                                 </div>
                                 <div className="flex flex-col gap-5 input_label">
-                                    <p className="flex flex-col gap-3">Company Name: <span className="font-montserrat font-light text-lg">ABC Limited</span></p>
-                                    <p className="flex flex-col gap-3">Message: <span className="font-montserrat font-light text-lg">Message Here</span></p>
+                                    <p className="flex flex-col gap-3">Company Name: <span className="font-montserrat font-light text-xl">{request.companyName}</span></p>
+                                    <p className="flex flex-col gap-3">Message: <span className="font-montserrat font-light text-xl">{request.message}</span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className={`text-center text-lg font-montserrat tracking-widest mt-12 p-3 rounded-lg font-medium cursor-pointer transition duration-300 ${respond ? 'bg-green-300' : 'bg-red-300'}`}>
-                        <p>{respond ? 'Responded' : 'Not Responded'}</p>
+                    <div className={`z-10 text-center text-xl font-montserrat tracking-widest mt-12 p-3 rounded-lg font-medium ${request.responded ? 'bg-green-300' : 'bg-red-300'}`}>
+                        <p>{request.responded ? 'Responded' : 'Not Responded'}</p>
                     </div>
-                    <button className="flex justify-center mt-4 button_style z-10">
+                    <button className="z-10 flex justify-center mt-4 button_style ">
                         Respond
                     </button>
                 </div>

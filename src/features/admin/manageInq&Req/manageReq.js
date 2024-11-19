@@ -7,10 +7,10 @@ import ReqRespond from "./reqRespond";
 
 export default function ManageReq() {
 
-    const CheckRespond = ({ request, onOpen }) => {
+    const CheckRespond = ({ request, onClick }) => {
         return (
             <>
-                <div className={`text-center rounded-lg font-medium cursor-pointer transition duration-300 ${request.responded ? 'bg-green-200 hover:bg-green-300' : 'bg-red-200 hover:bg-red-300'}`} onClick={onOpen}>
+                <div className={`text-center rounded-lg font-medium cursor-pointer transition duration-300 ${request.responded ? 'bg-green-200 hover:bg-green-300' : 'bg-red-200 hover:bg-red-300'}`} onClick={onClick}>
                     <p>{request.responded ? 'Responded' : 'Respond'}</p>
                 </div>
             </>
@@ -18,8 +18,8 @@ export default function ManageReq() {
         )
     };
 
-    {/**Filters */ }
-    const [gemstoneId, setGemstoneId] = useState('');
+    {/** Filters */ }
+    const [gemstoneId, setGemstoneId] = useState(''); // not applied
     const [customerName, setCustomerName] = useState('');
     const [requestId, setRequestId] = useState('');
     const [checkedRespond, setCheckedRespond] = useState('all');
@@ -28,25 +28,34 @@ export default function ManageReq() {
 
     {/**Modal */ }
     const [isReqModalOpen, setIsReqModalOpen] = useState(false);
-    const [isResponded, setIsResponded] = useState(false);
+    const [requestRespond, setRequestRespond] = useState({});
 
-    const [ids, setIds] = useState([]);
-    const closeModal = () => setIsReqModalOpen(false);
-    const openModal = ({ responded, ids }) => {
-        setIsResponded(responded);
-        setIsReqModalOpen(true);
-        setIds(ids);
-    };
-    const setRespond = ({ val }) => {
-        setIsResponded(val);
-    }
-
+    const [product, setProduct] = useState(null);
     const [requests, setRequests] = useState([]);
-    const [requestList, setRequestList] = useState([]);
-    const [message, setMessage] = useState('');
-    const [gemstoneIdList, setGemstoneIdList] = useState([]);
-    const [test, setTest] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [requestList, setRequestList] = useState([]); // to list requests and filter
+    const [loading, setLoading] = useState(false); // when updating status
+    const [message, setMessage] = useState(''); // when fetching requests
+    // const [gemstoneIdList, setGemstoneIdList] = useState([]);
+
+
+    const closeModal = () => setIsReqModalOpen(false); 
+    const handleRespondClick = async ({ req }) => {  // open modal
+        try {
+            setMessage('Loading...');
+            const response = await axios.post('http://localhost:5000/product/getProductById', {
+                gemstoneId: req.gemstoneId,
+            });
+
+            if (response.data.product.length > 0) {
+                setProduct(response.data.product);
+                setRequestRespond(req);
+                setIsReqModalOpen(true);
+            }
+        } catch (error) {
+            setMessage(error.message);
+            console.error("Error Fetching Product Details: ", error.message);
+        }
+    };
 
     const fetchPriceRequests = async () => {
         try {
@@ -61,20 +70,16 @@ export default function ManageReq() {
                 setMessage('No Requests To Show!');
                 if (error.response.status === 404) { // response status 404
                     console.error(error.response.data.message || 'No Requests available.');
-                    setGemstoneIdList([]);
                     setRequests([]);
                 } else if (error.response.status === 500) { // response status 500
                     console.error('Server error. Please try again later.');
-                    setGemstoneIdList([]);
                     setRequests([]);
                 } else { // other response status
                     console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
-                    setGemstoneIdList([]);
                     setRequests([]);
                 }
             } else { // Network Errors
                 console.error('Network error. Please check your connection.');
-                setGemstoneIdList([]);
                 setRequests([]);
             }
         }
@@ -153,20 +158,6 @@ export default function ManageReq() {
         }
     }
 
-    const [product, setProduct] = useState(null);
-    
-    const getProductById = async (gem) => {
-        try {
-            setMessage('Loading...');
-            const response = await axios.get('http://localhost:5000/product/getProductById', {
-                gemstoneId: gem,
-            });
-            setProduct(response.data.product);
-        } catch (error) {
-            setMessage(error.message);
-            console.error("Error Fetching Product Details: ", error.message);
-        }
-    }
 
     // const getGemstoneIdList = () => {
     //     let ids = [];
@@ -183,12 +174,11 @@ export default function ManageReq() {
     useEffect(() => {
         fetchPriceRequests();
         window.scroll(0, 0);
-    }, [])
+    }, []);
 
     useEffect(() => {
         handleRequestList();
-        setTest(customerName, requestId);
-    }, [requests, checkedRespond, selectedDate])
+    }, [requests, checkedRespond, selectedDate]);
 
     return (
         <div className="flex flex-col px-10 gap-5">
@@ -288,7 +278,6 @@ export default function ManageReq() {
                     className="w-7 cursor-pointer"
                 />
             </div>
-            <p>{test}</p>
 
             <table className="rounded-lg overflow-hidden border-b">
                 <thead className="text-left bg-gray-200 text-xl font-montserrat tracking-widest">
@@ -312,11 +301,9 @@ export default function ManageReq() {
                                 <td className="p-3 ">{new Date(request.date).toLocaleDateString('en-GB')}</td>
                                 <td className="p-3 ">{request.email}</td>
                                 <td className="p-3 ">
-                                    {/**Pass the whole request */}
                                     <CheckRespond
                                         request={request}
-                                        onOpen={() => openModal({ responded: request.responded, ids: [...request.gemstoneId] })}
-                                        
+                                        onClick={() => handleRespondClick({ req: request })}
                                     />
                                 </td>
                                 <td className="p-3 my-auto flex gap-4 items-center">
@@ -332,7 +319,9 @@ export default function ManageReq() {
                     }
                 </tbody>
             </table>
-            <ReqRespond isOpen={isReqModalOpen} onClose={closeModal} respond={isResponded} gemIds={ids} setRespond={setRespond} />
+            {product &&
+                < ReqRespond isOpen={isReqModalOpen} onClose={closeModal} products={product} request={requestRespond} />
+            }
 
             <div className="flex justify-center input_label">
                 <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
