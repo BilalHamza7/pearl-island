@@ -270,8 +270,7 @@ export default function ManageReq() {
                 </select>
 
 
-                <img
-                    src={isClearHovered ? "/clearFilterFilled.png" : "/clearFilterOutlined.png"}
+                <img src={isClearHovered ? "/clearFilterFilled.png" : "/clearFilterOutlined.png"}
                     onMouseEnter={() => setisClearHovered(true)}
                     onMouseLeave={() => setisClearHovered(false)}
                     onClick={handleClearFilterClick}
