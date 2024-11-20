@@ -1,14 +1,133 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./components/navbar";
+import axios from 'axios';
 
 export default function AdminProfile() {
 
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState('Pearl Island');
-    const [fullname, setFullname] = useState('Pearl Island');
-    const [email, setEmail] = useState('pearlisland@gmail.com');
+    const [adminId, setAdminId] = useState('');
+    const [username, setUsername] = useState('');
+    const [fullname, setFullname] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+
+    const [totalListing, setTotalListing] = useState('');
+    const [requestToRespond, setRequestToRespond] = useState('');
+    const [inquiryToRespond, setInquiryToRespond] = useState('');
+    const [productSold, setProductSold] = useState('');
+    const [totalRequest, setTotalRequest] = useState('');
+    const [totalInquiry, setTotalInquiry] = useState('');
+
+    const fetchAdmindetails = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/admin/getAdminDetails');
+            if (response.data.admin.adminId) {
+                setAdminId(response.data.admin.adminId);
+                setUsername(response.data.admin.username);
+                setFullname(response.data.admin.fullName);
+                setEmail(response.data.admin.email);
+            } else {
+                alert(response.data.message);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const updateAdminDetails = async () => {
+        try {
+            setMessage('Updating...');
+            const response = await axios.put('http://localhost:5000/admin/updateAdmin', {
+                adminId: adminId,
+                username: username,
+                fullName: fullname,
+                email: email,
+            });
+            if (response.data) {
+                setMessage('Successfully Updated!');
+            } else {
+                alert(response.data.message);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const getTotalListing = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/product/getKindCount');
+
+            if (response.data) {
+                let total = 0
+                for (let i = 0; i < response.data.products.length; i++) {
+                    total += response.data.products[i].count;
+                }
+                setTotalListing(total);
+            }
+        } catch (error) {
+            console.log(error.data);
+        }
+    }
+
+    const getAllRequests = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/request/getRequests');
+            if (response.data.requests.length > 0) {
+                setTotalRequest(response.data.requests.length);
+                let count = 0;
+                for (let i = 0; i < response.data.requests.length; i++) {
+                    !response.data.requests[i].responded && (count =  count + 1);
+                }
+                setRequestToRespond(count);
+            }
+        } catch (error) {
+            console.error(error.data);
+        }
+    }
+
+    const getAllInquirys = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/inquiry/getInquirys');
+            if (response.data.inquirys.length > 0) {
+                setTotalInquiry(response.data.inquirys.length);
+                let count = 0;
+                for (let i = 0; i < response.data.inquirys.length; i++) {
+                    !response.data.inquirys[i].responded && (count =  count + 1);
+                }
+                setInquiryToRespond(count);
+            }
+        } catch (error) {
+            console.error(error.data);
+        }
+    }
+
+    const getSoldStatus = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/product/getSoldStatus');
+            if (response.data.products.length > 0) {
+                let count = 0;
+                for (let i = 0; i < response.data.products.length; i++) {
+                    response.data.products[i].soldStatus && (count =  count + 1);
+                }
+                setProductSold(count);
+            }
+        } catch (error) {
+            console.error(error.data);
+        }
+    }
+
+
+
+    useEffect(() => {
+        fetchAdmindetails();
+        getTotalListing();
+        getAllRequests();
+        getAllInquirys();
+        getSoldStatus();
+    }, [])
+
 
     return (
         <>
@@ -29,11 +148,14 @@ export default function AdminProfile() {
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input_style w-64" />
                     </label>
                 </div>
+
+                {message && <p className="input_label text-green-400">{message}</p>}
+
                 <div className="flex gap-10 justify-center">
                     <button className="button_style" onClick={() => navigate('/resetPassword')}>
                         Change Password
                     </button>
-                    <button className="button_style">
+                    <button className="button_style" onClick={() => updateAdminDetails()}>
                         Save Details
                     </button>
                 </div>
@@ -42,19 +164,19 @@ export default function AdminProfile() {
                         <label className="font-saira text-2xl text-center flex flex-col gap-5">
                             Number of Active Listings:
                             <label className="text-center font-montserrat font-light">
-                                50
+                                {totalListing}
                             </label>
                         </label>
                         <label className="font-saira text-2xl text-center flex flex-col gap-5">
                             Pending Price Requests To Respond:
                             <label className="text-center font-montserrat font-light">
-                                2
+                                {requestToRespond}
                             </label>
                         </label>
                         <label className="font-saira text-2xl text-center flex flex-col gap-5">
                             Pending Inquiries To Respond:
                             <label className="text-center font-montserrat font-light">
-                                4
+                                {inquiryToRespond}
                             </label>
                         </label>
                     </div>
@@ -62,19 +184,19 @@ export default function AdminProfile() {
                         <label className="font-saira text-2xl text-center flex flex-col gap-5">
                             Total Gems Sold:
                             <label className="text-center font-montserrat font-light">
-                                13
+                                {productSold}
                             </label>
                         </label>
                         <label className="font-saira text-2xl text-center flex flex-col gap-5">
                             Total Price Requests Received:
                             <label className="text-center font-montserrat font-light">
-                                11
+                                {totalRequest}
                             </label>
                         </label>
                         <label className="font-saira text-2xl text-center flex flex-col gap-5">
                             Total Inquiries Received:
                             <label className="text-center font-montserrat font-light">
-                                20
+                                {totalInquiry}
                             </label>
                         </label>
                     </div>
