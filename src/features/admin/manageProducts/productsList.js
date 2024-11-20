@@ -5,6 +5,7 @@ import Navbar from "../components/navbar";
 import ProductCard from "./productCard";
 import { dateFilter } from "../components/dateFilter";
 import { EditProduct } from "./editProduct";
+import FeaturedProduct from "../components/featuredProduct";
 
 export default function ProductList() {
 
@@ -21,8 +22,6 @@ export default function ProductList() {
 
     const [products, setProducts] = useState([]);
     const [productList, setProductList] = useState([]);
-    const [featuredProducts, setFeaturedProducts] = useState([]);
-    const [featuredProdError, setFeaturedProdError] = useState('');
     const [message, setMessage] = useState('');
 
     const handleKindChange = (event) => {
@@ -65,70 +64,6 @@ export default function ProductList() {
             }
         }
     }
-
-    const handleFeaturedSubmit = async (e) => {
-        e.preventDefault();
-
-        if (featuredProducts.length === 0) {
-            setFeaturedProdError('Please Enter 1-4 Product IDs To Save');
-        } else {
-            setFeaturedProdError('');
-            try {
-                setFeaturedProdError('Please Wait!')
-                const response = await axios.post('http://localhost:5000/featuredProd/saveFeaturedProds',
-                    featuredProducts
-                );
-                setFeaturedProducts(response.data.products.productId);
-                setFeaturedProdError('Saved!');
-                console.log('saveFeaturedProds Successful');
-            } catch (error) {
-                if (error.response) {
-                    if (error.response.status === 404) { // response status 404
-                        console.error(error.response.data.message || 'Could Not Save Featured Products.');
-                    } else if (error.response.status === 500) { // response status 500
-                        console.error('Server error. Please try again later.');
-                    } else { // other response status
-                        console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
-                    }
-                } else { // Network Errors
-                    console.error('Network error. Please check your connection.');
-                }
-            }
-        }
-    }
-
-    const fetchFeaturedProducts = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/featuredProd/getFeaturedProds');
-
-            setFeaturedProducts(response.data.products);
-            console.log('getFeaturedProds Successful');
-        } catch (error) {
-            if (error.response) {
-                if (error.response.status === 404) { // response status 404
-                    console.error(error.response.data.message || 'No Featured products Are available.');
-                    setFeaturedProducts([]);
-                } else if (error.response.status === 500) { // response status 500
-                    console.error('Server error. Please try again later.');
-                    setFeaturedProducts([]);
-                } else { // other response status
-                    console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
-                    setFeaturedProducts([]);
-                }
-            } else { // Network Errors
-                console.error('Network error. Please check your connection.');
-                setFeaturedProducts([]);
-            }
-        }
-    }
-
-    const handleFeaturedInputChange = (index, value) => {
-        setFeaturedProducts((prevProducts) => {
-            const updatedProducts = [...prevProducts];
-            updatedProducts[index] = value; // Store product ID directly as a string
-            return updatedProducts;
-        });
-    };
 
     const weightFilter = async (weight) => {
         const filteredWeight = {};
@@ -233,7 +168,6 @@ export default function ProductList() {
 
     useEffect(() => {
         fetchProducts();
-        fetchFeaturedProducts();
         window.scroll(0, 0);
     }, [])
 
@@ -419,28 +353,8 @@ export default function ProductList() {
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
                 </div>
 
-                <div className="flex flex-col items-center gap-5 w-full">
-                    <p id="featured" className="text-4xl font-saira tracking-wider">Featured Products</p>
-                    <p className="text-xl font-montserrat ">Add Four Gemstone ID's To Be Featured</p>
-                    <form onSubmit={(e) => handleFeaturedSubmit(e)} className="flex gap-5 items-center">
-                        {[0, 1, 2, 3].map((index) => (
-                            <input
-                                key={index}
-                                type="text"
-                                placeholder={`ID ${index + 1}`}
-                                list="productIdList"
-                                value={featuredProducts[index] || ""}
-                                onChange={(e) => handleFeaturedInputChange(index, e.target.value)}
-                                className="input_style w-36"
-                            />
-                        ))}
-                        <button type="submit" className="button_style h-fit">
-                            Save
-                        </button>
-                    </form>
-                    <p className="subtitle_text text-red-600">{featuredProdError}</p>
-                </div>
-
+                <FeaturedProduct products={productList} />
+                
                 <p className="title_text">Quick Links</p>
                 <div className="flex justify-center gap-10 w-full">
                     <button onClick={() => navigate('/adminDashboard')} className="button_style">
