@@ -159,11 +159,11 @@ export default function ProductList() {
     }
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState({});
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const closeModal = () => setIsEditModalOpen(false);
     const openModal = (product) => {
         setSelectedProduct(product);
-        setIsEditModalOpen(true);
+            setIsEditModalOpen(true);
     };
 
     useEffect(() => {
@@ -208,16 +208,16 @@ export default function ProductList() {
                             <option value='all' className="">
                                 All kinds
                             </option>
-                            <option value='sapphire'>
+                            <option value='Sapphire'>
                                 Sapphire
                             </option>
-                            <option value='spinel'>
+                            <option value='Spinel'>
                                 Spinel
                             </option>
-                            <option value='padparadscha'>
+                            <option value='Padparadscha'>
                                 Padparadscha
                             </option>
-                            <option value='ruby'>
+                            <option value='Ruby'>
                                 Ruby
                             </option>
                             <option value='Alexandrite'>
@@ -263,34 +263,34 @@ export default function ProductList() {
                             <option value='all'>
                                 All colours
                             </option>
-                            <option value='blue'>
+                            <option value='Blue'>
                                 Blue
                             </option>
-                            <option value='red'>
+                            <option value='Red'>
                                 Red
                             </option>
-                            <option value='yellow'>
+                            <option value='Yellow'>
                                 Yellow
                             </option>
-                            <option value='pink'>
+                            <option value='Pink'>
                                 Pink
                             </option>
-                            <option value='purple'>
+                            <option value='Purple'>
                                 Purple
                             </option>
-                            <option value='green'>
+                            <option value='Green'>
                                 Green
                             </option>
-                            <option value='peach'>
+                            <option value='Peach'>
                                 Peach
                             </option>
-                            <option value='bi-colour'>
+                            <option value='Bi-Colour'>
                                 Bi-Colour
                             </option>
-                            <option value='greay'>
+                            <option value='Grey'>
                                 Grey
                             </option>
-                            <option value='white'>
+                            <option value='White'>
                                 White (Colourless)
                             </option>
                         </select>
@@ -347,14 +347,15 @@ export default function ProductList() {
                         <p className="title_text mt-10 text-red-500">{message}</p>
                     )
                 }
-                {/* <EditProduct isOpen={isEditModalOpen} onClose={closeModal} product={selectedProduct} /> */}
+                
+                {selectedProduct !== null && <EditProduct isOpen={isEditModalOpen} onClose={closeModal} product={selectedProduct} />}
 
                 <div className="flex justify-center w-full input_label">
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
                 </div>
 
                 <FeaturedProduct products={productList} />
-                
+
                 <p className="title_text">Quick Links</p>
                 <div className="flex justify-center gap-10 w-full">
                     <button onClick={() => navigate('/adminDashboard')} className="button_style">

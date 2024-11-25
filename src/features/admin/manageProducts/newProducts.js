@@ -166,7 +166,7 @@ export default function NewProduct() {
                 soldStatus: false,
             });
             console.log(response.data);
-            alert('Product Saved Successfully : ' + response.data.product.productId);
+            alert('Product Saved Successfully : ' + response.data);
             navigate('/manageProduct');
         } catch (error) {
             alert('An Error Occured, Please Try Again!');
@@ -282,34 +282,34 @@ export default function NewProduct() {
                             <label className="flex gap-3 items-center input_label">
                                 Section:
                                 <select onChange={(event) => setSection(event.target.value)} value={section} className="w-56 dropdown_style"> {/**Crimson Text */}
-                                    <option value='blue'>
+                                    <option value='Blue'>
                                         Blue
                                     </option>
-                                    <option value='red'>
+                                    <option value='Red'>
                                         Red
                                     </option>
-                                    <option value='yellow'>
+                                    <option value='Yellow'>
                                         Yellow
                                     </option>
-                                    <option value='pink'>
+                                    <option value='Pink'>
                                         Pink
                                     </option>
-                                    <option value='purple'>
+                                    <option value='Purple'>
                                         Purple
                                     </option>
-                                    <option value='green'>
+                                    <option value='Green'>
                                         Green
                                     </option>
-                                    <option value='peach'>
+                                    <option value='Peach'>
                                         Peach
                                     </option>
-                                    <option value='bi-colour'>
+                                    <option value='Bi-Colour'>
                                         Bi-Colour
                                     </option>
-                                    <option value='greay'>
+                                    <option value='Grey'>
                                         Grey
                                     </option>
-                                    <option value='white'>
+                                    <option value='White (Colourless)'>
                                         White (Colourless)
                                     </option>
                                 </select>
@@ -321,16 +321,16 @@ export default function NewProduct() {
                                 <label className="flex gap-3 items-center input_label">
                                     Kind:
                                     <select onChange={(event) => setSelectedKind(event.target.value)} value={selectedKind} className="w-full dropdown_style"> {/**Crimson Text */}
-                                        <option value='sapphire'>
+                                        <option value='Sapphire'>
                                             Sapphire
                                         </option>
-                                        <option value='spinel'>
+                                        <option value='Spinel'>
                                             Spinel
                                         </option>
-                                        <option value='padparadscha'>
+                                        <option value='Padparadscha'>
                                             Padparadscha
                                         </option>
-                                        <option value='ruby'>
+                                        <option value='Ruby'>
                                             Ruby
                                         </option>
                                         <option value='Alexandrite'>
@@ -349,7 +349,7 @@ export default function NewProduct() {
                                             Emerald
                                         </option>
                                         <option value='Other'>
-                                            Others
+                                            Other
                                         </option>
                                     </select>
                                 </label>
@@ -373,28 +373,28 @@ export default function NewProduct() {
                                 <label className="flex gap-3 items-center input_label">
                                     Cut:
                                     <select onChange={(event) => setSelectedCut(event.target.value)} value={selectedCut} className="w-full dropdown_style"> {/**Crimson Text */}
-                                        <option value='step-cut'>
+                                        <option value='Step Cut'>
                                             Step Cut
                                         </option>
-                                        <option value='modified-step-cut'>
+                                        <option value='Modified Step Cut'>
                                             Modified Step Cut
                                         </option>
-                                        <option value='step-cut'>
+                                        <option value='Emerald Cut'>
                                             Emerald Cut
                                         </option>
-                                        <option value='radiant-cut'>
+                                        <option value='Radiant Cut'>
                                             Radiant Cut
                                         </option>
-                                        <option value='asscher-cut'>
+                                        <option value='Asscher Cut'>
                                             Asscher Cut
                                         </option>
-                                        <option value='trilliant-cut'>
+                                        <option value='Trilliant Cut'>
                                             Trilliant Cut
                                         </option>
-                                        <option value='brilliant-cut'>
+                                        <option value='Brilliant Cut (Diamond Cut)'>
                                             Brilliant Cut (Diamond Cut)
                                         </option>
-                                        <option value='fancy-cut'>
+                                        <option value='Fancy Cut'>
                                             Fancy Cut
                                         </option>
                                     </select>
@@ -407,43 +407,43 @@ export default function NewProduct() {
                                         <option value='n/a'>
                                             N/A
                                         </option>
-                                        <option value='ceylon'>
+                                        <option value='Ceylon'>
                                             Ceylon
                                         </option>
-                                        <option value='mozambique'>
+                                        <option value='Mozambique'>
                                             Mozambique
                                         </option>
-                                        <option value='madagascar'>
+                                        <option value='Madagascar'>
                                             Madagascar
                                         </option>
-                                        <option value='tanzania'>
+                                        <option value='Tanzania'>
                                             Tanzania
                                         </option>
-                                        <option value='kenya'>
+                                        <option value='Kenya'>
                                             Kenya
                                         </option>
-                                        <option value='kashmir'>
+                                        <option value='Kashmir (India)'>
                                             Kashmir (India)
                                         </option>
-                                        <option value='burma'>
+                                        <option value='Burma'>
                                             Burma
                                         </option>
-                                        <option value='australia'>
+                                        <option value='Australia'>
                                             Australia
                                         </option>
-                                        <option value='nigeria'>
+                                        <option value='Nigeria'>
                                             Nigeria
                                         </option>
-                                        <option value='thailand'>
+                                        <option value='Thailand'>
                                             Thailand
                                         </option>
-                                        <option value='afghanistan'>
+                                        <option value='Afghanistan'>
                                             Afghanistan
                                         </option>
-                                        <option value='brazil'>
+                                        <option value='Brazil'>
                                             Brazil
                                         </option>
-                                        <option value='ethiopia'>
+                                        <option value='Ethiopia'>
                                             Ethiopia
                                         </option>
                                     </select>
@@ -451,41 +451,41 @@ export default function NewProduct() {
                                 <label className="flex gap-3 items-center input_label">
                                     Shape:
                                     <select onChange={(event) => setShape(event.target.value)} value={shape} className="w-full dropdown_style"> {/**Crimson Text */}
-                                        <option value='round'>
+                                        <option value='Round'>
                                             Round
                                         </option>
-                                        <option value='oval'>
+                                        <option value='Oval'>
                                             Oval
                                         </option>
-                                        <option value='antique-cushion'>
+                                        <option value='Antique Cushion'>
                                             Antique Cushion
                                         </option>
-                                        <option value='square-antique-cushion'>
+                                        <option value='Square Antique Cushion'>
                                             Square Antique Cushion
                                         </option>
-                                        <option value='heart'>
+                                        <option value='Heart'>
                                             Heart
                                         </option>
-                                        <option value='drop-pear'>
+                                        <option value='Drop/Pear'>
                                             Drop/Pear
                                         </option>
-                                        <option value='reactangle'>
+                                        <option value='Rectangle'>
                                             Rectangle
                                         </option>
-                                        <option value='square'>
+                                        <option value='Square'>
                                             Square
                                         </option>
-                                        <option value='triangle'>
+                                        <option value='Triangle'>
                                             Triangle
                                         </option>
-                                        <option value='marquise'>
+                                        <option value='Marquise'>
                                             Marquise
                                         </option>
-                                        <option value='kite'>
+                                        <option value='Kite'>
                                             Kite
                                         </option>
-                                        <option value='freeform'>
-                                            freeform
+                                        <option value='Free Form'>
+                                            Free Form
                                         </option>
                                     </select>
                                 </label>
@@ -493,10 +493,10 @@ export default function NewProduct() {
                                 <label className="flex gap-3 items-center input_label">
                                     Treatment:
                                     <select onChange={(event) => setTreatment(event.target.value)} value={treatment} className="w-full dropdown_style"> {/**Crimson Text */}
-                                        <option value='no-heat'>
+                                        <option value='Heat Only'>
                                             Heat Only
                                         </option>
-                                        <option value='un-heat'>
+                                        <option value='Un-Heat'>
                                             Un-Heat
                                         </option>
                                     </select>
@@ -505,22 +505,22 @@ export default function NewProduct() {
                                 <label className="flex gap-3 items-center input_label">
                                     Clarity:
                                     <select onChange={(event) => setClarity(event.target.value)} value={clarity} className="w-full dropdown_style"> {/**Crimson Text */}
-                                        <option value='flawless'>
+                                        <option value='Flawless (FL)'>
                                             Flawless (FL)
                                         </option>
-                                        <option value='internally-flawless'>
+                                        <option value='Internally Flawless (IF)'>
                                             Internally Flawless (IF)
                                         </option>
-                                        <option value='very-very-slightly-included'>
+                                        <option value='Very, Very Slightly Included (VVS)'>
                                             Very, Very Slightly Included (VVS)
                                         </option>
-                                        <option value='very-slightly-included'>
+                                        <option value='Very Slightly Included (VS)'>
                                             Very Slightly Included (VS)
                                         </option>
-                                        <option value='slightly-included'>
+                                        <option value='Slightly Included (SI)'>
                                             Slightly Included (SI)
                                         </option>
-                                        <option value='included'>
+                                        <option value='Included'>
                                             Included
                                         </option>
                                     </select>

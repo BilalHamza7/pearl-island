@@ -1,36 +1,40 @@
 import axios from "axios";
+
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import FileBase from 'react-file-base64';
+import { useNavigate } from "react-router-dom";
 import ProductImages from "./productImage";
 
 export const EditProduct = ({ isOpen, onClose, product }) => {
 
     const navigate = useNavigate();
 
-    const [section, setSection] = useState(product.section);
-    const [name, setName] = useState(product.name);
-    const [summary, setSummary] = useState(product.summary);
-    const [selectedKind, setSelectedKind] = useState(product.kind);
-    const [weight, setWeight] = useState(product.weight);
-    const [colour, setColour] = useState(product.colour);
-    const [size, setSize] = useState(product.size);
-    const [selectedCut, setSelectedCut] = useState(product.cut);
-    const [origin, setOrigin] = useState(product.origin);
-    const [shape, setShape] = useState(product.shape);
-    const [treatment, setTreatment] = useState(product.treatment);
-    const [clarity, setClarity] = useState(product.clarity);
-    const [certificate, setCertificate] = useState(product.certificate ? true : false);
-    const [description, setDescription] = useState(product.description);
-    const [selectedCertificate, setSelectedCertificate] = useState(product.certificate);
+    const [section, setSection] = useState('');
+    const [name, setName] = useState('');
+    const [summary, setSummary] = useState('');
+    const [selectedKind, setSelectedKind] = useState('');
+    const [weight, setWeight] = useState('');
+    const [colour, setColour] = useState('');
+    const [size, setSize] = useState('');
+    const [selectedCut, setSelectedCut] = useState('');
+    const [origin, setOrigin] = useState('');
+    const [shape, setShape] = useState('');
+    const [treatment, setTreatment] = useState('');
+    const [clarity, setClarity] = useState('');
+    const [certificate, setCertificate] = useState(false);
+    const [description, setDescription] = useState('');
+    const [selectedCertificate, setSelectedCertificate] = useState(null);
+    const [selectedSoldStatus, setSelectedSoldStatus] = useState(false);
 
     const [activeImage, setActiveImage] = useState();
     const [isSeemoreHovered, setIsSeemoreHovered] = useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
 
-    const [selectedFiles, setSelectedFiles] = useState(product.images.length > 0 ? [...product.images] : []);
+    const [selectedFiles, setSelectedFiles] = useState([]);
     const maxFiles = 7;
 
     const certificateInputRef = useRef(null); // to trigger click of hidden input for certificate
@@ -55,33 +59,22 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
         if (certificate === false) setSelectedCertificate(null);
     }
 
-    const handleFileChange = async (event) => {
-        const files = event.target.files;
-        const fileArray = Array.from(files);
+    const handleFileChange = (base64) => {
 
-        if (files.length > maxFiles) {
-            alert(`You can only select up to ${maxFiles} images.`);
+        if (base64.length > maxFiles) {
             setSelectedFiles([]);
-            event.target.value = '';
-        } else {
-            const promises = fileArray.map((file) => {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result); // Resolve with Base64 string
-                    reader.onerror = reject; // Handle errors
-                    reader.readAsDataURL(file); // Convert image to Base64
-                });
-            });
-            try {
-                const base64Images = await Promise.all(promises); // Wait for all images to be read
-                setSelectedFiles(base64Images); // Set state with all Base64 images
-            } catch (error) {
-                console.error('Error reading files:', error);
-            }
+            return alert(`You can only select up to ${maxFiles} images.`);
+        }
+        else {
+            let images = [];
+            base64.map((file, index) => {
+                images[index] = file.base64;
+            })
+            setSelectedFiles(images);
         }
     };
 
-    const handleNewProduct = async () => {
+    const updateProduct = async () => {
 
         if (name === '') {
             alert('Please enter a valid name');
@@ -113,7 +106,9 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/product/saveProduct', {
+            setLoading(true);
+            const response = await axios.put('http://localhost:5000/product/updateProduct', {
+                productId: product.productId,
                 name: name,
                 kind: selectedKind,
                 weight: weight,
@@ -129,11 +124,16 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                 summary: summary,
                 description: description,
                 images: selectedFiles,
-                soldStatus: false,
+                soldStatus: selectedSoldStatus,
             });
-            console.log(response.data);
-            alert('Product Saved Successfully : ' + response.data.product.productId);
-            navigate('/manageProduct');
+
+            if (response.data) {
+                console.log(response.data);
+                setLoading(false);
+                alert('Product Updated Successfully : ' + response.data);
+                onClose();
+                window.location.reload();
+            }
         } catch (error) {
             alert('An Error Occured, Please Try Again!');
             if (error.response) {
@@ -150,17 +150,34 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
         }
     }
 
-    const handleModalClose = () => {
-        setName('');
-        setSummary('');
+    const handleDeleteProduct = () => {
+        const response = window.confirm(`Do you really want to delete the Product - ${product.productId}?`);
+        if (response) {
+            //Delete the product
+        }
     };
 
     useEffect(() => {
-        if (selectedFiles.length > 0) {
-            setActiveImage(selectedFiles[0]);
-        }
-    }, [selectedFiles])
 
+        setSection(product.section);
+        setName(product.name);
+        setSummary(product.summary);
+        setSelectedKind(product.kind);
+        setWeight(product.weight);
+        setColour(product.colour);
+        setSize(product.size);
+        setSelectedCut(product.cut);
+        setOrigin(product.origin);
+        setShape(product.shape);
+        setTreatment(product.treatment);
+        setClarity(product.clarity);
+        setDescription(product.description);
+        setCertificate(product.certificate !== null ? true : false);
+        setSelectedCertificate(product.certificate ? product.certificate : null);
+        setSelectedFiles(product.images.length > 0 ? [...product.images] : []);
+        setSelectedSoldStatus(product.soldStatus);
+        setActiveImage(product.images[0]);
+    }, [product]);
 
     if (!isOpen) return null;
 
@@ -168,7 +185,18 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
         <>
             <div className="fixed top-0 bottom-0 left-0 right-0 z-50 overflow">
                 <div className="flex flex-col gap-5 p-10 w-full h-full overflow-y-scroll bg-white">
-                    <p className="text-xl w-fit font-montserrat hover:text-gray-600 transition duration-300 cursor-pointer " onClick={handleModalClose}>&larr; Product List</p>
+                    <div className="flex w-full justify-between items-center">
+                        <p className="text-xl w-fit font-montserrat hover:text-gray-600 transition duration-300 cursor-pointer " onClick={onClose}>&larr; Product List</p>
+                        <div className="flex gap-5">
+                            <label className="flex gap-2 w-fit items-center font-montserrat text-base hover:cursor-pointer">
+                                <input type="checkbox" value="available" checked={selectedSoldStatus} onChange={() => setSelectedSoldStatus(!selectedSoldStatus)} />
+                                Mark As Sold
+                            </label>
+                            <button className="p-2 bg-red-400 hover:bg-red-500 transition duration-300 text-lg font-saira rounded-md" onClick={handleDeleteProduct}>
+                                Delete Product
+                            </button>
+                        </div>
+                    </div>
                     <div className="flex justify-between gap-10 w-full h-fit">
                         <div className="flex flex-col gap-5 items-center w-full "> {/*Remove div when using for customer display */}
                             <div className="flex gap-10 w-full h-full ">
@@ -194,7 +222,11 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                 </div>
                             </div>
                             <div>
-                                <input type="file" accept="image/*" multiple onChange={handleFileChange} />
+                                <FileBase
+                                    type='file'
+                                    multiple={true}
+                                    onDone={(base64) => handleFileChange(base64)}
+                                />
                                 <ProductImages isOpen={isModalOpen} onClose={closeModal} images={selectedFiles} certificate={certificate ? selectedCertificate : null} />
                             </div>
                         </div>
@@ -255,34 +287,34 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                 <label className="flex gap-3 items-center input_label">
                                     Section:
                                     <select onChange={(event) => setSection(event.target.value)} value={section} className="w-56 dropdown_style"> {/**Crimson Text */}
-                                        <option value='blue'>
+                                        <option value='Blue'>
                                             Blue
                                         </option>
-                                        <option value='red'>
+                                        <option value='Red'>
                                             Red
                                         </option>
-                                        <option value='yellow'>
+                                        <option value='Yellow'>
                                             Yellow
                                         </option>
-                                        <option value='pink'>
+                                        <option value='Pink'>
                                             Pink
                                         </option>
-                                        <option value='purple'>
+                                        <option value='Purple'>
                                             Purple
                                         </option>
-                                        <option value='green'>
+                                        <option value='Green'>
                                             Green
                                         </option>
-                                        <option value='peach'>
+                                        <option value='Peach'>
                                             Peach
                                         </option>
-                                        <option value='bi-colour'>
+                                        <option value='Bi-Colour'>
                                             Bi-Colour
                                         </option>
-                                        <option value='greay'>
+                                        <option value='Grey'>
                                             Grey
                                         </option>
-                                        <option value='white'>
+                                        <option value='White (Colourless)'>
                                             White (Colourless)
                                         </option>
                                     </select>
@@ -294,16 +326,16 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                     <label className="flex gap-3 items-center input_label">
                                         Kind:
                                         <select onChange={(event) => setSelectedKind(event.target.value)} value={selectedKind} className="w-full dropdown_style"> {/**Crimson Text */}
-                                            <option value='sapphire'>
+                                            <option value='Sapphire'>
                                                 Sapphire
                                             </option>
-                                            <option value='spinel'>
+                                            <option value='Spinel'>
                                                 Spinel
                                             </option>
-                                            <option value='padparadscha'>
+                                            <option value='Padparadscha'>
                                                 Padparadscha
                                             </option>
-                                            <option value='ruby'>
+                                            <option value='Ruby'>
                                                 Ruby
                                             </option>
                                             <option value='Alexandrite'>
@@ -322,7 +354,7 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                                 Emerald
                                             </option>
                                             <option value='Other'>
-                                                Others
+                                                Other
                                             </option>
                                         </select>
                                     </label>
@@ -346,28 +378,28 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                     <label className="flex gap-3 items-center input_label">
                                         Cut:
                                         <select onChange={(event) => setSelectedCut(event.target.value)} value={selectedCut} className="w-full dropdown_style"> {/**Crimson Text */}
-                                            <option value='step-cut'>
+                                            <option value='Step Cut'>
                                                 Step Cut
                                             </option>
-                                            <option value='modified-step-cut'>
+                                            <option value='Modified Step Cut'>
                                                 Modified Step Cut
                                             </option>
-                                            <option value='step-cut'>
+                                            <option value='Emerald Cut'>
                                                 Emerald Cut
                                             </option>
-                                            <option value='radiant-cut'>
+                                            <option value='Radiant Cut'>
                                                 Radiant Cut
                                             </option>
-                                            <option value='asscher-cut'>
+                                            <option value='Asscher Cut'>
                                                 Asscher Cut
                                             </option>
-                                            <option value='trilliant-cut'>
+                                            <option value='Trilliant Cut'>
                                                 Trilliant Cut
                                             </option>
-                                            <option value='brilliant-cut'>
+                                            <option value='Brilliant Cut (Diamond Cut)'>
                                                 Brilliant Cut (Diamond Cut)
                                             </option>
-                                            <option value='fancy-cut'>
+                                            <option value='Fancy Cut'>
                                                 Fancy Cut
                                             </option>
                                         </select>
@@ -380,43 +412,43 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                             <option value='n/a'>
                                                 N/A
                                             </option>
-                                            <option value='ceylon'>
+                                            <option value='Ceylon'>
                                                 Ceylon
                                             </option>
-                                            <option value='mozambique'>
+                                            <option value='Mozambique'>
                                                 Mozambique
                                             </option>
-                                            <option value='madagascar'>
+                                            <option value='Madagascar'>
                                                 Madagascar
                                             </option>
-                                            <option value='tanzania'>
+                                            <option value='Tanzania'>
                                                 Tanzania
                                             </option>
-                                            <option value='kenya'>
+                                            <option value='Kenya'>
                                                 Kenya
                                             </option>
-                                            <option value='kashmir'>
+                                            <option value='Kashmir (India)'>
                                                 Kashmir (India)
                                             </option>
-                                            <option value='burma'>
+                                            <option value='Burma'>
                                                 Burma
                                             </option>
-                                            <option value='australia'>
+                                            <option value='Australia'>
                                                 Australia
                                             </option>
-                                            <option value='nigeria'>
+                                            <option value='Nigeria'>
                                                 Nigeria
                                             </option>
-                                            <option value='thailand'>
+                                            <option value='Thailand'>
                                                 Thailand
                                             </option>
-                                            <option value='afghanistan'>
+                                            <option value='Afghanistan'>
                                                 Afghanistan
                                             </option>
-                                            <option value='brazil'>
+                                            <option value='Brazil'>
                                                 Brazil
                                             </option>
-                                            <option value='ethiopia'>
+                                            <option value='Ethiopia'>
                                                 Ethiopia
                                             </option>
                                         </select>
@@ -424,41 +456,41 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                     <label className="flex gap-3 items-center input_label">
                                         Shape:
                                         <select onChange={(event) => setShape(event.target.value)} value={shape} className="w-full dropdown_style"> {/**Crimson Text */}
-                                            <option value='round'>
+                                            <option value='Round'>
                                                 Round
                                             </option>
-                                            <option value='oval'>
+                                            <option value='Oval'>
                                                 Oval
                                             </option>
-                                            <option value='antique-cushion'>
+                                            <option value='Antique Cushion'>
                                                 Antique Cushion
                                             </option>
-                                            <option value='square-antique-cushion'>
+                                            <option value='Square Antique Cushion'>
                                                 Square Antique Cushion
                                             </option>
-                                            <option value='heart'>
+                                            <option value='Heart'>
                                                 Heart
                                             </option>
-                                            <option value='drop-pear'>
+                                            <option value='Drop/Pear'>
                                                 Drop/Pear
                                             </option>
-                                            <option value='reactangle'>
+                                            <option value='Rectangle'>
                                                 Rectangle
                                             </option>
-                                            <option value='square'>
+                                            <option value='Square'>
                                                 Square
                                             </option>
-                                            <option value='triangle'>
+                                            <option value='Triangle'>
                                                 Triangle
                                             </option>
-                                            <option value='marquise'>
+                                            <option value='Marquise'>
                                                 Marquise
                                             </option>
-                                            <option value='kite'>
+                                            <option value='Kite'>
                                                 Kite
                                             </option>
-                                            <option value='freeform'>
-                                                freeform
+                                            <option value='Free Form'>
+                                                Free Form
                                             </option>
                                         </select>
                                     </label>
@@ -466,10 +498,10 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                     <label className="flex gap-3 items-center input_label">
                                         Treatment:
                                         <select onChange={(event) => setTreatment(event.target.value)} value={treatment} className="w-full dropdown_style"> {/**Crimson Text */}
-                                            <option value='no-heat'>
+                                            <option value='Heat Only'>
                                                 Heat Only
                                             </option>
-                                            <option value='un-heat'>
+                                            <option value='Un-Heat'>
                                                 Un-Heat
                                             </option>
                                         </select>
@@ -478,22 +510,22 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                     <label className="flex gap-3 items-center input_label">
                                         Clarity:
                                         <select onChange={(event) => setClarity(event.target.value)} value={clarity} className="w-full dropdown_style"> {/**Crimson Text */}
-                                            <option value='flawless'>
+                                            <option value='Flawless (FL)'>
                                                 Flawless (FL)
                                             </option>
-                                            <option value='internally-flawless'>
+                                            <option value='Internally Flawless (IF)'>
                                                 Internally Flawless (IF)
                                             </option>
-                                            <option value='very-very-slightly-included'>
+                                            <option value='Very, Very Slightly Included (VVS)'>
                                                 Very, Very Slightly Included (VVS)
                                             </option>
-                                            <option value='very-slightly-included'>
+                                            <option value='Very Slightly Included (VS)'>
                                                 Very Slightly Included (VS)
                                             </option>
-                                            <option value='slightly-included'>
+                                            <option value='Slightly Included (SI)'>
                                                 Slightly Included (SI)
                                             </option>
-                                            <option value='included'>
+                                            <option value='Included'>
                                                 Included
                                             </option>
                                         </select>
@@ -519,12 +551,19 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                 </div>
                             </div>
 
-                            <div className="flex w-full gap-10 mt-5">
+                            <div className={`flex w-full gap-10 mt-5 bg-${loading}-500`}>
                                 <button className="button_style w-full" onClick={() => navigate('/manageProduct')}>Cancel</button>
-                                <button onClick={handleNewProduct} className="button_style w-full">Save</button>
+                                <button onClick={updateProduct} className="button_style w-full">Save</button>
                             </div>
+
+
                         </div>
                     </div>
+                    {loading && (
+                        <div className="fixed top-0 bottom-0 left-0 right-0 z-50 overflow">
+                            <div className="flex w-full h-full items-center justify-center overflow-y-scroll bg-gray-600 bg-opacity-70 text-white text-2xl font-montserrat">LOADING...</div>
+                        </div>
+                    )}
                     <div className="flex flex-col items-center justify-center gap-5">
                         <p className="title_text">Description</p>
                         <textarea rows={3} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Enter Description Here" className="px-2 py-1 w-full text-center font-montserrat text-lg resize-none focus:outline-none border-b-2 border-black" />
