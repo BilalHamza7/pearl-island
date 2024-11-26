@@ -76,7 +76,6 @@ export default function FeaturedProduct({ products }) {
     const fetchProducts = async () => {
         try {
             const filtered = [...products];
-            console.log('array', filtered);
             // for (let i = 0; i < featuredIds.length; i++) {
             //     let id = [featuredIds[i]];
             //     const response = await axios.post('http://localhost:5000/product/getProductById', {
@@ -104,9 +103,6 @@ export default function FeaturedProduct({ products }) {
         <div>
             <div className="flex flex-col items-center gap-5 w-full">
                 <p id="featured" className="text-4xl font-saira tracking-wider">Featured Products</p>
-
-
-
                 <p className="text-xl font-montserrat ">Add Four Gemstone ID's To Be Featured</p>
                 <form onSubmit={(e) => handleFeaturedSubmit(e)} className="flex gap-5 items-center">
                     {[0, 1, 2, 3].map((index) => (

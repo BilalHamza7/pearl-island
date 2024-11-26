@@ -71,6 +71,7 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                 images[index] = file.base64;
             })
             setSelectedFiles(images);
+            setActiveImage(images[0]);
         }
     };
 
@@ -150,10 +151,36 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
         }
     }
 
-    const handleDeleteProduct = () => {
-        const response = window.confirm(`Do you really want to delete the Product - ${product.productId}?`);
+    const handleDeleteProduct = async () => {
+        const id = product.productId;
+        const response = window.confirm(`Do you really want to delete the Product - ${id}?`);
         if (response) {
-            //Delete the product
+            try {
+                setLoading(true);
+                const response = await axios.delete(`http://localhost:5000/product/deleteProduct/${id}`);
+                if (response.data.productId) {
+                    setLoading(false);
+                    alert(`Product with ID: ${response.data.productId} is successfully deleted!`);
+                    onClose();
+                    window.location.reload();
+                }
+            } catch (error) {
+                alert('An Error Occured, Please Try Again!');
+                setLoading(false);
+                onClose();
+
+                if (error.response) {
+                    if (error.response.status === 404) { // response status 404
+                        console.error(error.response.data.message || 'Could Not Delete Product.');
+                    } else if (error.response.status === 500) { // response status 500
+                        console.error('Server error. Please try again later.');
+                    } else { // other response status
+                        console.error(`Unexpected error: ${error.response.status}. Please try again later.`);
+                    }
+                } else { // Network Errors
+                    console.error('Network error. Please check your connection.');
+                }
+            }
         }
     };
 

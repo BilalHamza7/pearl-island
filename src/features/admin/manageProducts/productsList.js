@@ -133,7 +133,7 @@ export default function ProductList() {
         }
 
         // Filter by soldStatus
-        if (checkedSold !== null) {
+        if (checkedSold !== false) {
             filtered = filtered.filter(product => product.soldStatus === checkedSold);
         }
 
