@@ -48,8 +48,8 @@ export default function RecentProduct() {
             <tbody className="text-left bg-gray-100 text-lg font-montserrat tracking-widest">
 
                 {product.length > 0 ?
-                    product.map((product) => (
-                        <tr key={product.productId} className="capitalize font-light p-3 border-b border-gray-300">
+                    product.map((product, index) => (
+                        <tr key={index} className="capitalize font-light p-3 border-b border-gray-300">
                             <td className="p-3 ">{product.name}</td>
                             <td className="p-3 ">{product.weight}</td>
                             <td className="p-3 ">{product.shape}</td>
