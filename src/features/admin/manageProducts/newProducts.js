@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProductImages from "./productImage";
 import axios from 'axios';
-import FileBase from 'react-file-base64';
+import ProductDisplay from "./productDisplay";
+import ImageViewer from "./imageViewer";
 
 export default function NewProduct() {
 
@@ -68,8 +68,7 @@ export default function NewProduct() {
         'Grey',
     ];
 
-    const [activeImage, setActiveImage] = useState();
-    const [isSeemoreHovered, setIsSeemoreHovered] = useState(false);
+    const [isSeeMoreHovered, setIsSeeMoreHovered] = useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
 
     const openModal = () => setModalOpen(true);
@@ -184,50 +183,13 @@ export default function NewProduct() {
         }
     }
 
-    useEffect(() => {
-        if (selectedFiles.length > 0) {
-            setActiveImage(selectedFiles[0]);
-        }
-    }, [selectedFiles])
-
-
     return (
         <>
             <div className="flex flex-col gap-10 p-10 min-h-screen z-50 ">
                 <p className="text-xl w-fit font-montserrat hover:text-gray-600 transition duration-300 cursor-pointer " onClick={() => navigate('/manageProduct')}>&larr; Product List</p>
                 <div className="flex justify-between gap-10 w-full ">
-                    <div className="flex flex-col gap-5 items-center w-[1200px] h-[575px] "> {/*Remove div when using for customer display */}
-                        <div className="flex justify-between gap-5 w-full h-[550px]  ">
-                            <img src={activeImage ? activeImage : '/addImage.jpg'} className="w-[460px] h-[523px] object-fill" />
-                            <div className="flex flex-col w-32 gap-3 justify-between ">
-                                <img src={selectedFiles[0] ? selectedFiles[0] : '/addImage.jpg'} className="w-full h-full cursor-pointer transition duration-500 hover:scale-110" onClick={() => setActiveImage(selectedFiles[0])} />
-                                <img src={selectedFiles[1] ? selectedFiles[1] : '/addImage.jpg'} className="w-full h-full cursor-pointer transition duration-500 hover:scale-110" onClick={() => setActiveImage(selectedFiles[1])} />
-                                <img src={selectedFiles[2] ? selectedFiles[2] : '/addImage.jpg'} className="w-full h-full cursor-pointer transition duration-500 hover:scale-110" onClick={() => setActiveImage(selectedFiles[2])} />
-                                <button
-                                    className="flex items-center justify-center text-xs font-saira text-center w-full h-full hover:scale-110 transition duration-500     relative bg-cover bg-center overflow-hidden"
-                                    onMouseEnter={() => setIsSeemoreHovered(!isSeemoreHovered)}
-                                    onMouseLeave={() => setIsSeemoreHovered(!isSeemoreHovered)}
-                                    onClick={openModal}
-                                    title="See More Images"
-                                    style={{ backgroundImage: `url(${selectedFiles[3] ? selectedFiles[3] : '/addImage.jpg'})` }}
-                                >
-                                    <img
-                                        src={isSeemoreHovered ? "/seemoreFilled.png" : "/seemoreOutlined.png"}
-                                        alt="Icon"
-                                        className="w-12"
-                                    />
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <FileBase
-                                type='file'
-                                multiple={true}
-                                onDone={(base64) => handleFileChange(base64)}
-                            />
-                        </div>
-                    </div>
-                    <ProductImages isOpen={isModalOpen} onClose={closeModal} images={selectedFiles} certificate={certificate ? selectedCertificate : null} />
+                    <ProductDisplay selectedFiles={selectedFiles} isSeeMoreHovered={isSeeMoreHovered} handleSeeMoreHovered={() => setIsSeeMoreHovered(!isSeeMoreHovered)} openModal={openModal} handleFileChange={(base64) => handleFileChange(base64)} />
+                    <ImageViewer isOpen={isModalOpen} onClose={closeModal} images={selectedFiles} certificate={certificate ? selectedCertificate : null} />
 
                     <datalist className="" id="coloursList"> {/**Dropdown of Colour Search */}
                         <option value="Blue" />

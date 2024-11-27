@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import ReactImageMagnify from 'react-image-magnify';
 
-export default function ProductImages({ isOpen, onClose, images, certificate }) {
+export default function ImageViewer({ isOpen, onClose, images, certificate }) {
 
     const [source, setSource] = useState();
 
@@ -96,13 +95,13 @@ export default function ProductImages({ isOpen, onClose, images, certificate }) 
                         {images.map((image, index) => (
                             <img key={index} src={image} alt={`Selected ${index}`} onClick={() => setSource(image)} className="w-36 h-36 object-cover cursor-pointer hover:opacity-75 border border-transparent hover:border-black transition duration-300" />
                         ))}
+                        {certificate &&
+                            <img src={certificate} alt={'certificate'} onClick={() => setSource(certificate)} className="w-36 h-36 object-cover cursor-pointer hover:opacity-75 border border-transparent hover:border-black transition duration-300" />
+                        }
                     </div>
                 ) : (
                     <p className="title_text h-full flex justify-center items-center">No images selected</p>
                 )}
-                {certificate &&
-                    <img src={certificate} alt={'certificate'} onClick={() => setSource(certificate)} className="w-36 h-36 object-cover cursor-pointer hover:opacity-75 border border-transparent hover:border-black transition duration-300" />
-                }
             </div>
         </div>
     );
