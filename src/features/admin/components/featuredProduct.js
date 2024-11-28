@@ -73,7 +73,7 @@ export default function FeaturedProduct({ products }) {
         }
     };
 
-    const fetchProducts = async () => {
+    const fetchProducts = async () => { // to set featured product cards
         try {
             const filtered = [...products];
             // for (let i = 0; i < featuredIds.length; i++) {

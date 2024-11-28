@@ -11,16 +11,16 @@ export default function Navbar() {
             <div className="flex justify-between p-6 shadow-md">
                 <img src="/bigLogo.png" className="w-80 h-6" />
                 <div className="flex items-center gap-8 font-saira text-lg tracking-widest ">
-                    <NavLink to='/adminDashboard' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
+                    <NavLink to='/admin/adminDashboard' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
                         Dashboard
                     </NavLink>
-                    <NavLink to='/manageProduct' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
+                    <NavLink to='/admin/manageProduct' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
                         Manage Products
                     </NavLink>
-                    <NavLink to='/manageCustomer' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
+                    <NavLink to='/admin/manageCustomer' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
                         Manage Inquiries & Requests
                     </NavLink>
-                    <NavLink to='/adminProfile' className={({ isActive }) => isActive ? "w-7 active" : "w-7"} onMouseEnter={() => setIsProfileHovered(true)} onMouseLeave={() => setIsProfileHovered(false)}>
+                    <NavLink to='/admin/adminProfile' className={({ isActive }) => isActive ? "w-7 active" : "w-7"} onMouseEnter={() => setIsProfileHovered(true)} onMouseLeave={() => setIsProfileHovered(false)}>
                         {({ isActive }) => (
                             <img
                                 src={isProfileHovered || isActive ? "/profileFilled.png" : "/profileOutlined.png"}
@@ -28,7 +28,7 @@ export default function Navbar() {
                             />
                         )}
                     </NavLink>
-                    <NavLink to='/' onMouseEnter={() => setIsLogoutHovered(true)} onMouseLeave={() => setIsLogoutHovered(false)}>
+                    <NavLink to='/admin' onMouseEnter={() => setIsLogoutHovered(true)} onMouseLeave={() => setIsLogoutHovered(false)}>
                         <img
                             src={isLogoutHovered ? "/logoutOutlined.png" : "/logoutFilled.png"}
                             alt="Icon"

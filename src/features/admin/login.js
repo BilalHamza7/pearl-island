@@ -35,7 +35,7 @@ export default function Login() {
                     }
                 );
                 if (response.data.adminId) {
-                    navigate('/adminDashboard');
+                    navigate('/admin/adminDashboard');
                 } else {
                     alert(response.data.message);
                 }
@@ -75,9 +75,6 @@ export default function Login() {
                         <div className="flex w-full gap-5 justify-center ">
                             <button type="submit" className="button_style text-lg flex justify-center">
                                 Submit
-                            </button>
-                            <button className="hover:bg-gray-300 p-2" onClick={() => navigate('/createAdmin')}>
-                                Create Admin
                             </button>
                         </div>
                     </form>

@@ -186,7 +186,7 @@ export default function NewProduct() {
     return (
         <>
             <div className="flex flex-col gap-10 p-10 min-h-screen z-50 ">
-                <p className="text-xl w-fit font-montserrat hover:text-gray-600 transition duration-300 cursor-pointer " onClick={() => navigate('/manageProduct')}>&larr; Product List</p>
+                <p className="text-xl w-fit font-montserrat hover:text-gray-600 transition duration-300 cursor-pointer " onClick={() => navigate('/admin/manageProduct')}>&larr; Product List</p>
                 <div className="flex justify-between gap-10 w-full ">
                     <ProductDisplay selectedFiles={selectedFiles} isSeeMoreHovered={isSeeMoreHovered} handleSeeMoreHovered={() => setIsSeeMoreHovered(!isSeeMoreHovered)} openModal={openModal} handleFileChange={(base64) => handleFileChange(base64)} />
                     <ImageViewer isOpen={isModalOpen} onClose={closeModal} images={selectedFiles} certificate={certificate ? selectedCertificate : null} />
@@ -509,7 +509,7 @@ export default function NewProduct() {
                         </div>
 
                         <div className="flex w-full gap-10 mt-5">
-                            <button className="button_style w-full" onClick={() => navigate('/manageProduct')}>Cancel</button>
+                            <button className="button_style w-full" onClick={() => navigate('/admin/manageProduct')}>Cancel</button>
                             <button onClick={handleNewProduct} className="button_style w-full">Save</button>
                         </div>
                     </div>

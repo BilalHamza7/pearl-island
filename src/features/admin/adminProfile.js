@@ -152,7 +152,7 @@ export default function AdminProfile() {
                 {message && <p className="input_label text-green-400">{message}</p>}
 
                 <div className="flex gap-10 justify-center">
-                    <button className="button_style" onClick={() => navigate('/resetPassword')}>
+                    <button className="button_style" onClick={() => navigate('/admin/resetPassword')}>
                         Change Password
                     </button>
                     <button className="button_style" onClick={() => updateAdminDetails()}>
@@ -203,13 +203,13 @@ export default function AdminProfile() {
                 </div>
                 <p className="title_text text-center">Quick Links</p>
                 <div className="flex justify-center gap-10 w-full">
-                    <button onClick={() => navigate('/adminDashboard')} className="button_style">
+                    <button onClick={() => navigate('/admin/adminDashboard')} className="button_style">
                         Dashboard
                     </button>
-                    <button onClick={() => navigate('/manageProduct')} className="button_style">
+                    <button onClick={() => navigate('/admin/manageProduct')} className="button_style">
                         View All Products
                     </button>
-                    <button onClick={() => navigate('/manageCustomer')} className="button_style ">
+                    <button onClick={() => navigate('/admin/manageCustomer')} className="button_style ">
                         View All Requests & Inquiries
                     </button>
                 </div>

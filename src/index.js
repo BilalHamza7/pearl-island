@@ -17,14 +17,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/admin' element={<Login />} />
-        <Route path='/resetPassword' element={<ResetPassword />} />
-        <Route path='/manageProduct' element={<ProductList />} />
-        <Route path='/adminDashboard' element={<Dashboard />} />
-        <Route path='/verifyEmail' element={<VerifyEmail />} />
-        <Route path='/newPassword' element={<NewPassword />} />
-        <Route path='/manageCustomer' element={<Manage />} />
-        <Route path='/adminProfile' element={<AdminProfile />} />
-        <Route path='/addNewProduct' element={<NewProduct />} />
+        <Route path='/admin/resetPassword' element={<ResetPassword />} />
+        <Route path='/admin/manageProduct' element={<ProductList />} />
+        <Route path='/admin/adminDashboard' element={<Dashboard />} />
+        <Route path='/admin/verifyEmail' element={<VerifyEmail />} />
+        <Route path='/admin/newPassword' element={<NewPassword />} />
+        <Route path='/admin/manageCustomer' element={<Manage />} />
+        <Route path='/admin/adminProfile' element={<AdminProfile />} />
+        <Route path='/admin/addNewProduct' element={<NewProduct />} />
       </Routes>
     </BrowserRouter >
   );

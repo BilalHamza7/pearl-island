@@ -183,7 +183,7 @@ export default function ProductList() {
 
                 <div className="flex gap-10">
                     <a href='#featured' className="button_style my-3">Featured Products</a>
-                    <button onClick={() => navigate('/addNewProduct')} className="button_style my-3">
+                    <button onClick={() => navigate('/admin/addNewProduct')} className="button_style my-3">
                         Add New product
                     </button>
                 </div>
@@ -358,10 +358,10 @@ export default function ProductList() {
 
                 <p className="title_text">Quick Links</p>
                 <div className="flex justify-center gap-10 w-full">
-                    <button onClick={() => navigate('/adminDashboard')} className="button_style">
+                    <button onClick={() => navigate('/admin/adminDashboard')} className="button_style">
                         Dashboard
                     </button>
-                    <button onClick={() => navigate('/manageCustomer')} className="button_style">
+                    <button onClick={() => navigate('/admin/manageCustomer')} className="button_style">
                         View All Requests & Inquiries
                     </button>
                 </div>
