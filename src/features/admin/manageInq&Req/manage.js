@@ -42,10 +42,10 @@ export default function Manage() {
 
             <p className="mt-10 title_text text-center">Quick Links</p>
             <div className="flex justify-center gap-10 w-full my-5">
-                <button onClick={() => navigate('/adminDashboard')} className="button_style">
+                <button onClick={() => navigate('/admin/adminDashboard')} className="button_style">
                     Dashboard
                 </button>
-                <button onClick={() => navigate('/manageProduct')} className="button_style ">
+                <button onClick={() => navigate('/admin/manageProduct')} className="button_style ">
                     Manage Products
                 </button>
             </div>
