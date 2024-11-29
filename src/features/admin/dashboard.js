@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import RecentProduct from "./components/recentProduct";
 import ProductsCount from "./components/productsCount";

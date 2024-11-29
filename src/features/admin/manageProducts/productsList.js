@@ -6,6 +6,7 @@ import ProductCard from "./productCard";
 import { dateFilter } from "../components/dateFilter";
 import { EditProduct } from "./editProduct";
 import FeaturedProduct from "../components/featuredProduct";
+import CardSkeleton from "../../../components/cardSkeleton";
 
 export default function ProductList() {
 
@@ -344,7 +345,9 @@ export default function ProductList() {
                         )}
                     </div>
                     : (
-                        <p className="title_text mt-10 text-red-500">{message}</p>
+                        //Show Skeleton
+                        <CardSkeleton />
+                        // <p className="title_text mt-10 text-red-500">{message}</p>
                     )
                 }
                 
