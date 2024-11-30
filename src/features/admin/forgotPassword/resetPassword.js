@@ -5,7 +5,7 @@ export default function ResetPassword() {
     const navigate = useNavigate();
 
     const handleSubmit = () => {
-        navigate('/verifyEmail');
+        navigate('/admin/verifyEmail');
     }
 
     return (
@@ -25,7 +25,7 @@ export default function ResetPassword() {
                             <button type="submit" className="button_style text-lg flex justify-center">
                                 Reset Password
                             </button>
-                            <p className="subtitle_text cursor-pointer" onClick={() => navigate('/')}>&#8592; Back To Login</p>
+                            <p className="subtitle_text cursor-pointer" onClick={() => navigate('/admin')}>&#8592; Back To Login</p>
                         </div>
                     </form>
                 </div>

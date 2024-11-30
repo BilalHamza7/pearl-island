@@ -5,7 +5,7 @@ export default function VerifyEmail() {
     const navigate = useNavigate();
 
     const handleSubmit = () => {
-        navigate('/newPassword');
+        navigate('/admin/newPassword');
     }
 
     return (
@@ -24,7 +24,7 @@ export default function VerifyEmail() {
                         <button type="submit" className="button_style text-lg flex justify-center">
                             Verify
                         </button>
-                        <p className="subtitle_text cursor-pointer" onClick={() => navigate('/')}>&#8592; Back To Login</p>
+                        <p className="subtitle_text cursor-pointer" onClick={() => navigate('/admin')}>&#8592; Back To Login</p>
                     </div>
                 </form>
             </div>

@@ -164,7 +164,7 @@ export default function ProductList() {
     const closeModal = () => setIsEditModalOpen(false);
     const openModal = (product) => {
         setSelectedProduct(product);
-            setIsEditModalOpen(true);
+        setIsEditModalOpen(true);
     };
 
     useEffect(() => {
@@ -347,10 +347,13 @@ export default function ProductList() {
                     : (
                         //Show Skeleton
                         <CardSkeleton />
-                        // <p className="title_text mt-10 text-red-500">{message}</p>
+                        // <>
+                        //     <p className="title_text mt-10 text-red-500 motion-safe:animate-bounce">{message}</p>
+                        //     <p className="-mt-11">-----------------------------</p>
+                        // </>
                     )
                 }
-                
+
                 {selectedProduct !== null && <EditProduct isOpen={isEditModalOpen} onClose={closeModal} product={selectedProduct} />}
 
                 <div className="flex justify-center w-full input_label">

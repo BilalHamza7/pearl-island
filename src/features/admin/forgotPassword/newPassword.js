@@ -5,7 +5,7 @@ export default function NewPassword() {
     const navigate = useNavigate();
 
     const handleSubmit = () => {
-        navigate('/');
+        navigate('/admin');
     }
 
     return (
