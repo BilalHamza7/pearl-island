@@ -6,7 +6,6 @@ import ProductCard from "./productCard";
 import { dateFilter } from "../components/dateFilter";
 import { EditProduct } from "./editProduct";
 import FeaturedProduct from "../components/featuredProduct";
-import CardSkeleton from "../../../components/cardSkeleton";
 
 export default function ProductList() {
 
@@ -23,7 +22,7 @@ export default function ProductList() {
 
     const [products, setProducts] = useState([]);
     const [productList, setProductList] = useState([]);
-    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleKindChange = (event) => {
         setSelectedKind(event.target.value);
@@ -42,13 +41,14 @@ export default function ProductList() {
 
     const fetchProducts = async () => {
         try {
-            setMessage('Loading...');
+            setLoading(true);
             const response = await axios.get('http://localhost:5000/product/getProducts');
             setProducts(response.data.products);
             console.log('getProducts Successful');
+            setLoading(false);
         } catch (error) {
             if (error.response) {
-                setMessage('No Products To Show :(');
+                setLoading(false);
                 if (error.response.status === 404) { // response status 404
                     console.error(error.response.data.message || 'No products available.');
                     setProducts([]);
@@ -105,7 +105,6 @@ export default function ProductList() {
         }
 
         setProductList(filtered);
-        if (filtered.length === 0) setMessage('No Products Are Available!');
     }
 
     const handleProductList = async () => {
@@ -156,7 +155,6 @@ export default function ProductList() {
         }
 
         setProductList(filtered);
-        if (filtered.length === 0 && products.length !== 0) setMessage('No Products Are Available!');
     }
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -338,25 +336,33 @@ export default function ProductList() {
                     </div>
                 </div>
 
-                {productList.length > 0 ?
-                    <div className="grid grid-cols-5 gap-7 w-full">
-                        {productList.map((product) =>
-                            <ProductCard key={product.productId} prod={product} openModal={() => openModal(product)} />
-                        )}
-                    </div>
+                {loading ?
+                    <video
+                        width="240"
+                        height="240"
+                        autoPlay
+                        loop
+                        muted
+                        className=""
+                    >
+                        <source src="/loadingVid.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                     : (
-                        //Show Skeleton
-                        <CardSkeleton />
-                        // <>
-                        //     <p className="title_text mt-10 text-red-500 motion-safe:animate-bounce">{message}</p>
-                        //     <p className="-mt-11">-----------------------------</p>
-                        // </>
+                        loading == false && productList.length > 0 ?
+                            <div className="grid grid-cols-5 gap-7 w-full">
+                                {productList.map((product) =>
+                                    <ProductCard key={product.productId} prod={product} openModal={() => openModal(product)} />
+                                )}
+                            </div>
+                            :
+                            <p className="title_text mt-10 motion-safe:animate-bounce">No Products To Show :(</p>
                     )
                 }
 
                 {selectedProduct !== null && <EditProduct isOpen={isEditModalOpen} onClose={closeModal} product={selectedProduct} />}
 
-                <div className="flex justify-center w-full input_label">
+                <div className="flex justify-end w-full input_label">
                     <p onClick={() => window.scrollTo(0, 0)} className="cursor-pointer">&uarr; To Top</p>
                 </div>
 
