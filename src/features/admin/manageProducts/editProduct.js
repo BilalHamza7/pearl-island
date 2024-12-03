@@ -556,8 +556,20 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                         </div>
                     </div>
                     {loading && (
-                        <div className="fixed top-0 bottom-0 left-0 right-0 z-50 overflow">
-                            <div className="flex w-full h-full items-center justify-center overflow-y-scroll bg-gray-600 bg-opacity-70 text-white text-2xl font-montserrat">LOADING...</div>
+                        <div className="fixed top-0 bottom-0 left-0 right-0 z-50 overflow flex items-center justify-center">
+                            <div className="flex w-full h-full items-center justify-center bg-black bg-opacity-50">
+                                <video
+                                    width="240"
+                                    height="240"
+                                    autoPlay
+                                    loop
+                                    muted
+                                    className="rounded-xl"
+                                >
+                                    <source src="/loadingVid.mp4" type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                         </div>
                     )}
                     <div className="flex flex-col items-center justify-center gap-5">

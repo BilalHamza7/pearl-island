@@ -7,6 +7,7 @@ export default function FeaturedProduct({ products }) {
     const [featuredProducts, setFeaturedProducts] = useState([]);
     const [featuredProdError, setFeaturedProdError] = useState('');
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(null);
 
     const handleFeaturedSubmit = async (e) => {
         e.preventDefault();
@@ -14,6 +15,7 @@ export default function FeaturedProduct({ products }) {
         if (featuredIds.length === 0) {
             setFeaturedProdError('Please Enter 1-4 Product IDs To Save');
         } else {
+            setLoading(true);
             setFeaturedProdError('');
             try {
                 setFeaturedProdError('Please Wait!');
@@ -21,6 +23,7 @@ export default function FeaturedProduct({ products }) {
                     featuredIds
                 );
                 fetchFeaturedIds();
+                setLoading(false);
                 setFeaturedProdError('Saved!');
                 console.log('saveFeaturedProds Successful');
             } catch (error) {
@@ -119,8 +122,12 @@ export default function FeaturedProduct({ products }) {
                     <button type="submit" className="button_style h-fit">
                         Save
                     </button>
+                    <img
+                        src="/loadingGif.gif"
+                        className={`w-7 h-7 ${!loading && 'opacity-0'}`}
+                    />
+                    <p className={`${loading === false ? 'opacity-100' : 'opacity-0'}`}>&#x2713;</p>
                 </form>
-                <p className="subtitle_text text-red-600">{featuredProdError}</p>
             </div>
         </div>
     )

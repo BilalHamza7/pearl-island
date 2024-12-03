@@ -1,10 +1,19 @@
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
 
+    const navigate = useNavigate();
+
     const [isLogoutHovered, setIsLogoutHovered] = useState(false);
     const [isProfileHovered, setIsProfileHovered] = useState(false);
+
+    const handleLogOut = () => {
+        const response = window.confirm('Do You Really Want To Log Out?');
+        if(response === true) {
+            navigate('/admin');
+        }
+    };
 
     return (
         <>
@@ -28,13 +37,13 @@ export default function Navbar() {
                             />
                         )}
                     </NavLink>
-                    <NavLink to='/admin' onMouseEnter={() => setIsLogoutHovered(true)} onMouseLeave={() => setIsLogoutHovered(false)}>
+                    <div onClick={handleLogOut} onMouseEnter={() => setIsLogoutHovered(true)} onMouseLeave={() => setIsLogoutHovered(false)} className='cursor-pointer'>
                         <img
                             src={isLogoutHovered ? "/logoutOutlined.png" : "/logoutFilled.png"}
                             alt="Icon"
                             className="w-7"
                         />
-                    </NavLink>
+                    </div>
                 </div>
             </div>
             <Outlet />

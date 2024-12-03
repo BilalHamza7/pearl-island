@@ -11,7 +11,7 @@ export default function AdminProfile() {
     const [username, setUsername] = useState('');
     const [fullname, setFullname] = useState('');
     const [email, setEmail] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(null);
 
     const [totalListing, setTotalListing] = useState('');
     const [requestToRespond, setRequestToRespond] = useState('');
@@ -151,7 +151,7 @@ export default function AdminProfile() {
 
                 {/* {message && <p className="input_label text-green-400">{message}</p>} */}
 
-                <div className="flex gap-10 justify-center">
+                <div className="flex gap-10 justify-center items-center">
                     <button className="button_style" onClick={() => navigate('/admin/resetPassword')}>
                         Change Password
                     </button>
@@ -162,6 +162,7 @@ export default function AdminProfile() {
                         src="/loadingGif.gif"
                         className={`w-7 h-7 ${!loading && 'opacity-0'}`}
                     />
+                    <p className={`subtitle_text ${loading === false ? 'opacity-100' : 'opacity-0'}`}>&#x2713;</p>
                 </div>
                 <div className="flex flex-col gap-5 w-full px-10">
                     <div className="flex justify-around w-full">
