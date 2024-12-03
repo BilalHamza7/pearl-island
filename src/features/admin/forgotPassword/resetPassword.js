@@ -91,7 +91,7 @@ export default function ResetPassword() {
                             <input type="type" value={email} onChange={(e) => setEmail(e.target.value)} className="input_style" placeholder="example@gmail.com" />
                             <p className={`font-saira text-sm ${error.emailError ? 'text-red-600' : 'text-transparent'}`}>{error.emailError}</p>
                         </label>
-                        <div className="flex flex-col items-center gap-3">
+                        <div className="flex flex-col items-center gap-5">
                             <button type="submit" className="button_style text-lg flex justify-center">
                                 Reset Password
                             </button>

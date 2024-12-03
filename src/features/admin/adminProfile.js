@@ -11,7 +11,7 @@ export default function AdminProfile() {
     const [username, setUsername] = useState('');
     const [fullname, setFullname] = useState('');
     const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const [totalListing, setTotalListing] = useState('');
     const [requestToRespond, setRequestToRespond] = useState('');
@@ -38,7 +38,7 @@ export default function AdminProfile() {
 
     const updateAdminDetails = async () => {
         try {
-            setMessage('Updating...');
+            setLoading(true);
             const response = await axios.put('http://localhost:5000/admin/updateAdmin', {
                 adminId: adminId,
                 username: username,
@@ -46,7 +46,7 @@ export default function AdminProfile() {
                 email: email,
             });
             if (response.data) {
-                setMessage('Successfully Updated!');
+                setLoading(false);
             } else {
                 alert(response.data.message);
             }
@@ -78,7 +78,7 @@ export default function AdminProfile() {
                 setTotalRequest(response.data.requests.length);
                 let count = 0;
                 for (let i = 0; i < response.data.requests.length; i++) {
-                    !response.data.requests[i].responded && (count =  count + 1);
+                    !response.data.requests[i].responded && (count = count + 1);
                 }
                 setRequestToRespond(count);
             }
@@ -94,7 +94,7 @@ export default function AdminProfile() {
                 setTotalInquiry(response.data.inquirys.length);
                 let count = 0;
                 for (let i = 0; i < response.data.inquirys.length; i++) {
-                    !response.data.inquirys[i].responded && (count =  count + 1);
+                    !response.data.inquirys[i].responded && (count = count + 1);
                 }
                 setInquiryToRespond(count);
             }
@@ -109,7 +109,7 @@ export default function AdminProfile() {
             if (response.data.products.length > 0) {
                 let count = 0;
                 for (let i = 0; i < response.data.products.length; i++) {
-                    response.data.products[i].soldStatus && (count =  count + 1);
+                    response.data.products[i].soldStatus && (count = count + 1);
                 }
                 setProductSold(count);
             }
@@ -149,7 +149,7 @@ export default function AdminProfile() {
                     </label>
                 </div>
 
-                {message && <p className="input_label text-green-400">{message}</p>}
+                {/* {message && <p className="input_label text-green-400">{message}</p>} */}
 
                 <div className="flex gap-10 justify-center">
                     <button className="button_style" onClick={() => navigate('/admin/resetPassword')}>
@@ -158,6 +158,10 @@ export default function AdminProfile() {
                     <button className="button_style" onClick={() => updateAdminDetails()}>
                         Save Details
                     </button>
+                    <img
+                        src="/loadingGif.gif"
+                        className={`w-7 h-7 ${!loading && 'opacity-0'}`}
+                    />
                 </div>
                 <div className="flex flex-col gap-5 w-full px-10">
                     <div className="flex justify-around w-full">

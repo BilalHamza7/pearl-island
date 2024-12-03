@@ -8,6 +8,9 @@ export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [passwordType, setPasswordType] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const validateForm = () => {
@@ -26,6 +29,7 @@ export default function Login() {
         e.preventDefault();
         const validation = validateForm();
         if (validation === true) {
+            setLoading(true);
             setError({});
             try {
                 const response = await axios.post('http://localhost:5000/admin/verifyAdmin',
@@ -36,6 +40,7 @@ export default function Login() {
                 );
                 if (response.data.adminId) {
                     navigate('/admin/adminDashboard');
+                    setLoading(false);
                 } else {
                     alert(response.data.message);
                 }
@@ -59,7 +64,7 @@ export default function Login() {
                 <img src="/bigLogo.png" alt="Logo" className="w-80" />
                 <div className="flex flex-col gap-2 w-full h-full justify-center items-center">
                     <p className="title_text">Let's Get Started</p>
-                    <p className="subtitle_text">Enter your username and password to start managing!</p>
+                    <p className="subtitle_text">Enter Your Email And Password To Start Managing!</p>
 
                     <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col w-96 my-3 gap-7">
                         <label className="flex flex-col h-24 gap-2 input_label">
@@ -69,13 +74,20 @@ export default function Login() {
                         </label>
                         <label className="flex flex-col h-24 gap-2 input_label">
                             Password:
-                            <input type="text" className="input_style" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <div className="flex gap-3 items-center">
+                                <input type={passwordType ? "text" : "password"} className="input_style w-full" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <img src={passwordType ? "/showPassword.png" : "/hidePassword.png"} onClick={() => setPasswordType(!passwordType)} className="w-7 h-7 cursor-pointer hover:scale-105 transition duration-300" />
+                            </div>
                             <p className={`font-saira text-sm ${error.passwordError ? 'text-red-600' : 'text-transparent'}`}>{error.passwordError}</p>
                         </label>
                         <div className="flex w-full gap-5 justify-center ">
                             <button type="submit" className="button_style text-lg flex justify-center">
                                 Submit
                             </button>
+                            <img
+                                src="/loadingGif.gif"
+                                className={`w-7 h-7 ${!loading && 'opacity-0'}`}
+                            />
                         </div>
                     </form>
                 </div>

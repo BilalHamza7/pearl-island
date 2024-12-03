@@ -31,7 +31,7 @@ export default function VerifyEmail() {
                         Enter Code:
                         <input type="type" className="input_style" value={verifyOtp} onChange={(e) => setVerifyOtp(e.target.value)} />
                     </label>
-                    <div className="flex flex-col items-center gap-3 ">
+                    <div className="flex flex-col items-center gap-5">
                         <button type="submit" className="button_style text-lg flex justify-center">
                             Verify
                         </button>
