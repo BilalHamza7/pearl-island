@@ -54,7 +54,6 @@ export default function ResetPassword() {
     // send email using emailjsSend
     const sendEmail = async ({ username }) => {
         const otp = generateOtp();
-        console.log({ otp_code: otp, username });
 
         const data = {
             service_id: 'service_t3hnvtc',
@@ -68,16 +67,14 @@ export default function ResetPassword() {
 
         try {
             const response = await axios.post('https://api.emailjs.com/api/v1.0/email/send', data);
-            // const response = await send('service_t3hnvtc', 'template_0ybb7ff', {
-            //     username: username,
-            //     otp_code: otp,
-            // });
-            alert('Enter the OTP sent to your email.');
+            if (response.status === 200) {
+                alert('Enter the OTP sent to your email.');
+                navigate('/admin/verifyEmail', { state: { otp: otp, email: email } });
+            }
         } catch (error) {
             alert('Failed to send email!');
             console.error('FAILED...', error);
         }
-        // navigate('/admin/verifyEmail');
     };
 
     return (
