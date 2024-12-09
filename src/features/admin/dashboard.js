@@ -1,18 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./components/navbar";
 import RecentProduct from "./components/recentProduct";
 import ProductsCount from "./components/productsCount";
 import RecentRequest from "./components/recentRequest";
+import axios from "axios";
 
 export default function Dashboard() {
 
     const navigate = useNavigate();
 
+    const validateSession = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/admin/checkSession', { withCredentials: true });
+            if (!response.data.authenticated) {
+                navigate('/admin');
+            }
+        } catch (error) {
+            console.error(error.data);
+        }
+    }
+
     useEffect(() => {
+        validateSession();
         window.scrollTo(0, 0);
     }, [])
-
 
     return (
         <>
