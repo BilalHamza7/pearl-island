@@ -38,7 +38,7 @@ export default function Login() {
                         password: password,
                     }
                 );
-                if (response.data.adminId) {
+                if (response.data.session) {
                     navigate('/admin/adminDashboard');
                     setLoading(false);
                 } else {
@@ -76,7 +76,7 @@ export default function Login() {
                             Password:
                             <div className="flex gap-3 items-center">
                                 <input type={passwordType ? "text" : "password"} className="input_style w-full" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                <img src={passwordType ? "/showPassword.png" : "/hidePassword.png"} onClick={() => setPasswordType(!passwordType)} className="w-7 h-7 cursor-pointer hover:scale-105 transition duration-300" />
+                                <img src={passwordType ? "/showPassword.png" : "/hidePassword.png"} alt="show/hide password" onClick={() => setPasswordType(!passwordType)} className="w-7 h-7 cursor-pointer hover:scale-105 transition duration-300" />
                             </div>
                             <p className={`font-saira text-sm ${error.passwordError ? 'text-red-600' : 'text-transparent'}`}>{error.passwordError}</p>
                         </label>
@@ -87,6 +87,7 @@ export default function Login() {
                             <img
                                 src="/loadingGif.gif"
                                 className={`w-7 h-7 ${!loading && 'opacity-0'}`}
+                                alt="loading icon"
                             />
                         </div>
                     </form>
