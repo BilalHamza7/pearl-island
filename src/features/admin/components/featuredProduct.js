@@ -125,6 +125,7 @@ export default function FeaturedProduct({ products }) {
                     <img
                         src="/loadingGif.gif"
                         className={`w-7 h-7 ${!loading && 'opacity-0'}`}
+                        alt='loading gif'
                     />
                     <p className={`${loading === false ? 'opacity-100' : 'opacity-0'}`}>&#x2713;</p>
                 </form>

@@ -11,10 +11,20 @@ import NewPassword from './features/admin/forgotPassword/newPassword';
 import Manage from './features/admin/manageInq&Req/manage';
 import AdminProfile from './features/admin/adminProfile';
 import NewProduct from './features/admin/manageProducts/newProducts';
+import Homepage from './features/user/homepage';
+import Products from './features/user/products';
+import AboutUs from './features/user/aboutUs';
+import ContactUs from './features/user/contactUs';
 
 function App() {
   return (
     <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Homepage />} />
+        <Route path='/products' element={<Products />} />
+        <Route path='/aboutUs' element={<AboutUs />} />
+        <Route path='/contactUs' element={<ContactUs />} />
+      </Routes>
       <Routes>
         <Route path='/admin' element={<Login />} />
         <Route path='/admin/resetPassword' element={<ResetPassword />} />

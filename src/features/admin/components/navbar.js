@@ -18,7 +18,7 @@ export default function Navbar() {
     return (
         <>
             <div className="flex justify-between p-6 shadow-md">
-                <img src="/bigLogo.png" className="w-80 h-6" />
+                <img src="/bigLogo.png" className="w-80 h-6" alt="logo" />
                 <div className="flex items-center gap-8 font-saira text-lg tracking-widest ">
                     <NavLink to='/admin/adminDashboard' className={({ isActive }) => isActive ? "underline" : "hover:underline"}>
                         Dashboard

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Navbar from "../components/navbar";
-import ProductCard from "./productCard";
+import ProductCard from "../../components/productCard";
 import { dateFilter } from "../components/dateFilter";
 import { EditProduct } from "./editProduct";
 import FeaturedProduct from "../components/featuredProduct";
@@ -349,7 +349,7 @@ export default function ProductList() {
                         Your browser does not support the video tag.
                     </video>
                     : (
-                        loading == false && productList.length > 0 ?
+                        loading === false && productList.length > 0 ?
                             <div className="grid grid-cols-5 gap-7 w-full">
                                 {productList.map((product) =>
                                     <ProductCard key={product.productId} prod={product} openModal={() => openModal(product)} />
