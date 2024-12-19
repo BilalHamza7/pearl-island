@@ -20,19 +20,19 @@ export default function Footer() {
             </div>
             <div className="flex flex-col gap-5 text-white ">
                 <p className="text-3xl tracking-wide font-saira text-gray-300">Connect With Us On</p>
-                <a href="" className="flex gap-2 items-center text-2xl font-ibmplexserif tracking-wide hover:text-gray-400 transition duration-300 ">
+                <a href="/" className="flex gap-2 items-center w-fit text-2xl font-ibmplexserif tracking-wide hover:text-gray-400 transition duration-300 ">
                     <img src="/instaWhiteOutlined.png" alt="instagram" className="w-7" />
                     Instagram
                 </a>
-                <a href="" className="flex gap-2 items-center text-2xl font-ibmplexserif tracking-wide hover:text-gray-400 transition duration-300 ">
+                <a href="/" className="flex gap-2 items-center w-fit text-2xl font-ibmplexserif tracking-wide hover:text-gray-400 transition duration-300 ">
                     <img src="/whatsAppWhiteOutlined.png" alt="whatsApp" className="w-7" />
                     WhatsApp
                 </a>
-                <a href="" className="flex gap-2 items-center text-2xl font-ibmplexserif tracking-wide hover:text-gray-400 transition duration-300 ">
+                <a href="/" className="flex gap-2 items-center w-fit text-2xl font-ibmplexserif tracking-wide hover:text-gray-400 transition duration-300 ">
                     <img src="/facebookWhiteOulined.png" alt="facebook" className="w-7" />
                     Facebook
                 </a>
-                <a href="" className="flex gap-2 items-center text-2xl font-ibmplexserif tracking-wide hover:text-gray-400 transition duration-300 ">
+                <a href="/" className="flex gap-2 items-center w-fit text-2xl font-ibmplexserif tracking-wide hover:text-gray-400 transition duration-300 ">
                     <img src="/etsyWhiteOutlined.png" alt="etsy" className="w-7" />
                     Etsy
                 </a>
