@@ -49,19 +49,19 @@ export default function Homepage() {
                 <p className="font-saira text-3xl tracking-widest ">Pearl Island Services</p>
                 <div className="flex items-center justify-center gap-16 w-full text-xl font-saira font-light bg-gray-200 p-5 tracking-wider">
                     <div className="flex flex-col items-center gap-3 ">
-                        <img src="/gem1.jpg" alt="gem" className="h-44" />
+                        <img src="/shipped.png" alt="gem" className="h-20" />
                         <p >Complimentary Shipping</p>
                     </div>
                     <div className="flex flex-col items-center gap-3 ">
-                        <img src="/gem2.jpg" alt="gem" className="h-44" />
+                        <img src="/transaction.png" alt="gem" className="h-20" />
                         <p className="">Easy Return/Refund Policy</p>
                     </div>
                     <div className="flex flex-col items-center gap-3 ">
-                        <img src="/gem3.jpg" alt="gem" className="h-44" />
+                        <img src="/writing.png" alt="gem" className="h-20" />
                         <p >Personalized Orders</p>
                     </div>
                     <div className="flex flex-col items-center gap-3 ">
-                        <img src="/gem4.jpg" alt="gem" className="h-44" />
+                        <img src="/certificate.png" alt="gem" className="h-20" />
                         <p >Certificate of Authenticity</p>
                     </div>
                 </div>
