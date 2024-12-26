@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Navbar from "../components/navbar";
 import ProductCard from "../../components/productCard";
-import { dateFilter } from "../components/dateFilter";
 import { EditProduct } from "./editProduct";
 import FeaturedProduct from "../components/featuredProduct";
+import { dateFilter } from "../../../components/dateFilter.js";
 
 export default function ProductList() {
 
