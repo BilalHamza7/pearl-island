@@ -7,11 +7,11 @@ export default function ProductCard({ prod, openModal }) {
     return (
         <div className="w-full bg-white transition duration-300 rounded-lg " onMouseOver={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
             
-            <div className="relative h-52 overflow-clip">
+            <div className="relative overflow-clip flex flex-col items-center">
                 <img
                     alt="source"
                     src={prod.images[0]}
-                    className={`w-full h-full relative object-contain transition duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                    className={`w-52 h-52 relative object-fill object-center transition duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
                 />
                 {(isHovered && prod.soldStatus) &&
                     <div className="absolute bottom-3 right-3  border border-red-500 p-1 rounded z-10">
