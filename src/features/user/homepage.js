@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import FeaturedProducts from "./components/featuredProducts";
-import Navbar from "./components/navbar";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
 import CollectionCards from "./components/collectionCards";
 
 export default function Homepage() {
@@ -13,10 +11,6 @@ export default function Homepage() {
 
     return (
         <div className="min-h-screen">
-            <div className="hidden sm:block">
-                {/* Navbar : MAKE RESPONSIVE */}
-                <Navbar />
-            </div>
 
             <div className="sm:flex">
                 <img src="/homepageImg.jpg" className="w-full sm:w-1/2 h-52 sm:h-72 object-cover" alt="figure 1" />
@@ -27,7 +21,7 @@ export default function Homepage() {
             </div>
 
             <div className="flex flex-col justify-center items-center p-10 gap-5">
-                <p className="font-saira text-3xl tracking-widest ">Our Exclusive Products</p>
+                <p className="title_text">Our Exclusive Products</p>
                 <FeaturedProducts />
             </div>
 
@@ -41,12 +35,12 @@ export default function Homepage() {
             </div>
 
             <div className="flex flex-col justify-center items-center pt-10 gap-5">
-                <p className="font-saira text-3xl tracking-widest ">Our Collections</p>
+                <p className="title_text">Our Collections</p>
                 <CollectionCards />
             </div>
 
-            <div className="flex flex-col justify-center items-center pt-10 gap-y-5" onMouseEnter={() => setServicesHovered(true)} onMouseLeave={() => setServicesHovered(false)}>
-                <p className="font-saira text-3xl tracking-widest ">Pearl Island Services</p>
+            <div className="flex flex-col justify-center items-center pt-10 gap-y-7" onMouseEnter={() => setServicesHovered(true)} onMouseLeave={() => setServicesHovered(false)}>
+                <p className="title_text">Pearl Island Services</p>
                 <div className="flex items-center justify-center gap-16 w-full text-xl font-saira font-light bg-gray-200 p-5 tracking-wider">
                     <div className="flex flex-col items-center gap-3 ">
                         <img src="/shipped.png" alt="gem" className="h-20" />
@@ -69,14 +63,12 @@ export default function Homepage() {
             </div>
 
             <div className="flex flex-col justify-center items-center pt-5 pb-10 gap-5">
-                <p className="font-saira text-5xl tracking-widest ">Get In Touch With Us!</p>
-                <p className="font-montserrat text-xl tracking-wider font-light text-gray-600">Reach Out To Us For All Your Needs, We'll Be Delighted To Assist You!</p>
+                <p className="title_text">Get In Touch With Us!</p>
+                <p className="subtitle_text">Reach Out To Us For All Your Needs, We'll Be Delighted To Assist You!</p>
                 <button className="button_style" onClick={() => navigate('/contactUs')}>
                     Contact Us
                 </button>
             </div>
-
-            <Footer />
         </div>
     )
 };

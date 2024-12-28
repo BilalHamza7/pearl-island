@@ -15,15 +15,18 @@ import Homepage from './features/user/homepage';
 import Products from './features/user/products';
 import AboutUs from './features/user/aboutUs';
 import ContactUs from './features/user/contactUs';
+import UserLayout from './features/user/userLayout';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Homepage />} />
-        <Route path='/products' element={<Products />} />
-        <Route path='/aboutUs' element={<AboutUs />} />
-        <Route path='/contactUs' element={<ContactUs />} />
+        <Route path='/' element={<UserLayout />}>
+          <Route index element={<Homepage />} />
+          <Route path='/products' element={<Products />} />
+          <Route path='/aboutUs' element={<AboutUs />} />
+          <Route path='/contactUs' element={<ContactUs />} />
+        </Route>
       </Routes>
       <Routes>
         <Route path='/admin' element={<Login />} />

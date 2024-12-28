@@ -1,10 +1,10 @@
-import Navbar from "./components/navbar";
 
 export default function AboutUs() {
     return (
-        <div>
-            <Navbar />
-            <p>ABOUT US</p>
-        </div>
+        <>
+            <div className="min-h-screen">
+                <p>ABOUT US</p>
+            </div>
+        </>
     )
 };

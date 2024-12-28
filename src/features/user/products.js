@@ -165,7 +165,6 @@ export default function Products() {
 
     return (
         <>
-            <Navbar />
             <div className="sm:flex">
                 <img src="/productsimg.jpg" className="w-full sm:w-1/2 h-52 sm:h-72 object-cover" alt="figure 1" />
                 <div className="flex flex-col gap-2 items-center justify-center bg-gray-200 w-full sm:w-1/2 p-5 sm:p-12">
@@ -334,16 +333,15 @@ export default function Products() {
                     <p className="hover:font-bold cursor-pointer" onClick={() => window.scrollTo(0, 0)}>To Top &uarr;</p>
                 </div>
 
-                <div className="flex flex-col w-full items-center gap-4 tracking-widest">
-                    <p className="text-2xl font-saira">Cannot Find What Your Looking For?</p>
-                    <p className="text-xl font-montserrat font-light text-gray-600 w-9/12 text-center">We are here to help! Reach out to us for personalized assistance or to inquire about custom order -  We will work with your to create the perfect piece as per your needs!</p>
+                <div className="flex flex-col w-full items-center gap-4">
+                    <p className="title_text">Cannot Find What Your Looking For?</p>
+                    <p className="subtitle_text w-9/12">We are here to help! Reach out to us for personalized assistance or to inquire about custom order -  We will work with your to create the perfect piece as per your needs!</p>
                     <button className="button_style" onClick={() => navigate('/contactUs')}>Contact Us!</button>
                 </div>
 
                 {selectedProduct !== null && <EditProduct isOpen={isEditModalOpen} onClose={closeModal} product={selectedProduct} />}
 
             </div >
-            <Footer />
         </>
     )
 };
