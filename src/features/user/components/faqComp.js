@@ -17,7 +17,7 @@ export default function FaqComp({ question, message }) {
                 <p
                     className="font-montserrat text-md font-light tracking-wider"
                 >
-                    {message}
+                    {message}   
                 </p>
             </div>
         </div>

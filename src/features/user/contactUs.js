@@ -15,10 +15,10 @@ export default function ContactUs() {
                 </div>
             </div> */}
 
-            <div className="flex flex-col items-center justify-center p-10 gap-y-10">
+            <div className="flex flex-col items-center justify-center p-10 gap-y-14">
                 <form action="" className="flex flex-col items-center gap-7 w-6/12">
                     <div className="flex flex-col items-center gap-4">
-                        <p className="title_text">We'd Love To Help!</p>
+                        <p className="title_text">Get In Touch!</p>
                         <p className="subtitle_text">Fill out the form and we'll get right back to you.</p>
                     </div>
                     <div className="flex w-full justify-between gap-20">
@@ -71,9 +71,9 @@ export default function ContactUs() {
                 </form>
 
                 {/* Socials */}
-                <div className="flex flex-col gap-5 items-center">
+                <div className="flex flex-col gap-10 items-center justify-between">
                     <p className="title_text">Connect With Us On</p>
-                    <div className="flex gap-16">
+                    <div className="flex gap-36 justify-center items-center w-full">
                         <label htmlFor="" className="flex items-center gap-2 font-montserrat text-3xl tracking-wider cursor-pointer rounded-lg hover:bg-gray-200 transition duration-500">
                             <img src="/instaColoured.png" alt="" className="w-20" />
                             Instagram
@@ -82,6 +82,8 @@ export default function ContactUs() {
                             <img src="facebookColour.png" alt="" className="w-20" />
                             Facebook
                         </label>
+                    </div>
+                    <div className="flex gap-36 justify-center items-center w-full">
                         <label htmlFor="" className="flex items-center gap-2 font-montserrat text-3xl tracking-wider cursor-pointer rounded-lg hover:bg-gray-200 transition duration-500">
                             <img src="/etsyColour.png" alt="" className="w-20" />
                             ETSY

@@ -328,9 +328,9 @@ export default function Products() {
                             <p className="title_text mt-10 motion-safe:animate-bounce">No Products To Show :(</p>
                     )
                 }
-                <div className="flex gap-28 font-cormorant text-xl">
-                    <p className="hover:font-bold cursor-pointer" onClick={() => setPageLoad((pageLoad) => pageLoad + 2)}>Load More &rarr;</p>
-                    <p className="hover:font-bold cursor-pointer" onClick={() => window.scrollTo(0, 0)}>To Top &uarr;</p>
+                <div className="flex gap-28 font-saira font-light text-xl">
+                    <p className="hover:text-gray-700 transition duration-300 cursor-pointer" onClick={() => setPageLoad((pageLoad) => pageLoad + 2)}>Load More &rarr;</p>
+                    <p className="hover:text-gray-700 transition duration-300 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>To Top &uarr;</p>
                 </div>
 
                 <div className="flex flex-col w-full items-center gap-4">
