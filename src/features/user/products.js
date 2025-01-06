@@ -288,10 +288,6 @@ export default function Products() {
                                 This Year
                             </option>
                         </select>
-                        <label className="flex gap-2 items-center font-montserrat text-lg hover:cursor-pointer">
-                            <input type="checkbox" id="natural" value='natural' checked={checkedNatural} onChange={() => setCheckedNatural(!checkedNatural)} />
-                            Only Natural
-                        </label>
 
                         <img
                             src={isClearHovered ? "/clearFilterFilled.png" : "/clearFilterOutlined.png"}

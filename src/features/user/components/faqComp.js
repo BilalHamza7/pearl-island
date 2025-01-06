@@ -6,7 +6,7 @@ export default function FaqComp({ question, message }) {
 
     return (
         <div className="flex flex-col overflow-hidden">
-            <p className="flex gap-4 font-saira text-xl font-medium tracking-wider cursor-pointer" onClick={() => setMessageToggle(!messageToggle)}>
+            <p className="flex gap-4 font-saira text-xl tracking-wider cursor-pointer" onClick={() => setMessageToggle(!messageToggle)}>
                 {question}
                 <span className={`transition duration-300 ${messageToggle && 'rotate-180'}`}>&dArr;</span>
             </p>
