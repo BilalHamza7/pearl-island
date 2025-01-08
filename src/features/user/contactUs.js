@@ -8,7 +8,7 @@ export default function ContactUs() {
     return (
         <>
             <div className="sm:flex">
-                <img src="/contactusimg.jpg" className="w-full sm:w-1/2 h-52 sm:h-72 object-fill" alt="figure 1" />
+                <img src="/contactusimg.jpg" loading="lazy" className="w-full sm:w-1/2 h-52 sm:h-72 object-fill" alt="figure 1" />
                 <div className="flex flex-col gap-2 items-center justify-center bg-gray-200 w-full sm:w-1/2 p-5 sm:p-12">
                     <p className="font-saira text-lg sm:text-2xl tracking-wider sm:tracking-widest w-full ">GET IN TOUCH WITH US</p>
                     <p className="font-montserrat text-sm sm:text-lg tracking-widest font-extralight text-gray-600">We here at Pearl Island would be delighted to assist you with inquiries, special requests, custom orders and more. Reach out to us via the form below, and we’ll respond promptly to help you with your needs.</p>
@@ -75,21 +75,21 @@ export default function ContactUs() {
                     <p className="title_text">Connect With Us On</p>
                     <div className="flex gap-36 justify-center items-center w-full">
                         <label htmlFor="" className="flex items-center gap-2 font-montserrat text-3xl tracking-wider cursor-pointer rounded-lg hover:bg-gray-200 transition duration-500">
-                            <img src="/instaColoured.png" alt="" className="w-20" />
+                            <img src="/instaColoured.png" loading="lazy" alt="instagram" className="w-20" />
                             Instagram
                         </label>
                         <label htmlFor="" className="flex items-center gap-2 font-montserrat text-3xl tracking-wider cursor-pointer rounded-lg hover:bg-gray-200 transition duration-500">
-                            <img src="facebookColour.png" alt="" className="w-20" />
+                            <img src="facebookColour.png" loading="lazy" alt="facebook" className="w-20" />
                             Facebook
                         </label>
                     </div>
                     <div className="flex gap-36 justify-center items-center w-full">
                         <label htmlFor="" className="flex items-center gap-2 font-montserrat text-3xl tracking-wider cursor-pointer rounded-lg hover:bg-gray-200 transition duration-500">
-                            <img src="/etsyColour.png" alt="" className="w-20" />
+                            <img src="/etsyColour.png" loading="lazy" alt="etsy" className="w-20" />
                             ETSY
                         </label>
                         <label htmlFor="" className="flex items-center gap-2 font-montserrat text-3xl tracking-wider cursor-pointer rounded-lg hover:bg-gray-200 transition duration-500">
-                            <img src="whatsAppColour.png" alt="" className="w-20" />
+                            <img src="whatsAppColour.png" loading="lazy" alt="whatsapp" className="w-20" />
                             WhatsApp
                         </label>
                     </div>

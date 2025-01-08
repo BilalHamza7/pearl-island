@@ -3,7 +3,7 @@ export default function AboutUs() {
     return (
         <>
             <div className="sm:flex">
-                <img src="/aboutusimg.jpg" className="w-full sm:w-1/2 h-52 sm:h-72 object-center " alt="figure 1" />
+                <img src="/aboutusimg.jpg" loading="lazy" className="w-full sm:w-1/2 h-52 sm:h-72 object-center " alt="figure 1" />
                 <div className="flex flex-col gap-2 items-center justify-center bg-gray-200 w-full sm:w-1/2 p-5 sm:p-12">
                     <p className="font-saira text-lg sm:text-2xl tracking-wider sm:tracking-widest w-full ">WHO WE ARE</p>
                     <p className="font-montserrat text-sm sm:text-lg tracking-widest font-extralight text-gray-600">We specialize in crafting exquisite pieces that celebrate the natural beauty of gemstones. With a commitment to quality and artistry, we take pride in our rich heritage and expertise in this timeless industry.</p>

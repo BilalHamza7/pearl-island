@@ -166,7 +166,7 @@ export default function Products() {
     return (
         <>
             <div className="sm:flex">
-                <img src="/productsimg.jpg" className="w-full sm:w-1/2 h-52 sm:h-72 object-cover" alt="figure 1" />
+                <img src="/productsimg.jpg" loading="lazy" className="w-full sm:w-1/2 h-52 sm:h-72 object-cover" alt="figure 1" />
                 <div className="flex flex-col gap-2 items-center justify-center bg-gray-200 w-full sm:w-1/2 p-5 sm:p-12">
                     <p className="font-saira text-lg sm:text-2xl tracking-wider sm:tracking-widest w-full ">EXQUISITE CRAFTSMANSHIP, UNMATCHED ELEGANCE</p>
                     <p className="font-montserrat text-sm sm:text-lg tracking-widest font-extralight text-gray-600">Explore our collection of handpicked gemstones and finely crafted jewelry. Each piece is a reflection of timeless beauty, created with precision and care.</p>
