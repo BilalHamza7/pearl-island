@@ -16,7 +16,7 @@ export default function Homepage() {
                 <img src="/homepageImg.jpg" loading="lazy" className="w-full sm:w-1/2 h-52 sm:h-72 object-cover" alt="figure 1" />
                 <div className="flex flex-col gap-2 items-center justify-center bg-gray-200 w-full sm:w-1/2 p-5 sm:p-12">
                     <p className="font-saira text-lg sm:text-2xl tracking-wider sm:tracking-widest w-full ">EXQUISITE GEMSTONES & FINE JEWELLERY COLLECTION</p>
-                    <p className="font-montserrat text-sm sm:text-lg tracking-widest font-extralight text-gray-600">Dive into the world of precious gemstones and jewellery & discover the timeless beauty and elegance of precious gemstones at Pearl Island. </p>
+                    <p className="font-montserrat text-sm sm:text-lg tracking-widest font-light text-gray-600">Dive into the world of precious gemstones and jewellery & discover the timeless beauty and elegance of precious gemstones at Pearl Island. </p>
                 </div>
             </div>
 
@@ -39,9 +39,9 @@ export default function Homepage() {
                 <CollectionCards />
             </div>
 
-            <div className="flex flex-col justify-center items-center pt-10 gap-y-7" onMouseEnter={() => setServicesHovered(true)} onMouseLeave={() => setServicesHovered(false)}>
+            <div className="flex flex-col justify-center items-center pt-10 gap-y-7">
                 <p className="title_text">Pearl Island Services</p>
-                <div className="flex items-center justify-center gap-16 w-full text-xl font-saira font-light bg-gray-200 p-5 tracking-wider">
+                <div className="flex items-center justify-center gap-16 w-full text-xl font-saira font-light bg-gray-200 p-5 tracking-wider" onMouseEnter={() => setServicesHovered(true)} onMouseLeave={() => setServicesHovered(false)}>
                     <div className="flex flex-col items-center gap-3 ">
                         <img src="/shipped.png" loading="lazy" alt="gem" className="h-20" />
                         <p >Complimentary Shipping</p>

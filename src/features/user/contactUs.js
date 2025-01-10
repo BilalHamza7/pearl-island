@@ -11,7 +11,7 @@ export default function ContactUs() {
                 <img src="/contactusimg.jpg" loading="lazy" className="w-full sm:w-1/2 h-52 sm:h-72 object-fill" alt="figure 1" />
                 <div className="flex flex-col gap-2 items-center justify-center bg-gray-200 w-full sm:w-1/2 p-5 sm:p-12">
                     <p className="font-saira text-lg sm:text-2xl tracking-wider sm:tracking-widest w-full ">GET IN TOUCH WITH US</p>
-                    <p className="font-montserrat text-sm sm:text-lg tracking-widest font-extralight text-gray-600">We here at Pearl Island would be delighted to assist you with inquiries, special requests, custom orders and more. Reach out to us via the form below, and we’ll respond promptly to help you with your needs.</p>
+                    <p className="font-montserrat text-sm sm:text-lg tracking-widest font-light text-gray-600">We here at Pearl Island would be delighted to assist you with inquiries, special requests, custom orders and more. Reach out to us via the form below, and we’ll respond promptly to help you with your needs.</p>
                 </div>
             </div>
 

@@ -12,7 +12,17 @@ module.exports = {
       cormorant: ['Cormorant', 'sans-serif'],
       spectral: ['Spectral', 'sans-serif'],
     },
-    extend: {},
+    extend: {
+      animation: {
+        'infinite-scroll': 'infinite-scroll 20s linear infinite', // Adjust duration
+      },
+      keyframes: {
+        'infinite-scroll': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+      },
+    },
   },
   plugins: [],
 }
