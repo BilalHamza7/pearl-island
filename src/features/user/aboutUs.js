@@ -1,5 +1,9 @@
+import { useNavigate } from "react-router-dom"
 
 export default function AboutUs() {
+
+    const navigate = useNavigate();
+
     return (
         <>
             <div className="sm:flex">
@@ -13,13 +17,13 @@ export default function AboutUs() {
                 <div className="flex gap-20 px-10">
                     <div className="flex flex-col gap-7 items-center">
                         <p className="title_text">Our Mission</p>
-                        <p className="subtitle_text">
+                        <p className="subtitle_text w-2/3">
                             Our mission is to provide our clients with the finest gemstones and meticulously crafted jewelry that reflect both beauty and individuality. We believe in creating pieces that are not only visually stunning but also carry a personal story, becoming a cherished part of your life.
                         </p>
                     </div>
                     <div className="flex flex-col gap-7 items-center">
                         <p className="title_text">Our Vision</p>
-                        <p className="subtitle_text">
+                        <p className="subtitle_text w-2/3">
                             We aspire to be a global leader in luxury gemstones and jewelry, known for our commitment to quality, ethical sourcing, and innovation. Our vision is to set new standards in the industry by consistently delivering exceptional products and experiences for our clients.
                         </p>
                     </div>
@@ -77,8 +81,17 @@ export default function AboutUs() {
 
                 <div className="flex flex-col items-center gap-7 px-10">
                     <p className="title_text">Our Story</p>
-                    <p className="subtitle_text w-8/12">
-                        At Pearl Island, our journey began with a simple vision: to bring timeless beauty and exceptional craftsmanship to the world. Inspired by a passion for [your products/services], we dedicated ourselves to creating pieces that reflect elegance, quality, and individuality. From humble beginnings, we’ve grown into a trusted name, cherished by customers who value authenticity and excellence. Every product we offer tells a story—one of creativity, dedication, and a commitment to making dreams a reality. Join us on this journey and become a part of our story as we continue to craft timeless treasures for generations to come.</p>
+                    <p className="subtitle_text w-10/12">
+                        At Pearl Island, our journey began with a simple vision: to bring timeless beauty and exceptional craftsmanship to the world. Inspired by a passion for gemstones, we dedicated ourselves to creating pieces that reflect elegance, quality, and individuality. From humble beginnings, we’ve grown into a trusted name, cherished by customers who value authenticity and excellence. Every product we offer tells a story—one of creativity, dedication, and a commitment to making dreams a reality. Join us on this journey and become a part of our story as we continue to craft timeless treasures for generations to come.</p>
+                </div>
+
+                <div className="flex flex-col justify-center items-center gap-5">
+                    <p className="title_text">Get In Touch With Us!</p>
+                    <p className="subtitle_text">Reach Out To Us For All Your Needs, We'll Be Delighted To Assist You!</p>
+                    <button className="button_style" onClick={() => navigate('/contactUs')}>
+                        Contact Us
+                    </button>
+                    <label className="subtitle_text underline cursor-pointer" onClick={() => navigate('/products')}>Explore Products &rarr;</label>
                 </div>
             </div>
         </>

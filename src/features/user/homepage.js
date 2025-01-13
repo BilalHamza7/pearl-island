@@ -34,12 +34,11 @@ export default function Homepage() {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center pt-10 gap-5">
-                <p className="title_text">Our Collections</p>
+            <div className="flex flex-col justify-center items-center p-10">
                 <CollectionCards />
             </div>
 
-            <div className="flex flex-col justify-center items-center pt-10 gap-y-7">
+            <div className="flex flex-col justify-center items-center gap-y-7">
                 <p className="title_text">Pearl Island Services</p>
                 <div className="flex items-center justify-center gap-16 w-full text-xl font-saira font-light bg-gray-200 p-5 tracking-wider" onMouseEnter={() => setServicesHovered(true)} onMouseLeave={() => setServicesHovered(false)}>
                     <div className="flex flex-col items-center gap-3 ">

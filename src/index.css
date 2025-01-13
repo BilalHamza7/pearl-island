@@ -36,7 +36,7 @@ html {
 }
 
 .dropdown_style {
-    @apply font-crimson rounded-lg text-lg px-2 py-1 outline-none drop-shadow-md border border-gray-400 hover:cursor-pointer 
+    @apply font-saira w-fit font-light text-lg px-2 py-1 outline-none hover:cursor-pointer [&_option]:hover:outline-gray-400
 }
 
 .subtitle_text {

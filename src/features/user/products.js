@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
-import Navbar from "./components/navbar";
 import axios from "axios";
 import { dateFilter } from "../../components/dateFilter";
 import ProductCard from "../components/productCard";
 import { EditProduct } from "../admin/manageProducts/editProduct";
-import { useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Products() {
 
     const navigate = useNavigate();
 
-    const [selectedKind, setSelectedKind] = useState('all');
+    const { state } = useLocation();
+    const { colour, kind } = state || {};
+
+    const [selectedKind, setSelectedKind] = useState(kind ? kind : 'all');
     const [selectedWeight, setSelectedWeight] = useState('all');
-    const [selectedColour, setselectedColour] = useState('all');
+    const [selectedColour, setselectedColour] = useState(colour ? colour : 'all');
     const [checkedNatural, setCheckedNatural] = useState(false);
     const [gemstoneId, setGemstoneId] = useState('');
     const [selectedDate, setSelectedDate] = useState('all');
@@ -214,7 +215,7 @@ export default function Products() {
                             </option>
                         </select>
                         <select onChange={(event) => setSelectedWeight(event.target.value)} value={selectedWeight} className="w-40 dropdown_style">
-                            <option value='all'>
+                            <option value='all' className="bg-gray-">
                                 All Weights(cts)
                             </option>
                             <option value='less-than-1'>
@@ -243,8 +244,8 @@ export default function Products() {
                             <option value='Red'>
                                 Red
                             </option>
-                            <option value='Yellow'>
-                                Yellow
+                            <option value='Yellow/Orange'>
+                                Yellow/Orange
                             </option>
                             <option value='Pink'>
                                 Pink
