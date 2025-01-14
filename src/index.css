@@ -9,12 +9,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-    .paused {
-        animation-play-state: paused;
-    }
-}
-
 html {
     scroll-behavior: smooth;
 }
@@ -36,7 +30,7 @@ html {
 }
 
 .dropdown_style {
-    @apply font-saira w-fit font-light text-lg px-2 py-1 outline-none hover:cursor-pointer [&_option]:hover:outline-gray-400
+    @apply font-saira font-light text-lg px-2 py-1 outline-none hover:cursor-pointer [&_option]:hover:outline-gray-400
 }
 
 .subtitle_text {
@@ -45,4 +39,10 @@ html {
 
 .image_hover_magnify {
     @apply absolute border-4 border-black rounded-full cursor-none w-[100px] h-[100px] block
+}
+
+@keyframes scroll {
+    to {
+        transform: translateX(-100%)
+    }
 }

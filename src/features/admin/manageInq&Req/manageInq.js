@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import InqRespond from "./inqRespond";
-import { dateFilter } from "../../../components/dateFilter";
+import { dateFilter } from "../../components/dateFilter";
 
 
 export default function ManageInq() {

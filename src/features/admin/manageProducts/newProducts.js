@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import ProductDisplay from "./productDisplay";
-import ImageViewer from "./imageViewer";
+import ImageViewer from "../../components/imageViewer";
 
 export default function NewProduct() {
 

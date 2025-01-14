@@ -5,7 +5,7 @@ import Navbar from "../components/navbar";
 import ProductCard from "../../components/productCard";
 import { EditProduct } from "./editProduct";
 import FeaturedProduct from "../components/featuredProduct";
-import { dateFilter } from "../../../components/dateFilter.js";
+import { dateFilter } from "../../components/dateFilter.js";
 
 export default function ProductList() {
 

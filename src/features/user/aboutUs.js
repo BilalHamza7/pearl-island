@@ -13,7 +13,7 @@ export default function AboutUs() {
                     <p className="font-montserrat text-sm sm:text-lg tracking-widest font-light text-gray-600">We specialize in crafting exquisite pieces that celebrate the natural beauty of gemstones. With a commitment to quality and artistry, we take pride in our rich heritage and expertise in this timeless industry.</p>
                 </div>
             </div>
-            <div className="min-h-screen flex flex-col items-center gap-y-14 py-10 overflow-hidden">
+            <div className="min-h-screen flex flex-col items-center gap-y-14 py-10">
                 <div className="flex gap-20 px-10">
                     <div className="flex flex-col gap-7 items-center">
                         <p className="title_text">Our Mission</p>
@@ -35,7 +35,7 @@ export default function AboutUs() {
                         <div className="">
                             <img src="/establishedIcon.png" alt="gem" className="h-20" />
                             <p className="font-semibold font-montserrat text-xl mt-5">Established</p>
-                            <p className="font-saira text-lg">Years of industry expertise and reliability.</p>
+                            <p className="font-saira text-lg">10+ Years of industry expertise and reliability.</p>
                         </div>
                         <div className="">
                             <img src="/qualityIcon.png" alt="gem" className="h-20" />
@@ -56,26 +56,25 @@ export default function AboutUs() {
                 </div>
 
                 {/* A auto horizontally scrolling banner */}
-                <div className="flex gap-10 [&_img]:w-48 animate-infinite-scroll">
-                    <img src="/gem1.jpg" alt="gem1" />
-                    <img src="/gem2.jpg" alt="gem2" />
-                    <img src="/gem3.jpg" alt="gem3" />
-                    <img src="/gem4.jpg" alt="gem4" />
-                    <img src="/gem7.jpg" alt="gem7" />
-                    <img src="/gem8.jpg" alt="gem8" />
-                    <img src="/garnet.jpg" alt="garnet" />
-                    <img src="/alex.jpg" alt="alex" />
-                    <img src="/ruby.jpg" alt="ruby" />
-                    {/* duplicate */}
-                    <img src="/gem1.jpg" alt="gem1" />
-                    <img src="/gem2.jpg" alt="gem2" />
-                    <img src="/gem3.jpg" alt="gem3" />
-                    <img src="/gem4.jpg" alt="gem4" />
-                    <img src="/gem7.jpg" alt="gem7" />
-                    <img src="/gem8.jpg" alt="gem8" />
-                    <img src="/garnet.jpg" alt="garnet" />
-                    <img src="/alex.jpg" alt="alex" />
-                    <img src="/ruby.jpg" alt="ruby" />
+                <div className="flex w-full overflow-hidden">
+                    <div className="flex gap-5 justify-between min-w-full items-center [&_img]:w-48 animate-infinite-scroll bg-yellow-300">
+                        <img src="/gem1.jpg" alt="gem1" />
+                        <img src="/gem2.jpg" alt="gem2" />
+                        <img src="/gem3.jpg" alt="gem3" />
+                        <img src="/gem4.jpg" alt="gem4" />
+                        <img src="/gem7.jpg" alt="gem7" />
+                        <img src="/gem8.jpg" alt="gem8" />
+                        <img src="/garnet.jpg" alt="garnet" />
+                        <img src="/alex.jpg" alt="alex" />
+                        <img src="/ruby.jpg" alt="ruby" />
+                        {/* duplicate */}
+                        <img src="/gem1.jpg" alt="gem1" />
+                        <img src="/gem2.jpg" alt="gem2" />
+                        <img src="/gem3.jpg" alt="gem3" />
+                        <img src="/gem4.jpg" alt="gem4" />
+                        <img src="/gem7.jpg" alt="gem7" />
+                        <img src="/gem8.jpg" alt="gem8" />
+                    </div>
                 </div>
 
 

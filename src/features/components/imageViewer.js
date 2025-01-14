@@ -54,7 +54,7 @@ export default function ImageViewer({ isOpen, onClose, images, certificate }) {
             <div className="px-10 h-screen bg-white">
                 <div className="flex justify-end w-full">
                     <button className="pt-10" onClick={onClose}>
-                        <img src="/close.png" className="w-7 h-7" />
+                        <img src="/close.png" alt="close" className="w-7 h-7" />
                     </button>
                 </div>
                 {images.length > 0 &&

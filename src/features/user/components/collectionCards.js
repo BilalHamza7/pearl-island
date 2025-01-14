@@ -17,7 +17,7 @@ export default function CollectionCards() {
     ];
     const others = [
         { source: "/gem1.jpg", colour: "", kind: "Spinel" },
-        { source: "/pp2.jpg", colour: "", kind: "Alex" },
+        { source: "/pp2.jpg", colour: "", kind: "Alexandrite" },
         { source: "/gem4.jpg", colour: "", kind: "Chrysoberyl" },
         { source: "/yellowSapphire.jpg", colour: "", kind: "Garnet" },
         { source: "/yellowSapphire.jpg", colour: "", kind: "All Other Kinds" },

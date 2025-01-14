@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductDisplay from "./productDisplay";
-import ImageViewer from "./imageViewer";
+import ImageViewer from "../../components/imageViewer";
 
 export const EditProduct = ({ isOpen, onClose, product }) => {
 
@@ -551,8 +551,6 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                                 <button className="button_style w-full" onClick={() => navigate('/manageProduct')}>Cancel</button>
                                 <button onClick={updateProduct} className="button_style w-full">Save</button>
                             </div>
-
-
                         </div>
                     </div>
                     {loading && (

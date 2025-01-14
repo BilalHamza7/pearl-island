@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { dateFilter } from "../../../components/dateFilter";
+import { dateFilter } from "../../components/dateFilter";
 import ReqRespond from "./reqRespond";
 
 //allow to change responded
